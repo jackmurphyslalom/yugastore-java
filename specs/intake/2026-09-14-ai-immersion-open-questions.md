@@ -8,6 +8,10 @@ Raw intake from a team kickoff meeting, not yet a spec. Feed into `/speckit.spec
   (2026-09-14, ~2h14m), converted from `.docx` to Markdown for ingestion.
 - Related team-process decisions from the same meeting: see
   `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`.
+- **Update**: all three questions below were directly answered by the client in a later
+  interview; see `specs/intake/2026-09-14-client-requirements-interview.md` for the primary,
+  client-confirmed requirements. The assumptions recorded below are the team's own pre-interview
+  reading of the code and still need code-level verification.
 - Timestamps below are the transcript's own mm:ss markers, used as stable anchors.
 
 ## Questions
@@ -37,4 +41,6 @@ Raw intake from a team kickoff meeting, not yet a spec. Feed into `/speckit.spec
 - None of the three items above have been verified against the actual codebase in this pass —
   they are meeting notes/assumptions, not confirmed findings.
 - The "client problem" slide deck referenced in the meeting was not available to this ingestion
-  pass (it was described verbally, not attached as a source document).
+  pass (it was described verbally, not attached as a source document). A later client interview
+  now covers the same three topics directly — see
+  `specs/intake/2026-09-14-client-requirements-interview.md`.
