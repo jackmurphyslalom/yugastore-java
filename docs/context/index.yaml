@@ -45,6 +45,14 @@ entries:
     confidence: high
     last_verified: null
     status: scaffold-only
+  - id: decision-2026-09-14-immersion-kickoff
+    category: decisions
+    path: docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md
+    summary: Team-process decisions from the AI immersion kickoff meeting (team name, target cloud provider, LLM tool, knowledge-base and project-management approach).
+    source_paths: ["AI Immersion Meeting-20260914_105842 Teams recording/transcript (not retained in repo)"]
+    confidence: high
+    last_verified: "2026-09-14"
+    status: ingested
   - id: constitution
     category: governance
     path: .specify/memory/constitution.md
