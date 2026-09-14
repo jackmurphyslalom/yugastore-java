@@ -1,0 +1,23 @@
+This directory includes material derived from Anthropic's "skill-creator" skill:
+https://github.com/anthropics/skills/tree/main/skills/skill-creator
+(Upstream snapshot used during integration: 1ed29a03dc852d30fa6ef2ca53a67dc2c2c2c563)
+
+Modifications made by AI-SDLC maintainers include:
+- Rewritten instructions and examples for a provider-neutral authoring workflow
+- Focused references for workflows, output patterns, and quality gates
+- Integration updates for AI-SDLC managed-skill distribution
+
+This directory also adapts skill-design guidance from Matt Pocock's
+"writing-great-skills":
+https://github.com/mattpocock/skills/tree/ed37663cc5fbef691ddfecd080dff42f7e7e350d/skills/productivity/writing-great-skills
+(Pinned revision: ed37663cc5fbef691ddfecd080dff42f7e7e350d)
+
+Additional design references:
+- https://www.philschmid.de/agent-skills-tips
+- https://claude.com/blog/improving-skill-creator-test-measure-and-refine-agent-skills
+
+Article guidance is paraphrased rather than copied.
+
+Anthropic-derived material is provided under the Apache License 2.0 terms in
+LICENSE.txt. Matt Pocock-derived material is provided under the MIT terms in
+LICENSE-MattPocock.txt.

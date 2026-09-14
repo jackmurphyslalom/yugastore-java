@@ -1,0 +1,6 @@
+Adapted from mattpocock/skills release v1.1.0, commit
+d574778f94cf620fcc8ce741584093bc650a61d3.
+
+The original work is licensed under the MIT License. This adaptation aligns
+domain modeling with AI-SDLC's canonical glossary, context routing manifest,
+ADR policy, and guided or automated bootstrap modes.

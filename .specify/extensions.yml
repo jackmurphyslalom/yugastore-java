@@ -1,0 +1,62 @@
+schema_version: "1.0"
+hooks:
+  after_specify:
+    - extension: agent-context
+      command: speckit.agent-context.update
+      optional: true
+      priority: 10
+      description: Refresh agent context after specification
+    - extension: aisdlc-context
+      command: speckit.aisdlc.mockup
+      optional: true
+      priority: 10
+      prompt: Generate static UI mockups for UI-relevant stories in the feature spec?
+      description: Create reviewable UI mockups and handoff notes after specification.
+  after_plan:
+    - extension: agent-context
+      command: speckit.agent-context.update
+      optional: true
+      priority: 10
+      description: Refresh agent context after planning
+    - extension: aisdlc-context
+      command: speckit.aisdlc.promote
+      optional: true
+      priority: 10
+      prompt: Review durable planning decisions and record AI-SDLC promotion
+        recommendations?
+      description: Record planned promotion candidates after planning.
+  before_specify:
+    - extension: aisdlc-context
+      command: speckit.aisdlc.preflight
+      optional: false
+      priority: 10
+      description: Review the constitution and project context before writing the
+        specification.
+  before_plan:
+    - extension: aisdlc-context
+      command: speckit.aisdlc.preflight
+      optional: false
+      priority: 10
+      description: Review the constitution and project context before planning.
+  before_implement:
+    - extension: aisdlc-context
+      command: speckit.aisdlc.preflight
+      optional: false
+      priority: 10
+      description: Review the constitution, plan, and project docs before implementation.
+  after_implement:
+    - extension: aisdlc-context
+      command: speckit.aisdlc.pr
+      optional: true
+      priority: 20
+      prompt: Run PR readiness now? If you plan to run speckit.converge, skip this
+        hook, complete the appended tasks, then run speckit.aisdlc.pr ready.
+      description: Assess the complete local change scope against repository Standards
+        and the feature Spec before creating a pull request.
+    - extension: aisdlc-context
+      command: speckit.aisdlc.promote
+      optional: true
+      priority: 30
+      prompt: Review implementation changes and recommend what should be promoted into
+        durable docs?
+      description: Recommend promotion after implementation.

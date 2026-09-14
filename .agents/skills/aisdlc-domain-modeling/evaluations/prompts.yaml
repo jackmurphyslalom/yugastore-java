@@ -1,0 +1,13 @@
+cases:
+  - kind: typical
+    prompt: Define the actors, states, invariants, and canonical terms for this project.
+    should_use: true
+    expected: Ground a domain model and canonical glossary in project evidence.
+  - kind: edge-case
+    prompt: An established glossary uses a custom structure and two services use one term differently.
+    should_use: true
+    expected: Preserve the structure, expose the ambiguity, and propose a confirmed terminology change.
+  - kind: near-miss
+    prompt: Rename a local variable to satisfy the linter without changing domain behavior.
+    should_use: false
+    expected: Treat this as a mechanical code change, not domain modeling.

@@ -1,0 +1,29 @@
+framework:
+  version: 0.17.1
+  source: github.com/Slalom/ai-sdlc-framework
+  auto_update: false
+  spec_kit:
+    version: 0.13.4
+    script: sh
+    release_pinned: true
+agents:
+  enabled:
+    - github-copilot
+commands:
+  mode: generated
+  source: .specify/templates/commands
+context:
+  bootstrap:
+    mode: automated
+  freshness:
+    mode: local-only
+spec_kit:
+  integration: copilot
+  preset: aisdlc-core
+  extensions:
+    - agent-context
+    - aisdlc-context
+  community_extensions: []
+  workflows:
+    - speckit
+    - aisdlc-loop

@@ -1,0 +1,11 @@
+{
+  "ai": "copilot",
+  "integration": "copilot",
+  "branch_numbering": "sequential",
+  "context_file": ".github/copilot-instructions.md",
+  "here": true,
+  "preset": "aisdlc-core",
+  "script": "sh",
+  "speckit_version": "0.13.4",
+  "ai_skills": false
+}

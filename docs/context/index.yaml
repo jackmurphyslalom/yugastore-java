@@ -1,0 +1,61 @@
+# Context manifest for later AI-SDLC phases.
+# Replace these scaffold summaries with repo-specific content during bootstrap.
+# Optional applies_to lists workspace repository keys; omit it for project-wide context.
+
+version: 1
+last_bootstrapped: 2026-09-14
+entries:
+  - id: product-overview
+    category: product
+    path: docs/product/overview.md
+    summary: |
+      Automated draft describing the retail marketplace scope, actors, and implementation constraints.
+    source_paths: [README.md, pom.xml, resources/schema.cql, resources/schema.sql]
+    confidence: medium
+    last_verified: 2026-09-14
+    status: draft
+  - id: architecture-overview
+    category: architecture
+    path: docs/architecture/overview.md
+    summary: |
+      Automated draft describing the Maven modules, runtime entrypoints, database boundaries, tests, and Docker flow.
+    source_paths: [README.md, pom.xml, docker-run.sh, resources/schema.cql, resources/schema.sql]
+    confidence: medium
+    last_verified: 2026-09-14
+    status: draft
+  - id: product-glossary
+    category: product
+    path: docs/product/glossary.md
+    summary: |
+      Automated draft of repository terminology for service discovery, database APIs, and the gateway.
+    source_paths: [README.md, pom.xml, resources/schema.cql, resources/schema.sql]
+    confidence: medium
+    last_verified: 2026-09-14
+    status: draft
+  - id: repo-map
+    category: context
+    path: docs/context/repo-map.md
+    summary: |
+      Automated draft of the highest-signal README, Maven, service entrypoint, test, schema, and Docker paths.
+    source_paths: [README.md, pom.xml, docker-run.sh, resources/schema.cql, resources/schema.sql]
+    confidence: medium
+    last_verified: 2026-09-14
+    status: draft
+  - id: routing-map
+    category: context
+    path: docs/context/routing-map.md
+    summary: |
+      Framework routing map refreshed with the bootstrap authority files and exact repository baselines.
+    source_paths: []
+    confidence: high
+    last_verified: 2026-09-14
+    status: draft
+  - id: constitution
+    category: governance
+    path: .specify/memory/constitution.md
+    summary: |
+      Automated draft principles for service boundaries, database contracts, module tests, and runtime configuration.
+    source_paths: [pom.xml, README.md, resources/schema.cql, resources/schema.sql]
+    confidence: medium
+    last_verified: 2026-09-14
+    status: draft
