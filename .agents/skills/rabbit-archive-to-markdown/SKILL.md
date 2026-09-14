@@ -1,5 +1,5 @@
 ---
-name: rm-archive-to-markdown
+name: rabbit-archive-to-markdown
 description: Quickly convert a local file, URL, or document into a Markdown copy stored under docs/context/sources/ for future reference. Use when the user wants to archive a document, recording, image, or webpage as searchable Markdown without doing full knowledge extraction or distillation.
 license: MIT
 ---
