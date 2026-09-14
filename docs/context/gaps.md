@@ -69,3 +69,17 @@ Keep unresolved or weak-signal context here so later feature work does not quiet
   - **Next best reviewer or source**: Run `/speckit.constitution` once the team has real principles
     to ratify (test policy, per-service deployment rules, etc.); bootstrap intentionally does not
     author it.
+
+- **Area**: Existing admin/observability views (uptime dashboard, metrics, non-production
+  latency-injection toggle)
+  - **Why it matters**: A client interview raised whether a resilience feature should include an
+    uptime dashboard/metrics or a non-production toggle to intentionally add latency for
+    chaos-style testing, but the client themselves was unsure whether such views already exist in
+    the site. Any resilience spec should confirm this against the code first rather than assume
+    either way.
+  - **Evidence checked**: None yet — the client interview transcript only records uncertainty, not
+    a code-level answer.
+  - **Next best reviewer or source**: Inspect `api-gateway-microservice` and any admin UI in
+    `react-ui` for existing health/metrics endpoints or admin screens before scoping the
+    resilience feature described in
+    `specs/intake/2026-09-14-client-requirements-interview.md`.
