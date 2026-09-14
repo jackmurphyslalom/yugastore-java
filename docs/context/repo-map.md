@@ -1,48 +1,37 @@
 # Repo Map
 
-Use this file to orient humans and agents quickly.
-
-Capture the highest-signal entrypoints in this repository, not a full file tree dump.
-
-## How to Use This File
-
-- Start with the files that define product behavior or the main runtime flow.
-- Include the tests that best explain expected behavior.
-- Include the config, manifests, CI, and scripts that shape build, verification, and release behavior.
-- Add one short note for why each path matters.
-- Prefer repo-specific paths over broad directories whenever possible.
+High-signal entrypoints, gathered during the 2026-09-14 guided bootstrap pass.
 
 ## Read Order
 
-When future work needs fast orientation, the usual order is:
-
-1. core runtime entrypoints
-2. highest-signal tests
-3. manifests and workflow files
-4. durable docs and ADRs that are already repo-specific
-
-Do not list untouched sample files here unless the team has explicitly adapted them for this repo.
+1. [`README.md`](../../README.md) — service table, ports, build/run order
+2. [`pom.xml`](../../pom.xml) — Maven multi-module reactor (all 7 services)
+3. [`resources/schema.cql`](../../resources/schema.cql), [`resources/schema.sql`](../../resources/schema.sql) — data model
+4. `docs/product/overview.md`, `docs/architecture/overview.md` — durable context
 
 ## Key Entry Points
 
 | Path | Why it matters |
 |---|---|
-| `src/...` | Replace with the main runtime or feature entrypoints |
-| `tests/...` or `__tests__/...` | Replace with the highest-signal behavior checks |
-| `package.json`, `pyproject.toml`, etc. | Replace with the main build or dependency manifest |
-| `.github/workflows/...` | Replace with the important CI/CD workflow files |
+| `README.md` | Service table (ports), build/run steps, notes `login-microservice` as WIP |
+| `pom.xml` | Root Maven reactor listing all modules |
+| `api-gateway-microservice/src/main/java/.../controller/*Controller.java` | Only entrypoint the UI calls; fans out to downstream services |
+| `api-gateway-microservice/src/main/java/.../rest/clients/*RestClient.java` | Confirms which services the gateway actually integrates (no Login client) |
+| `checkout-microservice/src/main/java/.../cronoscheckoutapi/service/CheckoutServiceImpl.java` | Core checkout/inventory business logic |
+| `products-microservice/src/main/java/.../domain/ProductMetadata.java` | Product/pricing shape (price stored directly on the record) |
+| `resources/schema.cql` | YCQL keyspace `cronos`: products, product_rankings, orders, product_inventory |
+| `resources/schema.sql` | YSQL `shopping_cart` table |
+| `docker-run.sh` | Full-stack container run script |
+| each microservice's `application.yml` | Port + `spring.application.name` per service |
+| each microservice's `manifest.yml` | Legacy Cloud Foundry deployment target |
 
 ## Supporting Paths
 
-Use this section for high-value secondary paths such as:
-
-- generated artifacts that matter
-- shared utilities
-- framework or integration configuration
-- durable docs that future work should read early
+- `resources/dataload.sh`, `resources/cassandra-loader`, `resources/parse_metadata_json.py`, `resources/products.json` — sample data loading (~6K products)
+- `src/test/java/**` per module — mostly Spring Boot context-load smoke tests, low behavioral signal today
+- `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`, `specs/intake/2026-09-14-ai-immersion-open-questions.md` — active engagement context
 
 ## Notes
 
-- Prefer the files future feature work should read first.
-- Do not mirror a full directory tree.
-- Remove this starter text once the repo-specific map is in place.
+- No application CI workflow files exist under `.github/workflows/`; only AI-SDLC framework prompts/skills live under `.github/`.
+- `login-microservice` exists but is not wired into `api-gateway-microservice` — treat as WIP.
