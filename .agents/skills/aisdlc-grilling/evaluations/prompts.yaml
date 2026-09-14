@@ -1,0 +1,13 @@
+cases:
+  - kind: typical
+    prompt: Help me resolve the remaining product decisions before we verify the project context.
+    should_use: true
+    expected: Inspect evidence, then ask one decision at a time with a recommendation.
+  - kind: edge-case
+    prompt: The source and README disagree about an important lifecycle rule; decide which is authoritative.
+    should_use: true
+    expected: Surface the conflict and ask for human confirmation instead of choosing silently.
+  - kind: near-miss
+    prompt: Implement the already approved lifecycle validation and run its tests.
+    should_use: false
+    expected: Use implementation guidance rather than a context decision interview.

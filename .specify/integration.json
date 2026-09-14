@@ -1,0 +1,65 @@
+{
+  "version": "0.13.4",
+  "integration_state_schema": 1,
+  "integration": "codex",
+  "default_integration": "codex",
+  "installed_integrations": [
+    "claude",
+    "cursor-agent",
+    "codex",
+    "kiro-cli",
+    "copilot",
+    "cline",
+    "rovodev",
+    "zed",
+    "grok",
+    "droid",
+    "zcode"
+  ],
+  "integration_settings": {
+    "claude": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "cursor-agent": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "codex": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "kiro-cli": {
+      "script": "sh",
+      "invoke_separator": "."
+    },
+    "copilot": {
+      "script": "sh",
+      "invoke_separator": "."
+    },
+    "cline": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "rovodev": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "zed": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "grok": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "droid": {
+      "script": "sh",
+      "invoke_separator": "-"
+    },
+    "zcode": {
+      "script": "sh",
+      "invoke_separator": "-"
+    }
+  }
+}
