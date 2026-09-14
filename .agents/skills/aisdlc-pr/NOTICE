@@ -1,0 +1,9 @@
+This directory adapts guidance from Matt Pocock's "code-review" skill:
+https://github.com/mattpocock/skills/tree/ed37663cc5fbef691ddfecd080dff42f7e7e350d/skills/engineering/code-review
+(Pinned revision: ed37663cc5fbef691ddfecd080dff42f7e7e350d)
+
+AI-SDLC maintainers rewrote the workflow for deterministic comparison-base resolution, complete
+working-tree coverage, independent Standards and Spec review, provider-neutral feedback collection,
+and explicit external-write confirmation.
+
+The adapted guidance is provided under the MIT License in LICENSE-MattPocock.txt.

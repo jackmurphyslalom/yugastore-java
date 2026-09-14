@@ -1,0 +1,76 @@
+prompts:
+  - name: speckit-agent-context-update
+    description: Invoke speckit-agent-context-update skill
+    content_file: prompts/speckit-agent-context-update.prompt.md
+  - name: speckit-aisdlc-bootstrap
+    description: Invoke speckit-aisdlc-bootstrap skill
+    content_file: prompts/speckit-aisdlc-bootstrap.prompt.md
+  - name: speckit-aisdlc-mockup
+    description: Invoke speckit-aisdlc-mockup skill
+    content_file: prompts/speckit-aisdlc-mockup.prompt.md
+  - name: speckit-aisdlc-pr
+    description: Invoke speckit-aisdlc-pr skill
+    content_file: prompts/speckit-aisdlc-pr.prompt.md
+  - name: speckit-aisdlc-preflight
+    description: Invoke speckit-aisdlc-preflight skill
+    content_file: prompts/speckit-aisdlc-preflight.prompt.md
+  - name: speckit-aisdlc-promote
+    description: Invoke speckit-aisdlc-promote skill
+    content_file: prompts/speckit-aisdlc-promote.prompt.md
+  - name: speckit-aisdlc-triage
+    description: Invoke speckit-aisdlc-triage skill
+    content_file: prompts/speckit-aisdlc-triage.prompt.md
+  - name: speckit-analyze
+    description: Invoke speckit-analyze skill
+    content_file: prompts/speckit-analyze.prompt.md
+  - name: speckit-checklist
+    description: Invoke speckit-checklist skill
+    content_file: prompts/speckit-checklist.prompt.md
+  - name: speckit-clarify
+    description: Invoke speckit-clarify skill
+    content_file: prompts/speckit-clarify.prompt.md
+  - name: speckit-constitution
+    description: Invoke speckit-constitution skill
+    content_file: prompts/speckit-constitution.prompt.md
+  - name: speckit-converge
+    description: Invoke speckit-converge skill
+    content_file: prompts/speckit-converge.prompt.md
+  - name: speckit-implement
+    description: Invoke speckit-implement skill
+    content_file: prompts/speckit-implement.prompt.md
+  - name: speckit-plan
+    description: Invoke speckit-plan skill
+    content_file: prompts/speckit-plan.prompt.md
+  - name: speckit-specify
+    description: Invoke speckit-specify skill
+    content_file: prompts/speckit-specify.prompt.md
+  - name: speckit-tasks
+    description: Invoke speckit-tasks skill
+    content_file: prompts/speckit-tasks.prompt.md
+  - name: speckit-taskstoissues
+    description: Invoke speckit-taskstoissues skill
+    content_file: prompts/speckit-taskstoissues.prompt.md
+  - name: speckit-bugfix-patch
+    description: Invoke speckit-bugfix-patch skill
+    content_file: prompts/speckit-bugfix-patch.prompt.md
+  - name: speckit-bugfix-report
+    description: Invoke speckit-bugfix-report skill
+    content_file: prompts/speckit-bugfix-report.prompt.md
+  - name: speckit-bugfix-verify
+    description: Invoke speckit-bugfix-verify skill
+    content_file: prompts/speckit-bugfix-verify.prompt.md
+  - name: speckit-issue-import
+    description: Invoke speckit-issue-import skill
+    content_file: prompts/speckit-issue-import.prompt.md
+  - name: speckit-issue-link
+    description: Invoke speckit-issue-link skill
+    content_file: prompts/speckit-issue-link.prompt.md
+  - name: speckit-issue-sync
+    description: Invoke speckit-issue-sync skill
+    content_file: prompts/speckit-issue-sync.prompt.md
+  - name: speckit-iterate-apply
+    description: Invoke speckit-iterate-apply skill
+    content_file: prompts/speckit-iterate-apply.prompt.md
+  - name: speckit-iterate-define
+    description: Invoke speckit-iterate-define skill
+    content_file: prompts/speckit-iterate-define.prompt.md
