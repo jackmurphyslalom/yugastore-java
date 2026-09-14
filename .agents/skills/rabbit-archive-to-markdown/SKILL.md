@@ -26,7 +26,7 @@ Convert a source into a durable Markdown copy so its content is greppable and re
    ---
    source: <original path or URL>
    source_type: <docx|pdf|pptx|url|image|other>
-   retrieved: <YYYY-MM-DD>
+   retrieved: <YYYY-MM-DD HH:MM>
    original_filename: <name, if a local file>
    ---
    ```
