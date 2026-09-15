@@ -13,6 +13,34 @@ concepts:
       interlinked entities and the semantics/relationships between them,
       optionally with an ontology supporting reasoning.
     sources: [2026-09-15-knowledge-graph]
+  - id: twelve-factor-app
+    label: Twelve-Factor App
+    description: >-
+      A methodology (Heroku, Adam Wiggins) of twelve declarative principles
+      for building portable, cleanly scaling cloud-native SaaS applications.
+    sources: [2026-09-15-twelve-factor-app]
+  - id: sixteen-factor-app
+    label: Sixteen-Factor App
+    description: >-
+      Google Cloud's extension of the Twelve-Factor App methodology with four
+      additional factors for generative-AI applications: prompts as code,
+      state as a service, observability for non-determinism, and trust and
+      safety by design.
+    sources: [2026-09-15-twelve-to-sixteen-factor-app]
+  - id: client-requirements-2026-09
+    label: Yugastore Client Requirements (2026-09)
+    description: >-
+      Three business-level feature requests from the Yugastore product owner:
+      bottleneck-free experimentation, graceful service degradation, and
+      pricing agility without redeploys.
+    sources: [2026-09-15-client-requirements-interview]
+  - id: ai-sdlc-bootstrap-decision
+    label: AI-SDLC Bootstrap Adoption
+    description: >-
+      The team's decision to bootstrap the Yugastore repo with the
+      opinionated, all-in-one AI-SDLC framework variant rather than a minimal
+      grab-bag alternative or a bespoke spec framework.
+    sources: [2026-09-15-meeting-with-young-chul-kim]
 relations:
   - id: llm-wiki-pattern-related-to-knowledge-graph
     type: related_to
@@ -22,4 +50,20 @@ relations:
       Both are structured, interlinked representations of accumulated
       knowledge; the LLM wiki is an informal, markdown-native analogue of a
       formal knowledge graph, and approaches like GraphRAG blend the two.
+  - id: sixteen-factor-app-extends-twelve-factor-app
+    type: extends
+    from: sixteen-factor-app
+    to: twelve-factor-app
+    description: >-
+      The sixteen-factor app keeps all twelve original factors and adds four
+      more (prompts as code, state as a service, observability for
+      non-determinism, trust and safety by design) for AI applications.
+  - id: ai-sdlc-bootstrap-decision-related-to-client-requirements-2026-09
+    type: related_to
+    from: ai-sdlc-bootstrap-decision
+    to: client-requirements-2026-09
+    description: >-
+      The AI-SDLC bootstrap was sequenced specifically so the client
+      requirements interview (and this meeting) could be fed into the
+      resulting knowledge base.
 categories: []
