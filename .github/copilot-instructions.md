@@ -90,7 +90,7 @@ Initial blocker codes are `INVALID_COMPARISON_BASE`, `UNSAFE_CHECKOUT`,
 missing framework script; report `MISSING_SCRIPT` with its installed path.
 
 ## Writing style
-Writing Style Guide Follow the instructions in #.github/writing-style-guide.md for consistent writing style
+Writing style: Follow the [writing style guide](writing-style-guide.md) for consistent documentation and content.
 
 ---
 *This file is managed by the AI-SDLC Framework. Run `aisdlc init --here --force` to update.*
