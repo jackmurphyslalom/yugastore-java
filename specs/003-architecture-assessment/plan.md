@@ -9,11 +9,12 @@
 ## Summary
 
 Add two new agent skills (prompt/documentation-generation tooling, not application code): a
-per-tier assessment skill that writes `meta/architecture-assessment/{tier-name}.md` (SCQA
-overview + full 16-factor table, grounded in
-`docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`) for one of the 7 recognized
-application tiers, and a separate rollup skill that hard-gates on all 7 tier files existing and
-valid before writing `meta/architecture-assessment/README.md` with C1/C2/C3 Mermaid diagrams.
+per-tier assessment skill that writes `meta/architecture-assessment/{tier-name}.md`
+(Context/Findings/Recommendation sections + a 16-factor table with Score and Explanation
+columns, grounded in `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`) for one
+of the 7 recognized application tiers, and a separate rollup skill that hard-gates on all 7 tier
+files existing and valid before writing `meta/architecture-assessment/README.md` with C1/C2/C3
+Mermaid diagrams.
 Both skills follow this repo's `rabbit-` naming convention for custom (non-framework) additions
 and are pure Markdown-writing workflows executed by an agent — there is no compiled artifact,
 runtime service, or automated test suite to add.

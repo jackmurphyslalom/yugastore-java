@@ -10,9 +10,10 @@ This is a skill-invocation contract (inputs/outputs of an agent skill), not a ne
 ## Preconditions / Validation (hard gate — FR-009, FR-010)
 
 - MUST check that all 7 expected tier files exist under `meta/architecture-assessment/`.
-- MUST check that each existing file is structurally valid: contains both a detectable SCQA
-  section and a detectable 16-factor table (see `../data-model.md` validity rule). A
-  structurally invalid file is treated identically to a missing file for gating purposes.
+- MUST check that each existing file is structurally valid: contains the `## Context`,
+  `## Findings`, `## Recommendation`, and `## 16-Factor Assessment` headings (see
+  `../data-model.md` validity rule). A structurally invalid file is treated identically to a
+  missing file for gating purposes.
 - If any of the 7 tiers is missing or invalid:
   - MUST NOT create or modify `meta/architecture-assessment/README.md`.
   - MUST report the exact list of missing/invalid tier names (not just a generic failure).

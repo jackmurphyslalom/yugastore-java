@@ -31,9 +31,11 @@ Exactly these 7 files under `meta/architecture-assessment/` are checked, in this
 For each of the 7 fixed filenames above:
 
 - Check the file exists under `meta/architecture-assessment/`.
-- Check it is structurally valid: it contains both the exact heading `## SCQA Overview` and the
-  exact heading `## 16-Factor Assessment` (the same two headings the tier skill writes). A file
-  missing either heading, or an empty/unreadable file, is treated identically to a missing file.
+- Check it is structurally valid: it contains the exact headings `## Context`, `## Findings`,
+  `## Recommendation`, and `## 16-Factor Assessment` (the same headings the tier skill writes),
+  with every one of the 16 factor rows carrying a Score and an Explanation. A file missing any
+  required heading, missing a Score/Explanation on any factor row, or an empty/unreadable file,
+  is treated identically to a missing file.
 
 If **any** of the 7 files is missing or structurally invalid:
 

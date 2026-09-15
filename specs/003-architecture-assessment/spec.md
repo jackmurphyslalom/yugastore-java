@@ -25,9 +25,10 @@ aisdlc-grilling session recorded in
 
 An engineer onboarding to this codebase invokes the per-tier assessment skill against one
 application tier (for example, `products-microservice`). The skill produces
-`meta/architecture-assessment/products-microservice.md`, containing an SCQA overview for that
-tier and a scoring table against all 16 factors of Google Cloud's AI 16-factor model, with
-factors XIII-XVI marked "N/A" where the tier has no AI component today.
+`meta/architecture-assessment/products-microservice.md`, containing Context, Findings, and
+Recommendation sections for that tier and a scoring table against all 16 factors of Google
+Cloud's AI 16-factor model, with factors XIII-XVI marked "N/A" where the tier has no AI
+component today.
 
 **Why this priority**: This is the atomic unit of value — a single completed tier assessment is
 independently useful for onboarding even before the other 6 tiers or the rollup exist.
@@ -40,8 +41,8 @@ including any marked "N/A").
 
 1. **Given** no assessment file yet exists for `products-microservice`, **When** the per-tier
    assessment skill is invoked for that tier, **Then**
-   `meta/architecture-assessment/products-microservice.md` is created with an SCQA overview and
-   a complete 16-factor table.
+   `meta/architecture-assessment/products-microservice.md` is created with `## Context`,
+   `## Findings`, and `## Recommendation` sections and a complete 16-factor table.
 2. **Given** a tier has no AI/LLM component today, **When** it is assessed, **Then** factors
    XIII (Prompts as code), XIV (State as a service), XV (Observability for non-determinism), and
    XVI (Trust & safety by design) are each explicitly marked "N/A" in that tier's table, rather
@@ -113,8 +114,9 @@ missing tier.
   file? The skill overwrites that tier's file with a freshly generated assessment (assessments
   are not designed to be hand-edited and preserved across re-runs).
 - What happens if the rollup skill is invoked while a tier file exists but is empty or otherwise
-  malformed (missing the SCQA or 16-factor sections)? The rollup treats a structurally invalid
-  tier file the same as a missing tier for gating purposes, and reports it as such.
+  malformed (missing the Context/Findings/Recommendation sections or the 16-factor table)? The
+  rollup treats a structurally invalid tier file the same as a missing tier for gating purposes,
+  and reports it as such.
 - How does the per-tier assessment skill handle a tier name that is not one of the 7 recognized
   application tiers (for example, a typo, or a path under `.agents/`, `.specify/`, or
   `.github/`)? The skill refuses to produce an assessment for any tier outside the 7 recognized
@@ -137,13 +139,15 @@ missing tier.
   MUST report that the target is out of scope.
 - **FR-003**: The per-tier assessment skill MUST write its output to
   `meta/architecture-assessment/{tier-name}.md`, using the tier's exact directory name.
-- **FR-004**: Each per-tier assessment file MUST contain an SCQA overview (Situation,
-  Complication, Question, Answer/recommendation) specific to that tier.
+- **FR-004**: Each per-tier assessment file MUST contain a `## Context` section, a `## Findings`
+  section, and a `## Recommendation` section, each specific to that tier.
 - **FR-005**: Each per-tier assessment file MUST contain a scoring/assessment table covering all
   16 factors of Google Cloud's AI 16-factor model (the classic 12-factor principles plus XIII
   Prompts as code, XIV State as a service, XV Observability for non-determinism, XVI Trust &
   safety by design), grounded in
-  `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`.
+  `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`. Each factor row MUST
+  include a numeric Score (1-5) or `N/A`, and an Explanation grounding that score/N-A in
+  observed evidence.
 - **FR-006**: For any tier with no AI/LLM component today, the per-tier assessment skill MUST
   mark factors XIII-XVI as "N/A" in that tier's table rather than omitting them or scoring them
   as deficient.
@@ -153,8 +157,8 @@ missing tier.
 - **FR-008**: A separate rollup skill MUST read all 7 tier assessment files from
   `meta/architecture-assessment/` and MUST NOT itself perform per-tier 16-factor assessment.
 - **FR-009**: The rollup skill MUST verify that all 7 expected tier assessment files exist and
-  are structurally valid (contain both an SCQA overview and a 16-factor table) before producing
-  any output.
+  are structurally valid (contain the `## Context`, `## Findings`, `## Recommendation`, and
+  `## 16-Factor Assessment` headings) before producing any output.
 - **FR-010**: If one or more of the 7 tier assessment files is missing or structurally invalid,
   the rollup skill MUST refuse to run, MUST NOT create or modify
   `meta/architecture-assessment/README.md`, and MUST report exactly which tiers are missing or
@@ -181,8 +185,8 @@ missing tier.
 ### Key Entities *(include if feature involves data)*
 
 - **Tier assessment file**: A single Markdown file at `meta/architecture-assessment/{tier
-  name}.md`, one per recognized application tier, containing an SCQA overview and a 16-factor
-  scoring table for that tier.
+  name}.md`, one per recognized application tier, containing a Context section, a Findings
+  section, and a Recommendation section, and a 16-factor scoring table for that tier.
 - **AI 16-factor model**: The evaluation framework applied to every tier — the classic 12-factor
   app principles plus 4 AI-era factors (XIII Prompts as code, XIV State as a service, XV
   Observability for non-determinism, XVI Trust & safety by design), sourced from
@@ -232,3 +236,19 @@ missing tier.
   subdirectories (`meta/architecture-assessment/` vs. `meta/rabbit-wiki/`).
 - No automated CI enforcement of "all 7 tiers assessed" is required by this feature; the
   rollup's hard gate at invocation time is the sole enforcement mechanism.
+
+## Iterations
+
+### Iteration 2026-09-15: Context/Findings/Recommendation + scored 16-factor table
+
+**Change**: Replace the per-tier `## SCQA Overview` section with `## Context`, `## Findings`,
+and `## Recommendation` sections; add Score (1-5, or N/A) and Explanation columns to the
+16-Factor Assessment table; update the rollup's structural-validity gate to check for the new
+headings instead of SCQA.
+**Scope**: Feature-wide
+**Artifacts updated**: spec.md, plan.md, research.md, data-model.md,
+contracts/rabbit-architecture-assessment-tier.md, contracts/rabbit-architecture-assessment-rollup.md,
+quickstart.md, tasks.md
+**Tasks added**: T021-T033
+**Tasks removed**: —
+**Tasks marked complete**: —

@@ -1,6 +1,6 @@
 ---
 name: rabbit-architecture-assessment-tier
-description: Assess a single yugastore-java application tier against an SCQA overview and the full 16-factor (12-factor + 4 AI-era factors) model, writing meta/architecture-assessment/{tier-name}.md. Use when the user wants a per-tier architecture assessment for one of the 7 recognized tiers (eureka-server-local, products-microservice, checkout-microservice, cart-microservice, api-gateway-microservice, login-microservice, react-ui).
+description: Assess a single yugastore-java application tier against a Context/Findings/Recommendation narrative and the full 16-factor (12-factor + 4 AI-era factors) model, each factor scored 1-5 by a parallel subagent, writing meta/architecture-assessment/{tier-name}.md. Use when the user wants a per-tier architecture assessment for one of the 7 recognized tiers (eureka-server-local, products-microservice, checkout-microservice, cart-microservice, api-gateway-microservice, login-microservice, react-ui).
 license: MIT
 ---
 
@@ -41,24 +41,24 @@ Exactly these 7 values are valid targets (from `specs/003-architecture-assessmen
 - Do not modify any file under the 7 microservice/`react-ui` module directories — this skill only
   reads that source; all writes go to `meta/architecture-assessment/`.
 
-## Step 3: Write the SCQA overview
+## Step 3: Write the Context / Findings / Recommendation sections
 
-Under the exact heading `## SCQA Overview`, write four short paragraphs or bullet groups specific
-to this tier:
+Under three exact headings, `## Context`, `## Findings`, and `## Recommendation`, write content
+specific to this tier:
 
-- **Situation**: what this tier is and its role in the system today.
-- **Complication**: friction, risk, or open question specific to this tier (grounded in observed
-  evidence, e.g. `docs/architecture/overview.md`'s Assumptions and Open Questions, or gaps found
-  in source).
-- **Question**: the key architecture question this tier raises.
-- **Answer/recommendation**: a grounded, evidence-based recommendation (not speculation beyond
-  what the source supports).
+- **Context**: what this tier is, its role in the system today, and which evidence sources were
+  consulted (`docs/architecture/overview.md`, the tier's own directory).
+- **Findings**: a bullet list of notable, grounded observations — friction, risk, or open
+  questions specific to this tier. May surface risks tied to low-scoring 16-factor items from
+  Step 4.
+- **Recommendation**: one grounded, evidence-based paragraph (not speculation beyond what the
+  source supports).
 
 ## Step 4: Write the 16-factor table
 
 Under the exact heading `## 16-Factor Assessment`, write one Markdown table with exactly 16 rows,
 one per factor, grounded in `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`.
-Columns: `Factor | Name | Assessment`. Use this exact ordered factor list (name column):
+Columns: `Factor | Name | Score | Explanation`. Use this exact ordered factor list (name column):
 
 | # | Name |
 |---|---|
@@ -79,22 +79,28 @@ Columns: `Factor | Name | Assessment`. Use this exact ordered factor list (name 
 | XV | Observability for non-determinism |
 | XVI | Trust & safety by design |
 
-- Score factors I-XII with a concrete assessment grounded in this tier's actual configuration
-  and code (e.g. Config -> `application.yml` env-driven values; Port binding -> the tier's port
-  from `docs/architecture/overview.md`'s module table; Logs -> whether structured/stdout logging
-  is observed).
-- Mark factors XIII-XVI as `N/A` unless this tier has an observed AI/LLM component (none of the 7
-  tiers do today, per the spec's Assumptions) — still include all 4 rows, marked `N/A` with a
-  one-line reason (no AI/LLM component observed).
+- **Execution model**: dispatch one parallel subagent per factor (16 total, one call batch) to
+  independently research and score that single factor against this tier's evidence (gathered in
+  Step 2). Each subagent returns exactly one `Score` (1-5, where 1 = not addressed/poor and 5 =
+  fully addressed/excellent) and one `Explanation` grounded in observed evidence for its factor.
+  Subagents never write the output file — this skill collects all 16 results and assembles them,
+  in factor order (I-XVI), into the single table before writing the file.
+- Factors I-XII: each subagent scores 1-5 with a concrete explanation grounded in this tier's
+  actual configuration and code (e.g. Config -> `application.yml` env-driven values; Port binding
+  -> the tier's port from `docs/architecture/overview.md`'s module table; Logs -> whether
+  structured/stdout logging is observed).
+- Factors XIII-XVI: each subagent still runs and returns `Score: N/A` with a one-line Explanation
+  of why (no AI/LLM component observed) unless this tier has an observed AI/LLM component (none
+  of the 7 tiers do today, per the spec's Assumptions).
+
 
 ## Step 5: `login-microservice`-only WIP/unwired finding
 
-Only when the target is exactly `login-microservice`, add an explicit finding (its own short
-subsection or a bolded line within the SCQA overview) citing `docs/architecture/overview.md`'s
-module table row verbatim in substance: `login-microservice` is **WIP**, with no `api-gateway`
-REST client wired yet (no corresponding client exists under
-`api-gateway-microservice/src/main/java/.../rest/clients/`). Do not add this finding for any
-other tier.
+Only when the target is exactly `login-microservice`, add an explicit finding (its own bullet
+within `## Findings`) citing `docs/architecture/overview.md`'s module table row verbatim in
+substance: `login-microservice` is **WIP**, with no `api-gateway` REST client wired yet (no
+corresponding client exists under `api-gateway-microservice/src/main/java/.../rest/clients/`).
+Do not add this finding for any other tier.
 
 ## Step 6: Write the file
 
@@ -106,6 +112,7 @@ other tier.
 
 ## Completion Report
 
-Report: the validated target tier, the output file path, and a one-line confirmation that both
-the `## SCQA Overview` and `## 16-Factor Assessment` headings are present. On rejection, report
+Report: the validated target tier, the output file path, and a one-line confirmation that
+`## Context`, `## Findings`, `## Recommendation`, and `## 16-Factor Assessment` headings are all
+present, with a Score and Explanation in every one of the 16 factor rows. On rejection, report
 only the rejected target and the 7 valid values — no file path.

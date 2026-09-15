@@ -1,5 +1,5 @@
 ---
-description: Assess one application tier against the SCQA + 16-factor model and write meta/architecture-assessment/{tier-name}.md.
+description: Assess one application tier against the Context/Findings/Recommendation + scored 16-factor model and write meta/architecture-assessment/{tier-name}.md.
 ---
 
 ## Target Tier

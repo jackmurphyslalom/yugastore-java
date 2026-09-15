@@ -27,13 +27,15 @@ value from the Application Tier enumeration.
 
 | Field | Type | Required | Notes |
 |---|---|---|---|
-| SCQA overview | Markdown section (Situation, Complication, Question, Answer/recommendation) | Yes | Specific to the tier (FR-004) |
-| 16-factor table | Markdown table, 16 rows | Yes | Factors I-XII scored; XIII-XVI scored or "N/A" (FR-005, FR-006) |
+| Context section | Markdown section (`## Context`) | Yes | Specific to the tier (FR-004) |
+| Findings section | Markdown section (`## Findings`) | Yes | Specific to the tier (FR-004) |
+| Recommendation section | Markdown section (`## Recommendation`) | Yes | Specific to the tier (FR-004) |
+| 16-factor table | Markdown table, 16 rows, columns `Factor \| Name \| Score \| Explanation` | Yes | Factors I-XII scored; XIII-XVI scored or "N/A" (FR-005, FR-006) |
 | WIP/unwired finding | Explicit statement within the file | Only for `login-microservice` | Sourced from `docs/architecture/overview.md` (FR-007) |
 
 **Validity rule** (used by the rollup skill's gate, FR-009/FR-010): a tier file is *valid* only if
-it contains both a detectable SCQA section and a detectable 16-factor table; otherwise it is
-treated as missing.
+it contains all of `## Context`, `## Findings`, `## Recommendation`, and `## 16-Factor
+Assessment`; otherwise it is treated as missing.
 
 **Lifecycle**: Overwritten in full on every re-run for that tier (FR-016) — not incrementally
 patched or hand-preserved.

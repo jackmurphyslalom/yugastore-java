@@ -56,8 +56,9 @@ This file records the resulting decisions and the alternatives considered during
 ## Decision: Rollup gating mechanism
 
 - **Decision**: The rollup skill enumerates the 7 fixed tier filenames, checks each file exists
-  and contains both an SCQA heading and a 16-factor table heading/marker; any missing or
-  structurally invalid file blocks the run before any Mermaid generation or write begins.
+  and contains the `## Context`, `## Findings`, `## Recommendation`, and `## 16-Factor
+  Assessment` headings; any missing or structurally invalid file blocks the run before any
+  Mermaid generation or write begins.
 - **Rationale**: FR-009/FR-010 and User Story 3 require a hard, all-or-nothing gate with an exact
   list of missing/invalid tiers reported — never a partial `README.md`.
 - **Alternatives considered**: Best-effort rollup that fills in placeholders for missing tiers —

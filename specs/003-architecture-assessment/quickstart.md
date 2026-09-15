@@ -17,8 +17,9 @@ implementation to confirm the feature works end to end.
    `products-microservice`.
 2. Confirm `meta/architecture-assessment/products-microservice.md` is created.
 3. Open the file and confirm it has:
-   - An SCQA overview section.
-   - A 16-factor table with all 16 rows, factors XIII-XVI marked `N/A`.
+   - A Context section, a Findings section, and a Recommendation section.
+   - A 16-factor table with all 16 rows, each row showing a Score and an Explanation, factors
+     XIII-XVI marked `N/A`.
 4. Repeat for a second tier, `login-microservice`, and confirm its file additionally records the
    WIP/unwired finding.
 

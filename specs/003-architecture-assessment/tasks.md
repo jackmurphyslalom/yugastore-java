@@ -13,6 +13,8 @@ description: "Task list for Architecture Assessment feature"
 
 **Organization**: Tasks are grouped by user story (US1, US2, US3) to enable independent implementation and verification of each story, per `spec.md`'s priorities (US1: P1, US3: P1, US2: P2).
 
+**Execution model (added by iteration)**: The tier skill's 16-factor table is produced by dispatching 16 parallel subagents (one per factor) that each research and score one factor; the invoking skill assembles their results into the single ordered table before writing the tier file. See `contracts/rabbit-architecture-assessment-tier.md` "Execution model".
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
@@ -118,6 +120,28 @@ Single project — prompt/skill tooling only (per `plan.md`'s Project Structure)
 
 ---
 
+## Phase 7: Iteration: Context/Findings/Recommendation + Scored 16-Factor Table
+
+**Purpose**: Apply the 2026-09-15 iteration — replace the per-tier `## SCQA Overview` section with `## Context`, `## Findings`, and `## Recommendation` sections; add Score and Explanation columns to the 16-factor table; update the rollup's structural-validity gate to check for the new headings; regenerate all 7 tier files and the rollup README under the new structure.
+
+- [X] T021 [P] Update `.agents/skills/rabbit-architecture-assessment-tier/SKILL.md` Step 3 (replace SCQA overview guidance with `## Context`, `## Findings`, `## Recommendation` sections) and Step 4 (16-factor table gains Score (1-5, or `N/A`) and Explanation columns per factor, produced by dispatching 16 parallel per-factor subagents per the contract's new "Execution model" section, then assembling their results into the table)
+- [X] T022 [P] Update `.agents/skills/rabbit-architecture-assessment-rollup/SKILL.md` Step 1 gate to check for `## Context`, `## Findings`, `## Recommendation`, and `## 16-Factor Assessment` headings instead of an SCQA heading
+- [X] T023 [P] Update `.github/prompts/*.prompt.md` files if they reference SCQA wording, to keep prompt copy consistent with the new section names
+- [X] T024 [P] Regenerate `meta/architecture-assessment/eureka-server-local.md` using the updated tier skill (T021)
+- [X] T025 [P] Regenerate `meta/architecture-assessment/products-microservice.md` using the updated tier skill (T021)
+- [X] T026 [P] Regenerate `meta/architecture-assessment/checkout-microservice.md` using the updated tier skill (T021)
+- [X] T027 [P] Regenerate `meta/architecture-assessment/cart-microservice.md` using the updated tier skill (T021)
+- [X] T028 [P] Regenerate `meta/architecture-assessment/api-gateway-microservice.md` using the updated tier skill (T021)
+- [X] T029 [P] Regenerate `meta/architecture-assessment/login-microservice.md` using the updated tier skill (T021), preserving its WIP/unwired finding (FR-007)
+- [X] T030 [P] Regenerate `meta/architecture-assessment/react-ui.md` using the updated tier skill (T021)
+- [X] T031 Regenerate `meta/architecture-assessment/README.md` using the updated rollup skill (T022), once all 7 regenerated tier files (T024-T030) are structurally valid under the new gate
+- [X] T032 Update `quickstart.md` Scenario 1/3/4 verification steps to check for the new headings and Score/Explanation columns (already reflected in this iteration's edit to `quickstart.md`; task tracks re-verifying it matches the regenerated output)
+- [X] T033 Re-run the full `quickstart.md` (all 5 scenarios) as a final sign-off pass against the new Context/Findings/Recommendation + scored 16-factor structure
+
+**Checkpoint**: Both skills and all 7 tier files + the rollup README reflect the new section/column structure; the rollup gate accepts only files with the new headings.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -128,6 +152,7 @@ Single project — prompt/skill tooling only (per `plan.md`'s Project Structure)
 - **User Story 3 (Phase 4)**: Depends on Foundational (T003); T012/T013 depend on the tier skill authored in T004 (US1) to generate the remaining tier files — this is a real cross-story file dependency, not just priority ordering
 - **User Story 2 (Phase 5)**: Depends on User Story 3 (T009) because it extends the same `rabbit-architecture-assessment-rollup/SKILL.md` file, and on T012/T013 (all 7 tier files present and valid)
 - **Polish (Phase 6)**: Depends on Phases 3-5 all being complete
+- **Iteration Phase 7**: Depends on Phase 6 completion (post-completion iteration); T021/T022 (SKILL.md updates) block T024-T030 (per-tier regeneration), which block T031 (rollup regeneration); T032/T033 depend on T024-T031
 
 ### Within Each User Story
 
@@ -178,6 +203,7 @@ Task: "Run skill with out-of-scope target, verify rejection"
 3. User Story 3 → rollup's hard gate proven safe before it ever produces output
 4. User Story 2 → rollup's success path (C4 model) completes the feature
 5. Polish → idempotency and full quickstart sign-off
+6. Iteration (Phase 7) → update both SKILL.md files for Context/Findings/Recommendation + scored 16-factor table, regenerate all 7 tier files and the rollup README, re-verify quickstart
 
 ### Notes
 
