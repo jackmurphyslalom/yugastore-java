@@ -22,3 +22,6 @@ Run `tools/gh-agent-board/scripts/update-ticket.sh --issue <ticket-number> --fie
 script with `GH_TOKEN` set from this repo's `.env` file instead of the default session, e.g.:
 `GH_TOKEN="$(grep '^GH_CLASSIC_KEY=' .env | cut -d= -f2-)" tools/gh-agent-board/scripts/update-ticket.sh ...`.
 Never print, log, or echo the token value itself.
+
+**Config note**: `config/board.json` is the shipped placeholder template. To operate against the
+real `yugastore-java` Project, also set `BOARD_CONFIG=tools/gh-agent-board/config/board.smoke-test.json`.

@@ -8,22 +8,31 @@ using the `gh` CLI only (no raw REST/GraphQL, no Actions/webhooks — FR-013). S
 
 - `gh` CLI installed and authenticated as the shared bot/service account (repo + project scopes).
 - `jq` installed.
-- `config/board.json` populated with this repo's real `project_id`, field IDs, and Status/Priority
-  option IDs (see "Populating config/board.json" below).
+- A real, populated board config (see "Populating a real board config" below); `config/board.json`
+  ships as a placeholder template and must not be overwritten with real values (the test suite
+  reads it by default).
 - `bats-core` installed to run the test suite (`brew install bats-core` or equivalent).
 
-## Populating `config/board.json`
+## Populating a real board config
 
-Look up the project and field/option IDs once, then paste them into `config/board.json`:
+`config/board.json` is the shipped placeholder template consumed by default and by the bats test
+suite — never overwrite it with real IDs, or the tests that assert against its canonical
+`Todo`/`In Progress`/`In Review`/`Done`/`P0`-`P3` vocabulary will fail.
+
+To point the scripts at a real Project instead, create your own config file (or use the existing
+`config/board.smoke-test.json`, which already holds this repo's real `yugastore-java` Project
+data) and pass it via the `BOARD_CONFIG` env var:
 
 ```sh
 gh project list --owner <owner> --format json                # find project_number / project_id
 gh project field-list <project_number> --owner <owner> --format json   # find field_id + option ids
+# then, per invocation:
+BOARD_CONFIG=tools/gh-agent-board/config/board.smoke-test.json ./scripts/<script>.sh ...
 ```
 
-Replace every `REPLACE_WITH_*` placeholder in `config/board.json` with the real values. The
-`options` maps must use the exact display names (`Todo`, `In Progress`, `In Review`, `Done` for
-Status; `P0`-`P3` for Priority) as keys, per FR-016.
+Note the real Project's Status/Priority option names may not match the template's canonical
+vocabulary (e.g. this repo's real Project has `Backlog`/`Ready`/`In progress`/`In review`/`Done`
+and only `P0`/`P1`/`P2`, with no `P3` or `Won't Fix` — see `docs/context/gaps.md`).
 
 **`owner` value quirk**: for a personal (non-org) project, `gh project` subcommands reject the
 literal username with `unknown owner type` — set `"owner": "@me"` instead. For an org-owned
