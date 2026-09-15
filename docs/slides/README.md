@@ -20,13 +20,14 @@ this file is a deck.
    ```markdown
    ---
    marp: true
-   theme: default
+   theme: slalom
    paginate: true
    ---
    ```
 
    - `marp: true` — required; tells the Marp CLI to treat this file as a deck.
-   - `theme` — a built-in theme name (`default`, `gaia`, `uncover`) or a custom one.
+   - `theme` — `slalom` (this repo's branded theme, see below), a built-in theme name
+     (`default`, `gaia`, `uncover`), or another custom one.
    - `paginate: true` — shows slide numbers; optional but recommended.
 
 3. Write your first slide as normal Markdown (heading, bullets, etc.) right after the front
@@ -50,16 +51,35 @@ this file is a deck.
    hand. See [Content is hand-authored, not generated](#content-is-hand-authored-not-generated)
    below.
 
+## The `slalom` theme
+
+[docs/slides/themes/slalom.css](themes/slalom.css) is a custom Marp theme built on Marp's
+`default` theme, using brand colors and the wordmark extracted from the Slalom Slide Master
+Deck (May 2026) PowerPoint theme:
+
+- Brand colors as CSS custom properties (`--slalom-blue`, `--slalom-blue-dark`, etc.), applied
+  to headings and links.
+- The Slalom logo rendered in the bottom-right corner of every slide, embedded as a base64
+  data URI so exported decks remain self-contained (a plain relative file path breaks once Marp
+  inlines the theme into a single portable HTML/PDF file placed elsewhere).
+- A `lead` slide class (`<!-- _class: lead -->`) with a solid brand-blue background and white
+  text, for title/section-break slides.
+
+The source logo asset lives at [docs/slides/assets/slalom-logo.svg](assets/slalom-logo.svg).
+Use `theme: slalom` in a deck's front matter and pass `--theme-set docs/slides/themes/slalom.css`
+to every `marp-cli` invocation (rendering and exporting) — see below.
+
 ## Rendering a deck
 
 No repo-level Node.js setup or `package.json` is required. Render any deck on demand with:
 
 ```bash
-npx @marp-team/marp-cli docs/slides/<your-deck>.md -o /tmp/<your-deck>.html
+npx @marp-team/marp-cli docs/slides/<your-deck>.md --theme-set docs/slides/themes/slalom.css -o /tmp/<your-deck>.html
 ```
 
 The first run downloads the Marp CLI via `npx`; later runs reuse `npx`'s local cache. Open the
-generated `.html` file in a browser to view the deck.
+generated `.html` file in a browser to view the deck. Omit `--theme-set` if a deck doesn't use
+the `slalom` theme.
 
 ## Content is hand-authored, not generated
 
@@ -76,8 +96,8 @@ or HTML file. Both are manual, on-demand commands — there is no Maven plugin, 
 CI wiring for exports:
 
 ```bash
-npx @marp-team/marp-cli docs/slides/<deck>.md --pdf
-npx @marp-team/marp-cli docs/slides/<deck>.md --html
+npx @marp-team/marp-cli docs/slides/<deck>.md --theme-set docs/slides/themes/slalom.css --pdf
+npx @marp-team/marp-cli docs/slides/<deck>.md --theme-set docs/slides/themes/slalom.css --html
 ```
 
 Each command produces a file (`<deck>.pdf` or `<deck>.html`) alongside the source Markdown.

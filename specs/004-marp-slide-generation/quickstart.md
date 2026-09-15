@@ -12,7 +12,7 @@ required — everything runs through `npx` on demand.
 ## Scenario 1: Render the sample deck (User Story 2 / SC-002)
 
 ```bash
-npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md -o /tmp/ai-sdlc-bootstrap-overview.html
+npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md --theme-set docs/slides/themes/slalom.css -o /tmp/ai-sdlc-bootstrap-overview.html
 ```
 
 **Expected outcome**: Command completes without error; the generated HTML, when opened, shows one
@@ -30,14 +30,16 @@ understand.
    npx @marp-team/marp-cli docs/slides/<your-deck>.md -o /tmp/<your-deck>.html
    ```
 
+   Add `--theme-set docs/slides/themes/slalom.css` if the deck's front matter sets `theme: slalom`.
+
 **Expected outcome**: A contributor with no prior Marp experience can go from a blank file to a
 viewable deck in under 5 minutes using only `docs/slides/README.md` and this command.
 
 ## Scenario 3: Export to PDF and HTML (User Story 3 / SC-003)
 
 ```bash
-npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md --pdf
-npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md --html
+npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md --theme-set docs/slides/themes/slalom.css --pdf
+npx @marp-team/marp-cli docs/slides/ai-sdlc-bootstrap-overview.md --theme-set docs/slides/themes/slalom.css --html
 ```
 
 **Expected outcome**: A `.pdf` and a `.html` file are produced alongside the source Markdown

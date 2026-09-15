@@ -1,8 +1,10 @@
 ---
 marp: true
-theme: default
+theme: slalom
 paginate: true
 ---
+
+<!-- _class: lead -->
 
 # AI-SDLC Bootstrap: yugastore-java Repo History
 
