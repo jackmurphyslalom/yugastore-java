@@ -89,5 +89,8 @@ Initial blocker codes are `INVALID_COMPARISON_BASE`, `UNSAFE_CHECKOUT`,
 `TOOL_FAILURE`. Never invent a command or install a package to replace a
 missing framework script; report `MISSING_SCRIPT` with its installed path.
 
+## Writing style
+Writing style: Follow the [writing style guide](writing-style-guide.md) for consistent documentation and content.
+
 ---
 *This file is managed by the AI-SDLC Framework. Run `aisdlc init --here --force` to update.*
