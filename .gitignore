@@ -28,7 +28,7 @@ package-lock.json
 .direnv
 .idea
 .env
-.vscode/
+.vscode/settings.json
 *.dylib
 
 # Local working files
