@@ -39,14 +39,22 @@ deciding yet what the content means — that is `/rabbit-analyze`'s job.
    append a numeric suffix (`-2`, `-3`, ...) until the slug is unique. Never overwrite an
    existing `{slug}/` folder.
 6. Create `meta/rabbit-wiki/sources/{slug}/` and write all three files:
-   - `original.{ext}` — an untouched copy of the source file, extension preserved.
+   - `original.{ext}` — the source file content, extension preserved.
    - `transformed.md`
    - `raw.md`
-   Never delete, move-and-discard, or mutate the original input file in `pending_imports/` (or
-   at its original location) — only a copy is written under the new folder.
+   `pending_imports/` is a transient intake staging area, not a second permanent home for the
+   asset — `meta/rabbit-wiki/sources/{slug}/original.{ext}` is the one permanent, immutable copy
+   once ingestion completes (never overwritten by later steps):
+   - If the input reference was a file inside `pending_imports/`, **move** it: write
+     `original.{ext}` from its content, then delete the file from `pending_imports/`. Do not
+     leave a duplicate copy behind in `pending_imports/`.
+   - If the input reference was an absolute file path outside `pending_imports/` or a URL, the
+     file is not staged intake we own — write `original.{ext}` as a copy and leave the source
+     location untouched (never delete or mutate a file outside `pending_imports/`).
 7. Report the assigned slug and the new folder path back to the user.
 
 ## Completion Report
 
-Return: the assigned slug, the `meta/rabbit-wiki/sources/{slug}/` path, and confirmation that the
-original input file was left untouched.
+Return: the assigned slug, the `meta/rabbit-wiki/sources/{slug}/` path, and confirmation of
+whether the `pending_imports/` staging file was removed (moved in) or the input was left in
+place (external path/URL).

@@ -41,6 +41,13 @@ concepts:
       opinionated, all-in-one AI-SDLC framework variant rather than a minimal
       grab-bag alternative or a bespoke spec framework.
     sources: [2026-09-15-meeting-with-young-chul-kim]
+  - id: yugastore-delivery-team
+    label: Yugastore Delivery Team Roster
+    description: >-
+      The named participants (Jack Murphy, Michael Apfelbeck, Young Chul Kim)
+      behind the AI-SDLC bootstrap and related MCP/GitHub tooling setup for
+      this repo.
+    sources: [2026-09-15-team-rabbit-mode]
 relations:
   - id: llm-wiki-pattern-related-to-knowledge-graph
     type: related_to
@@ -59,6 +66,13 @@ relations:
       more (prompts as code, state as a service, observability for
       non-determinism, trust and safety by design) for AI applications.
   - id: ai-sdlc-bootstrap-decision-related-to-client-requirements-2026-09
+  - id: yugastore-delivery-team-related-to-ai-sdlc-bootstrap-decision
+    type: related_to
+    from: yugastore-delivery-team
+    to: ai-sdlc-bootstrap-decision
+    description: >-
+      The same three people named in the roster ran the AI-SDLC bootstrap
+      setup call.
     type: related_to
     from: ai-sdlc-bootstrap-decision
     to: client-requirements-2026-09
