@@ -46,6 +46,16 @@ The architecture diagram of Yugastore is shown below.
 
 # Build and run
 
+## Prerequisites
+
+On macOS, install the local dev CLI tools/dependencies in one step with [Homebrew Bundle](https://docs.brew.sh/Brew-Bundle-and-Brewfile):
+
+```
+$ brew bundle
+```
+
+This installs everything listed in the repo's [`Brewfile`](Brewfile) (`gh`, `jq`, `bats-core`, Java 17, Maven, Node, Python 3, `wget`, Docker).
+
 To build, simply run the following from the base directory:
 
 ```
