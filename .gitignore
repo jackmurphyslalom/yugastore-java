@@ -33,3 +33,10 @@ package-lock.json
 
 # Local working files
 /tmp/
+
+# Python bytecode cache
+__pycache__/
+*.pyc
+
+# Personal smoke-test board config (contains account-specific project/field IDs)
+tools/gh-agent-board/config/board.smoke-test.json

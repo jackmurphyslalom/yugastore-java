@@ -95,3 +95,9 @@ Initial blocker codes are `INVALID_COMPARISON_BASE`, `UNSAFE_CHECKOUT`,
 `TOOL_FAILURE`. Never invent a command or install a package to replace a
 missing framework script; report `MISSING_SCRIPT` with its installed path.
 <!-- AI-SDLC:AGENTS END -->
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+at specs/copilot-agent-issue-board/plan.md
+<!-- SPECKIT END -->

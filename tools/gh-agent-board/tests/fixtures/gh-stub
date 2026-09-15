@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Test double for `gh`: records invocation args and pops one canned JSON response per call.
+
+: "${GH_STUB_LOG:?GH_STUB_LOG must be set}"
+: "${GH_STUB_QUEUE:?GH_STUB_QUEUE must be set}"
+
+printf '%s\n' "$*" >> "$GH_STUB_LOG"
+
+if [[ ! -s "$GH_STUB_QUEUE" ]]; then
+  echo "gh-stub: no queued response for call: $*" >&2
+  exit 99
+fi
+
+response_line="$(head -n1 "$GH_STUB_QUEUE")"
+tail -n +2 "$GH_STUB_QUEUE" > "${GH_STUB_QUEUE}.tmp" && mv "${GH_STUB_QUEUE}.tmp" "$GH_STUB_QUEUE"
+
+exit_code="$(jq -r '.exit_code // 0' <<<"$response_line")"
+stdout="$(jq -r '.stdout // ""' <<<"$response_line")"
+stderr="$(jq -r '.stderr // ""' <<<"$response_line")"
+
+[[ -n "$stdout" ]] && printf '%s' "$stdout"
+[[ -n "$stderr" ]] && printf '%s' "$stderr" >&2
+
+exit "$exit_code"
