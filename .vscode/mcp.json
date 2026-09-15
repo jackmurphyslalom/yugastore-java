@@ -1,0 +1,19 @@
+{
+	"servers": {
+		"github-mcp": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/",
+			"headers": {
+				"Authorization": "Bearer ${input:github_token}"
+			}
+		}
+	},
+	"inputs": [
+		{
+			"id": "github_token",
+			"type": "promptString",
+			"description": "GitHub personal access token (classic, ghp_...) with 'repo' scope for jackmurphyslalom/yugastore-java",
+			"password": true
+		}
+	]
+}
