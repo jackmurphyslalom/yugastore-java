@@ -1,3 +1,25 @@
-concepts: []
-relations: []
+concepts:
+  - id: llm-wiki-pattern
+    label: LLM Wiki (Karpathy pattern)
+    description: >-
+      A pattern where an LLM incrementally builds and maintains a persistent,
+      structured markdown wiki from ingested sources, rather than re-deriving
+      synthesis from raw documents at every query.
+    sources: [2026-09-15-llm-wiki]
+  - id: knowledge-graph
+    label: Knowledge Graph
+    description: >-
+      A knowledge base using a graph-structured data model to represent
+      interlinked entities and the semantics/relationships between them,
+      optionally with an ontology supporting reasoning.
+    sources: [2026-09-15-knowledge-graph]
+relations:
+  - id: llm-wiki-pattern-related-to-knowledge-graph
+    type: related_to
+    from: llm-wiki-pattern
+    to: knowledge-graph
+    description: >-
+      Both are structured, interlinked representations of accumulated
+      knowledge; the LLM wiki is an informal, markdown-native analogue of a
+      formal knowledge graph, and approaches like GraphRAG blend the two.
 categories: []
