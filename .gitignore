@@ -38,5 +38,8 @@ package-lock.json
 __pycache__/
 *.pyc
 
+# Spec Kit active-feature pointer (local working state)
+.specify/feature.json
+
 # Personal smoke-test board config (contains account-specific project/field IDs)
 tools/gh-agent-board/config/board.smoke-test.json
