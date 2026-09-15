@@ -1,5 +1,4 @@
 // Dependencies
-import _ from 'lodash';
 import React, { Component } from 'react';
 // Externals
 import Cart from '../Cart';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, FormGroup, FormControl } from 'react-bootstrap';
+import { Grid, FormControl } from 'react-bootstrap';
 import { Button } from '../../../common';
 import './index.css';
 
