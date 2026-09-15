@@ -39,13 +39,10 @@ Young Kim
 
 - Designed a GitHub Actions CI/CD pipeline (parallel Java + React jobs, coverage artifacts)
 - Stabilized CI by isolating context-load smoke tests from external services
-- Standardized the Java testing framework (JUnit 5 + Mockito + AssertJ + JaCoCo) across every
-  module, fixing pre-existing build failures along the way
+- Standardized the Java testing framework (JUnit 5 + Mockito + AssertJ + JaCoCo) across every module, fixing pre-existing build failures along the way
 
 ---
 
 # Recap
 
-One continuous thread: bootstrap the AI-SDLC framework and its supporting docs/tooling, then
-raise the CI and testing floor on top of it — all hand-curated here from this repo's own
-decisions, docs, and merged PRs.
+One continuous thread: bootstrap the AI-SDLC framework and its supporting docs/tooling, then raise the CI and testing floor on top of it — all hand-curated here from this repo's own decisions, docs, and merged PRs.
