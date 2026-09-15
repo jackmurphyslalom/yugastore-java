@@ -8,6 +8,15 @@
 
 **Input**: User description: "Establish a separation between user stories and local feature specs: define and document a clear boundary between product-level user stories (backlog/planning artifacts, i.e. GitHub Issues) and the Spec Kit local specs/ feature specs (spec.md/plan.md/tasks.md), so it's clear which artifact is the source of truth at each stage and how they relate. (github.com/jackmurphyslalom/yugastore-java#21)"
 
+## Clarifications
+
+### Session 2026-09-15
+
+- Q: Should the new doc live in docs/process/? → A: Yes, docs/process/.
+- Q: Promotion criteria — crisp testable rule or examples-only guidance? → A: Concrete testable rule.
+- Q: Should docs/product/glossary.md entries be a hard requirement of this feature? → A: No, defer to `/speckit.aisdlc.promote`.
+- Q: Should specs/README.md also link to the new doc? → A: Yes, cross-link it.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Decide where new work should be tracked (Priority: P1)
@@ -103,10 +112,12 @@ clarification.
 - **FR-003**: The documentation MUST state, per delivery stage (intake/backlog, `/speckit.specify`,
   `/speckit.plan`, `/speckit.tasks`, `/speckit.implement`, done/closed), which single artifact is
   authoritative.
-- **FR-004**: The documentation MUST give concrete promotion criteria — with at least one
-  real example of "Issue only" (e.g. issue #19 / the Brewfile PR) and one example of "Issue +
-  `specs/` feature" (e.g. `specs/copilot-agent-issue-board`) — for when a GitHub Issue should be
-  promoted into a `specs/` feature versus handled as a direct change.
+- **FR-004**: The documentation MUST give a concrete, testable promotion rule (e.g. the Issue
+  decomposes into 2+ independently testable user journeys, touches more than one microservice/
+  module, or needs a `plan.md`/`tasks.md` breakdown before implementation) — not examples alone —
+  for when a GitHub Issue should be promoted into a `specs/` feature versus handled as a direct
+  change. It MUST also include at least one worked example of each path: "Issue only" (e.g. issue
+  #19 / the Brewfile PR) and "Issue + `specs/` feature" (e.g. `specs/copilot-agent-issue-board`).
 - **FR-005**: The documentation MUST clarify that a `spec.md` "User Story" (P1/P2/P3) section
   describes a prioritized user journey within a single Spec Kit feature, and is not itself a
   backlog item, to prevent the terminology collision described in User Story 3.
@@ -116,6 +127,8 @@ clarification.
   is tracked independently.
 - **FR-007**: The documentation MUST live at `docs/process/` and be linked from
   `docs/process/README.md`.
+- **FR-008**: `specs/README.md` MUST be updated with a short cross-link to the new documentation
+  so a reader starting from either `docs/process/README.md` or `specs/README.md` can find it.
 
 ### Key Entities
 
@@ -137,8 +150,10 @@ clarification.
   "Issue only" vs. "Issue + `specs/` feature".
 - **SC-002**: The documentation states, without contradiction, which artifact is authoritative for
   all 6 delivery stages listed in FR-003.
-- **SC-003**: The documentation is discoverable within one click from both `docs/README.md` and
-  `docs/process/README.md`.
+- **SC-003**: The documentation is discoverable within one click from `docs/README.md`,
+  `docs/process/README.md`, and `specs/README.md`.
+- **SC-004**: The promotion rule in FR-004 is a testable condition (not a subjective judgment
+  call) that a reader can apply to a new Issue without needing to consult a worked example first.
 
 ## Assumptions
 
