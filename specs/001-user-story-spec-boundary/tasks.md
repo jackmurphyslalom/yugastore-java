@@ -37,7 +37,7 @@ Documentation-only feature — no `src/`/`tests/` tree. Paths touched:
 
 **Purpose**: Create the new page with the shared header/intro before any section is drafted
 
-- [ ] T001 Create `docs/process/user-stories-vs-specs.md` with a title, one-sentence purpose
+- [x] T001 Create `docs/process/user-stories-vs-specs.md` with a title, one-sentence purpose
       statement, and a link back to this feature (`specs/001-user-story-spec-boundary/spec.md`),
       matching the terse style of `docs/process/pr-process.md` and `docs/process/mcp-servers.md`
       (plan.md Constraints)
@@ -50,11 +50,11 @@ Documentation-only feature — no `src/`/`tests/` tree. Paths touched:
 
 **⚠️ CRITICAL**: No user story section can be drafted until this phase is complete
 
-- [ ] T002 In `docs/process/user-stories-vs-specs.md`, add a "GitHub Issue" definition (product-
+- [x] T002 In `docs/process/user-stories-vs-specs.md`, add a "GitHub Issue" definition (product-
       level backlog artifact, tracked via the project board + `tools/gh-agent-board` tooling) and
       a "Spec Kit Feature (`specs/<feature>/`)" definition (per-feature `spec.md`/`plan.md`/
       `tasks.md` delivery artifacts) (FR-001, FR-002; data-model.md)
-- [ ] T003 In the same file, add the two worked-example references that later sections will cite:
+- [x] T003 In the same file, add the two worked-example references that later sections will cite:
       "Issue only" (issue #19 / PR #38, the Brewfile) and "Issue + `specs/` feature"
       (`specs/copilot-agent-issue-board/`) (FR-004 evidence; plan.md Existing Patterns)
 
@@ -69,10 +69,10 @@ feature" using a testable rule, not just examples.
 
 **Independent Test**: quickstart.md scenario 1 — classify 3 example intakes using only the doc.
 
-- [ ] T004 [US1] In `docs/process/user-stories-vs-specs.md`, write the concrete testable
+- [x] T004 [US1] In `docs/process/user-stories-vs-specs.md`, write the concrete testable
       promotion rule (journey count ≥2, touches >1 microservice/module, or needs a
       `plan.md`/`tasks.md` breakdown) (FR-004; research.md "Promotion rule shape")
-- [ ] T005 [US1] Apply the rule from T004 to the two worked examples from T003, showing the
+- [x] T005 [US1] Apply the rule from T004 to the two worked examples from T003, showing the
       "Issue only" and "Issue + `specs/` feature" outcomes explicitly (FR-004)
 
 **Checkpoint**: User Story 1 is fully drafted and independently testable via quickstart scenario 1
@@ -87,7 +87,7 @@ feature" using a testable rule, not just examples.
 **Independent Test**: quickstart.md scenario 2 — pick any one delivery stage and confirm exactly
 one authoritative artifact is stated.
 
-- [ ] T006 [US2] In `docs/process/user-stories-vs-specs.md`, add a precedence table covering all
+- [x] T006 [US2] In `docs/process/user-stories-vs-specs.md`, add a precedence table covering all
       6 delivery stages (intake/backlog, `/speckit.specify`, `/speckit.plan`, `/speckit.tasks`,
       `/speckit.implement`, done/closed) and the single authoritative artifact at each (FR-003)
 
@@ -102,7 +102,7 @@ one authoritative artifact is stated.
 **Independent Test**: quickstart.md scenario 3 — search the doc for "User Story" and confirm the
 distinction is stated explicitly.
 
-- [ ] T007 [US3] In `docs/process/user-stories-vs-specs.md`, add an explicit terminology note:
+- [x] T007 [US3] In `docs/process/user-stories-vs-specs.md`, add an explicit terminology note:
       a `spec.md` "User Story N (Priority: Px)" section is a prioritized journey *within* one
       Spec Kit feature, not a standalone backlog item or a substitute for a GitHub Issue
       (FR-005; data-model.md "User Story (spec.md section)")
@@ -115,14 +115,14 @@ distinction is stated explicitly.
 
 **Purpose**: Lifecycle convention, discoverability links, and final validation
 
-- [ ] T008 In `docs/process/user-stories-vs-specs.md`, add the lifecycle/closure section: closing
+- [x] T008 In `docs/process/user-stories-vs-specs.md`, add the lifecycle/closure section: closing
       a GitHub Issue remains human-only (no `close-issue.sh` exists); a `specs/<feature>/` and its
       originating Issue are linked via `tools/gh-agent-board/scripts/link-artifacts.sh`; open/
       closed and in-progress/done state are tracked independently (FR-006)
-- [ ] T009 [P] Add one bullet to `docs/process/README.md` linking the new page (FR-007)
-- [ ] T010 [P] Add a short cross-link from `specs/README.md` to the new page (FR-008)
-- [ ] T011 Run all 5 `quickstart.md` validation scenarios against the finished page end to end
-- [ ] T012 Re-validate `specs/001-user-story-spec-boundary/checklists/requirements.md` against the
+- [x] T009 [P] Add one bullet to `docs/process/README.md` linking the new page (FR-007)
+- [x] T010 [P] Add a short cross-link from `specs/README.md` to the new page (FR-008)
+- [x] T011 Run all 5 `quickstart.md` validation scenarios against the finished page end to end
+- [x] T012 Re-validate `specs/001-user-story-spec-boundary/checklists/requirements.md` against the
       finished page; update any checkbox whose pass/fail state changed
 
 ---
