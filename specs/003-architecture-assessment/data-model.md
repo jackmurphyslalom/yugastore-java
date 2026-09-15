@@ -28,9 +28,9 @@ value from the Application Tier enumeration.
 | Field | Type | Required | Notes |
 |---|---|---|---|
 | Context section | Markdown section (`## Context`) | Yes | Specific to the tier (FR-004) |
-| Findings section | Markdown section (`## Findings`) | Yes | Specific to the tier (FR-004) |
-| Recommendation section | Markdown section (`## Recommendation`) | Yes | Specific to the tier (FR-004) |
-| 16-factor table | Markdown table, 16 rows, columns `Factor \| Name \| Score \| Explanation` | Yes | Factors I-XII scored; XIII-XVI scored or "N/A" (FR-005, FR-006) |
+| Findings section | Markdown section (`## Findings`) | Yes | Specific to the tier (FR-004); MUST note load/performance-testing tooling and status (FR-022) |
+| Recommendation section | Markdown section (`## Recommendation`) | Yes | Specific to the tier (FR-004); MUST include an explicit rationale, a T-shirt size (S/M/L/XL), a risk category, and human-vs-agent time-on-task estimates (FR-020, FR-021) |
+| 16-factor table | Markdown table, 16 rows, columns `Factor \| Name \| Score \| Explanation \| Gap to 5 \| Quick Fix` | Yes | Factors I-XII scored; XIII-XVI scored or "N/A" (FR-005, FR-006); `Gap to 5` = `5 − Score` or `N/A` (FR-018); `Quick Fix` required for any factor scored below 5 (FR-019) |
 | WIP/unwired finding | Explicit statement within the file | Only for `login-microservice` | Sourced from `docs/architecture/overview.md` (FR-007) |
 
 **Validity rule** (used by the rollup skill's gate, FR-009/FR-010): a tier file is *valid* only if
@@ -39,6 +39,16 @@ Assessment`; otherwise it is treated as missing.
 
 **Lifecycle**: Overwritten in full on every re-run for that tier (FR-016) — not incrementally
 patched or hand-preserved.
+
+## Recommendation (entity detail)
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| Rationale | Prose | Yes | Explicit "why", not just "what" (FR-020) |
+| Size | Enum: `S` \| `M` \| `L` \| `XL` | Yes | T-shirt size of the recommended change (FR-021) |
+| Risk | Category + short reason | Yes | Explicitly flags when an alternative would amount to a wholesale refactor (FR-021) |
+| Human time-on-task | Estimate | Yes | Estimated effort for a human implementer (FR-021) |
+| Agent time-on-task | Estimate | Yes | Estimated effort for an agent implementer (FR-021) |
 
 ## AI 16-Factor Model (reference framework, not generated data)
 
@@ -63,11 +73,26 @@ component (all 7 tiers today, per spec Assumptions).
 | C1 diagram | ```mermaid``` block, System Context | Yes | Whole system, all 7 tiers (FR-011) |
 | C2 diagram | ```mermaid``` block, Container | Yes | Whole system, all 7 tiers (FR-011) |
 | C3 diagram | ```mermaid``` block, Component | Yes | `api-gateway-microservice` only (FR-011) |
+| Foundational Posture Score section | Markdown section | Yes | Cross-tier sixteen-factor summary aggregating all 7 tiers (FR-023) |
 
 **Exclusion**: No C4-Code (level 4) diagram (FR-012).
 
 **Lifecycle**: Idempotent full overwrite on every successful rollup run (FR-017); never appended
 to, never written partially (FR-010).
+
+## Foundational Posture Score (entity)
+
+**Location**: A section within `meta/architecture-assessment/README.md`, produced by the rollup
+skill once all 7 tier files carry `Gap to 5`, `Quick Fix`, and strengthened Recommendation
+fields (FR-023).
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| Per-tier score summary | Table or list, 1 row per tier | Yes | Rolls up each tier's 16-factor scores |
+| Weakness | Prose, per tier | Yes | Cites the tier's concrete weak factor(s), not a restated table |
+| Estimated cost | Prose/size, per tier | Yes | Derived from each tier's Recommendation `Size` fields |
+| Estimated risk | Prose/category, per tier | Yes | Derived from each tier's Recommendation `Risk` fields |
+| Cross-tier posture value | Single aggregate summary | Yes | One rolled-up value/summary across all 7 tiers |
 
 ## Relationships
 

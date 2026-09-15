@@ -77,3 +77,48 @@ This file records the resulting decisions and the alternatives considered during
   existence/headings) — considered useful as an optional convenience but not required by any FR;
   left out of scope to avoid inventing an unrequested automation surface. `speckit.tasks` may
   still choose to add a lightweight manual-verification task instead.
+
+## Decision: Track the skill-tailoring A/B comparison as a spike, not drop it
+
+- **Decision**: Run a skill-tailoring A/B comparison — assess one tier once with the dedicated
+  `rabbit-architecture-assessment-tier` skill and once with a generic, untailored prompt covering
+  the same 16-factor model — and record a qualitative quality comparison here.
+- **Rationale**: Raised in the 2026-09-15 client feedback recap
+  (`meta/rabbit-wiki/wiki/2026-09-15-architecture-assessment-recap-part-2.md`) as a way to
+  validate that the dedicated skill's structure/execution model (parallel per-factor subagents,
+  fixed headings) produces materially better output than a generic prompt would. This is
+  process/experimentation, not a functional requirement on the artifact format, so it is tracked
+  as a `research.md` entry plus a `tasks.md` spike task rather than an FR.
+- **Alternatives considered**: Dropping the comparison entirely — explicitly rejected by the
+  2026-09-15 recap feedback; the client asked that this not be silently dropped.
+- **Result**: Spike executed 2026-09-15 on `cart-microservice` — one run via the dedicated
+  `rabbit-architecture-assessment-tier` skill (see `meta/architecture-assessment/cart-microservice.md`),
+  one run via a bare generic prompt ("assess against 12-factor + 4 AI-era factors, score 1-5,
+  give findings and a recommendation") with no fixed headings, no execution-model guidance, and
+  no repo-specific grounding instructions.
+  - **Structure/consistency**: the tailored skill produced a fully structured, machine-checkable
+    output (exact `## Context`/`## Findings`/`## Recommendation`/`## 16-Factor Assessment`
+    headings, `Gap to 5`/`Quick Fix` columns, `N/A` for factors XIII-XVI) that the rollup skill's
+    hard gate can validate. The generic run used free-form prose headings, scored XIII as `0/5`
+    instead of `N/A` (structurally invalid for the rollup gate), and had no Gap-to-5/Quick-Fix
+    equivalent at all — it would fail the rollup's structural-validity check outright.
+  - **Coverage gap the generic run caught that the tailored run missed**: the generic run
+    inspected `SecurityConfiguration` and found `permitAll()`/CSRF-disabled/no-input-validation —
+    a real, concrete security finding — and separately caught that `ShoppingCartImpl` is
+    `@Scope(SCOPE_SESSION)`, a statefulness violation (Factor VI/XIV). Neither the security gap
+    nor the session-scope finding appears in the tailored `cart-microservice.md` output, because
+    the tailored skill's Step 2 evidence list (`application.yml`, `pom.xml`, `Dockerfile`,
+    `README.md`, package layout) does not explicitly direct evidence-gathering into
+    `SecurityConfiguration` or scope annotations the way the generic prompt's open-ended
+    "assess against 12-factor" framing happened to.
+  - **Where the tailored run was still stronger**: the tailored output's explanations cite
+    concrete file paths and class names consistently across all 16 rows (not just the ones the
+    generic run happened to inspect), includes the required Recommendation sizing/risk/time-on-
+    task fields the generic run entirely omitted, and is directly consumable by the rollup gate.
+  - **Conclusion**: the dedicated skill wins decisively on structural consistency and
+    machine-checkability (its entire value proposition), but this spike surfaced a real content
+    gap — Step 2's evidence list should also name `SecurityConfiguration`/`*Config` classes and
+    `@Scope` annotations explicitly, since a generic prompt found them and the tailored one
+    didn't. Recorded as a follow-up improvement candidate for the tier skill rather than a blocker
+    for this iteration (out of scope for FR-018-FR-023; would need its own iteration/FR if
+    pursued). No change made to `cart-microservice.md` or the tier skill as part of this spike.

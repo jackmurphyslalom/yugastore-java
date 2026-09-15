@@ -42,6 +42,19 @@ build/redeploy cycle entirely, without requiring a new service (Option B) or per
 three-way domain-model duplication already flagged as a risk in
 [`products-microservice.md`](../architecture-assessment/products-microservice.md) (Option C).
 
+**Size**: M — a new runtime-loadable pricing-rules source (config or table) plus read paths in
+`products-microservice` and `checkout-microservice`.
+
+**Risk**: Medium. Not a wholesale refactor, but it touches two services and sits near the
+already-flagged `ProductMetadata` duplication, so the schema must be coordinated carefully to
+avoid adding a fourth hand-synchronized copy.
+
+
+**Human time-on-task**: ~4-6 developer-days (schema design, two service read paths, rollout
+verification).
+
+**Agent time-on-task**: ~2-4 hours to scaffold the config/table schema and both services' read
+paths, plus human review of the schema and duplication risk.
 > Adopting this recommendation requires a future `/speckit.specify` cycle before any
 > implementation begins — this document does not authorize implementation.
 

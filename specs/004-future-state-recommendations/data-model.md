@@ -37,9 +37,15 @@ captures the structure of the Markdown entities it produces, per the spec's Key 
 
 - **Fields**:
   - `chosen_option`: exactly one label from Options considered (FR-007)
-  - `tradeoff_rationale`: short explanation of why the chosen option won over the others (FR-007)
+  - `tradeoff_rationale`: explicit explanation of why the chosen option won over the others —
+    MUST state the rationale, not just name the chosen option (FR-007, FR-016)
   - `future_cycle_note`: fixed statement that adoption requires a future `/speckit.specify` cycle
     before implementation begins (FR-011)
+  - `size`: T-shirt size for the recommended option — one of `S` | `M` | `L` | `XL` (FR-013)
+  - `risk`: risk category for the recommended option, explicitly calling out when an
+    alternative would amount to a wholesale refactor (FR-014)
+  - `human_time_on_task`: estimated time-on-task for a human implementer (FR-015)
+  - `agent_time_on_task`: estimated time-on-task for an agent implementer (FR-015)
 
 ## Entity: Alternatives considered
 
@@ -81,3 +87,6 @@ captures the structure of the Markdown entities it produces, per the spec's Key 
 - Content-authoring for Current-state finding / Options considered / Recommendation /
   Alternatives considered is blocked (state remains `scaffolded`) until
   `meta/architecture-assessment/` exists with real content (FR-012).
+- Each Recommendation instance MUST state `size`, `risk`, `human_time_on_task`, and
+  `agent_time_on_task`, and `tradeoff_rationale` MUST be a genuine rationale rather than a bare
+  restatement of `chosen_option` (FR-013, FR-014, FR-015, FR-016).

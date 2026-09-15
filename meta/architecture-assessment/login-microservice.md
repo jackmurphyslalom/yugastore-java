@@ -29,6 +29,9 @@
   (Build/release/run, score 3; Dev/prod parity, score 2).
 - Admin actions run through normal request paths (`UserController`/`UserValidator`), with no
   separate one-off admin-task process (Admin Processes, score 1).
+- Load/performance-testing status: no load-testing or simulation tooling was observed; none
+  identified. Since this tier carries zero live traffic today (no gateway wiring), no meaningful
+  load estimate can be derived until it is integrated.
 
 ## Recommendation
 
@@ -39,23 +42,34 @@ and integration plan") — do not assume completion status without human confirm
 scope; this assessment only records the finding, it does not complete or wire the service (per
 this feature's plan.md constraints).
 
+**Size**: L — wiring `login-microservice` into `api-gateway-microservice` requires a new REST
+client, controller/service wiring, and a Dockerfile, not a small patch.
+
+**Risk**: Medium. Touches the gateway (a shared, load-bearing tier) even though the login service
+itself is isolated; not a wholesale refactor of either tier.
+
+**Human time-on-task**: ~3-5 developer-days to add the gateway REST client, wire authentication
+flows end-to-end, and add a Dockerfile.
+
+**Agent time-on-task**: ~2-4 hours to scaffold the REST client, gateway wiring, and Dockerfile.
+
 ## 16-Factor Assessment
 
-| # | Name | Score | Explanation |
-|---|---|---|---|
-| I | Codebase | 2 | Single Maven module tracked in the same monorepo/VCS as every other tier; the shared-repository pattern is a real deviation from the strict 12-factor "one codebase, independently versioned" principle. |
-| II | Dependencies | 5 | Dependencies declared explicitly in `pom.xml` with pinned versions (`spring-boot-starter-web`, `-data-jpa`, `-security`, Spring Boot 2.6.3, Java 17); no vendored or implicit dependencies observed. |
-| III | Config | 3 | `application.yml` exists (at `src/main/resources/`, unlike siblings' module-root convention) and externalizes port/datasource/logging settings from code, but the datasource URL and credentials are hardcoded to a local value rather than environment-variable driven. |
-| IV | Backing services | 4 | Spring Data JPA repositories (`UserRepository`, `RoleRepository`) treat the relational store as a swappable attached backing service, consistent with the rest of the system's YugabyteDB usage; no confirmation the datasource URL itself is environment-swappable without a code/config change. |
-| V | Build, release, run | 3 | Same Maven build/release/run separation as other tiers (`mvn -DskipTests package`); a `manifest.yml` exists for CF-style deployment, but no `Dockerfile` exists unlike all 6 sibling modules — a real fleet-parity gap in the release stage. |
-| VI | Processes | 4 | Runs as a stateless Spring Boot process; user/role state persists via JPA to the datasource, not in-process memory. |
-| VII | Port binding | 4 | `application.yml` explicitly declares `server.port: 8085`, confirming `docs/architecture/overview.md`'s documented port; no environment-variable override (e.g. `${SERVER_PORT:-8085}`) observed for deployment flexibility. |
-| VIII | Concurrency | 3 | Same stateless-process scaling model as the rest of the fleet in design, but with no `api-gateway` wiring it carries zero live concurrent traffic today — design compliance without operational validation. |
-| IX | Disposability | 3 | Standard Spring Boot start/stop lifecycle provides baseline disposability; no custom shutdown hooks or optimized resource cleanup observed. |
-| X | Dev/prod parity | 2 | The datasource URL is hardcoded to a local Postgres instance with no environment-profile split, and no `Dockerfile` exists (only `manifest.yml`) — a weaker parity story than the other 6 tiers. |
-| XI | Logs | 3 | Relies on Spring Boot default stdout logging (`logging.level.root: info` in `application.yml`); no structured logging or log-level-per-environment tuning observed. |
-| XII | Admin Processes | 1 | User management flows entirely through normal request paths (`UserController`/`UserValidator`); no separate one-off admin-task process infrastructure exists. |
-| XIII | Prompts as code | N/A | Traditional authentication service with no AI/LLM component observed. |
-| XIV | State as a service | N/A | Conventional relational (JPA) user/role state; no AI/LLM conversational-state concern. |
-| XV | Observability for non-determinism | N/A | Deterministic authentication logic with no AI/LLM model output. |
-| XVI | Trust & safety by design | N/A | No AI/LLM component observed; `WebSecurityConfig`/`SecurityConfig` provide conventional auth security, distinct from AI-era trust & safety concerns. |
+| # | Name | Score | Explanation | Gap to 5 | Quick Fix |
+|---|---|---|---|---|---|
+| I | Codebase | 2 | Single Maven module tracked in the same monorepo/VCS as every other tier; the shared-repository pattern is a real deviation from the strict 12-factor "one codebase, independently versioned" principle. | 3 | Same monorepo tradeoff as siblings; no tier-specific fix beyond documenting the constraint. |
+| II | Dependencies | 5 | Dependencies declared explicitly in `pom.xml` with pinned versions (`spring-boot-starter-web`, `-data-jpa`, `-security`, Spring Boot 2.6.3, Java 17); no vendored or implicit dependencies observed. | 0 | — |
+| III | Config | 3 | `application.yml` exists (at `src/main/resources/`, unlike siblings' module-root convention) and externalizes port/datasource/logging settings from code, but the datasource URL and credentials are hardcoded to a local value rather than environment-variable driven. | 2 | Externalize the hardcoded local Postgres datasource URL/credentials via environment variables. |
+| IV | Backing services | 4 | Spring Data JPA repositories (`UserRepository`, `RoleRepository`) treat the relational store as a swappable attached backing service, consistent with the rest of the system's YugabyteDB usage; no confirmation the datasource URL itself is environment-swappable without a code/config change. | 1 | Confirm the datasource URL is environment-swappable without a code change. |
+| V | Build, release, run | 3 | Same Maven build/release/run separation as other tiers (`mvn -DskipTests package`); a `manifest.yml` exists for CF-style deployment, but no `Dockerfile` exists unlike all 6 sibling modules — a real fleet-parity gap in the release stage. | 2 | Add a `Dockerfile` to match the other 6 tiers' release-stage parity. |
+| VI | Processes | 4 | Runs as a stateless Spring Boot process; user/role state persists via JPA to the datasource, not in-process memory. | 1 | No action needed beyond monitoring; state is already externalized to JPA. |
+| VII | Port binding | 4 | `application.yml` explicitly declares `server.port: 8085`, confirming `docs/architecture/overview.md`'s documented port; no environment-variable override (e.g. `${SERVER_PORT:-8085}`) observed for deployment flexibility. | 1 | Add an environment-variable override for `server.port`. |
+| VIII | Concurrency | 3 | Same stateless-process scaling model as the rest of the fleet in design, but with no `api-gateway` wiring it carries zero live concurrent traffic today — design compliance without operational validation. | 2 | Cannot be validated for concurrency until wired into the gateway and given live traffic. |
+| IX | Disposability | 3 | Standard Spring Boot start/stop lifecycle provides baseline disposability; no custom shutdown hooks or optimized resource cleanup observed. | 2 | Add custom shutdown hooks once the service carries live traffic. |
+| X | Dev/prod parity | 2 | The datasource URL is hardcoded to a local Postgres instance with no environment-profile split, and no `Dockerfile` exists (only `manifest.yml`) — a weaker parity story than the other 6 tiers. | 3 | Add a `Dockerfile` and externalize the datasource URL to close the fleet-parity gap. |
+| XI | Logs | 3 | Relies on Spring Boot default stdout logging (`logging.level.root: info` in `application.yml`); no structured logging or log-level-per-environment tuning observed. | 2 | Add structured logging with correlation IDs. |
+| XII | Admin Processes | 1 | User management flows entirely through normal request paths (`UserController`/`UserValidator`); no separate one-off admin-task process infrastructure exists. | 4 | Add a dedicated admin/one-off task class for user/role management. |
+| XIII | Prompts as code | N/A | Traditional authentication service with no AI/LLM component observed. | N/A | — |
+| XIV | State as a service | N/A | Conventional relational (JPA) user/role state; no AI/LLM conversational-state concern. | N/A | — |
+| XV | Observability for non-determinism | N/A | Deterministic authentication logic with no AI/LLM model output. | N/A | — |
+| XVI | Trust & safety by design | N/A | No AI/LLM component observed; `WebSecurityConfig`/`SecurityConfig` provide conventional auth security, distinct from AI-era trust & safety concerns. | N/A | — |

@@ -69,6 +69,10 @@ one explicit recommendation with a tradeoff rationale.
 4. **Given** `meta/architecture-assessment/` does **not** yet exist, **When** anyone attempts to
    fill in a "Current-state finding" section with real content, **Then** that work MUST be
    deferred and flagged as blocked rather than filled with a placeholder or guessed finding.
+5. **Given** a recommendation document, **When** it is read, **Then** it states a T-shirt size
+   (S/M/L/XL), a risk category, an estimated human time-on-task, an estimated agent
+   time-on-task, and a `## Recommendation` section whose rationale explains why the chosen
+   option was picked over the alternatives (not just the chosen option's name).
 
 ---
 
@@ -173,6 +177,15 @@ document states that adoption requires a future `/speckit.specify` cycle.
   blocked until `meta/architecture-assessment/` exists with real generated content from Feature
   003's implemented and executed skills. Scaffolding tasks (creating the files with headings,
   building the index) are not subject to this block.
+- **FR-013**: Each recommendation document MUST state a T-shirt size (S/M/L/XL) for the
+  recommended option.
+- **FR-014**: Each recommendation document MUST state a risk category for the recommended
+  option, explicitly calling out when an alternative would amount to a wholesale refactor.
+- **FR-015**: Each recommendation document MUST state an estimated time-on-task for a human
+  implementer and, separately, for an agent implementer.
+- **FR-016**: The `## Recommendation` section of each recommendation document MUST include an
+  explicit rationale for why the chosen option was selected over the alternatives, not just the
+  name of the chosen option.
 
 ### Key Entities
 
@@ -210,7 +223,21 @@ document states that adoption requires a future `/speckit.specify` cycle.
   output.
 - The three client needs and their verbatim wording are fixed inputs from
   `specs/intake/2026-09-14-client-requirements-interview.md` and
-  `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`; they are not subject to
+  `Iterations
+
+### Iteration 2026-09-15: Sizing, risk, and time-on-task fields
+
+**Change**: Add T-shirt size, risk category, and human/agent time-on-task fields to each
+recommendation document, and strengthen the `## Recommendation` section to require an explicit
+rationale.
+**Scope**: Feature-wide
+**Artifacts updated**: spec.md, plan.md, tasks.md, data-model.md, quickstart.md,
+contracts/recommendation-document-format.md
+**Tasks added**: T024, T025, T026, T027, T028, T029
+**Tasks removed**: none
+**Tasks marked complete**: none (content-authoring deferred to `/speckit.implement`)
+
+## docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`; they are not subject to
   reinterpretation by this feature.
 - `meta/future-state/` is a new, standalone namespace at the repository root, parallel to (not
   nested under) `meta/architecture-assessment/` and `meta/rabbit-wiki/`.

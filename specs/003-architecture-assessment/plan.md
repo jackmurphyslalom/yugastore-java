@@ -10,14 +10,17 @@
 
 Add two new agent skills (prompt/documentation-generation tooling, not application code): a
 per-tier assessment skill that writes `meta/architecture-assessment/{tier-name}.md`
-(Context/Findings/Recommendation sections + a 16-factor table with Score and Explanation
-columns, grounded in `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`) for one
-of the 7 recognized application tiers, and a separate rollup skill that hard-gates on all 7 tier
-files existing and valid before writing `meta/architecture-assessment/README.md` with C1/C2/C3
-Mermaid diagrams.
+(Context/Findings/Recommendation sections + a 16-factor table with Score, Explanation, Gap to 5,
+and Quick Fix columns, grounded in
+`docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`) for one of the 7 recognized
+application tiers, and a separate rollup skill that hard-gates on all 7 tier files existing and
+valid before writing `meta/architecture-assessment/README.md` with C1/C2/C3 Mermaid diagrams
+plus a cross-tier foundational posture score section.
 Both skills follow this repo's `rabbit-` naming convention for custom (non-framework) additions
 and are pure Markdown-writing workflows executed by an agent — there is no compiled artifact,
-runtime service, or automated test suite to add.
+runtime service, or automated test suite to add. A tracked spike task compares the dedicated
+tier skill against a generic prompt for one tier (skill-tailoring A/B comparison), recorded in
+`research.md`.
 
 ## Technical Context
 
@@ -119,3 +122,18 @@ cross-reference.
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
 No Constitution Check violations — this section is intentionally empty.
+
+## Iteration Note (2026-09-15: actionable scoring + posture score)
+
+No new tech stack. Both skills' existing steps now produce additional derived columns/sections
+from the same per-tier data already gathered — no new data sources:
+
+- Tier skill Step 4 (16-factor table): each per-factor subagent additionally derives `Gap to 5`
+  (`5 − Score`, or `N/A`) and, for factors scored below 5, a `Quick Fix` suggestion.
+- Tier skill Step 3 (`## Recommendation`): strengthened to require an explicit rationale, a
+  T-shirt size (S/M/L/XL), a risk category, and human-vs-agent time-on-task estimates.
+- Tier skill Step 3 (`## Findings`): gains a load/performance-testing tooling-status note.
+- Rollup skill: gains a new aggregation step producing a cross-tier foundational posture score
+  section, gated on all 7 tier files carrying the new columns/fields.
+- A skill-tailoring A/B comparison spike (dedicated skill vs. generic prompt, one tier) is
+  tracked in `research.md` and `tasks.md`, not dropped.

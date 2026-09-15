@@ -51,6 +51,13 @@ including any marked "N/A").
    **When** it is assessed, **Then** it receives the same full 16-factor treatment as the other 6
    tiers, and its WIP/unwired status is recorded as an explicit finding in its assessment file
    rather than causing the tier to be skipped or lightly assessed.
+4. **Given** a tier's Recommendation section, **When** it is read, **Then** it states an explicit
+   rationale (why this change, not just what change), a T-shirt size (S/M/L/XL), a risk category
+   (explicitly flagging when an alternative would amount to a wholesale refactor), and both a
+   human time-on-task estimate and an agent time-on-task estimate.
+5. **Given** a tier is assessed, **When** its Findings section is read, **Then** it states the
+   tier's load/performance-testing tooling status (or explicitly "none identified") rather than
+   omitting the topic.
 
 ---
 
@@ -105,6 +112,31 @@ missing tier.
 2. **Given** all 7 tier files exist but one is subsequently deleted, **When** the rollup skill is
    invoked again, **Then** it re-detects the now-missing tier and refuses to run, naming that
    tier.
+
+---
+
+### User Story 4 - Roll per-tier scores into a foundational posture score (Priority: P2)
+
+Once all 7 tier assessment files carry the strengthened, actionable scoring format (Gap to 5,
+Quick Fix, and rationale-bearing Recommendations), an engineer invokes the rollup skill. In
+addition to the C1/C2/C3 diagrams, the rollup aggregates all 7 tiers' scores, weaknesses,
+estimated implementation cost, and estimated risk into one cross-tier sixteen-factor
+foundational posture section in `meta/architecture-assessment/README.md`.
+
+**Why this priority**: This extends the existing rollup skill (User Story 2) once its
+prerequisite per-tier data is actionable; it delivers a client-presentable, whole-system
+summary but is not required for the rollup's core gating/C4 behavior to function.
+
+**Independent Test**: With all 7 tier files present and carrying the new Gap-to-5, Quick Fix,
+and strengthened Recommendation fields, run the rollup skill and confirm
+`meta/architecture-assessment/README.md` contains a foundational posture section that cites
+concrete per-tier weaknesses and risk levels.
+
+**Acceptance Scenarios**:
+
+1. **Given** all 7 tier files carry Gap-to-5, Quick Fix, and rationale-bearing Recommendations,
+   **When** the rollup skill is invoked, **Then** the rollup's posture section cites concrete
+   per-tier weaknesses and risk levels rather than restating the 16-factor table.
 
 ---
 
@@ -181,6 +213,23 @@ missing tier.
 - **FR-017**: Re-running the rollup skill after a successful rollup MUST regenerate
   `meta/architecture-assessment/README.md` from the current state of all 7 tier files
   (idempotent overwrite), not append to or leave stale content in the prior version.
+- **FR-018**: The 16-factor table in each tier assessment file MUST include a `Gap to 5` column
+  (`5 − Score`, or `N/A` when Score is `N/A`) so a low score has a visible numeric target.
+- **FR-019**: The 16-factor table in each tier assessment file MUST include a `Quick Fix` column
+  with a short, concrete remediation suggestion tied to that specific factor, for any factor
+  scored below 5.
+- **FR-020**: The `## Recommendation` section MUST include an explicit rationale (why this
+  change, not just what change) for every recommendation, rather than a bare suggestion.
+- **FR-021**: The `## Recommendation` section MUST also state a T-shirt size (S/M/L/XL), a risk
+  category (explicitly flagging when an alternative would amount to a wholesale refactor), and
+  an estimated time-on-task for both a human implementer and an agent implementer.
+- **FR-022**: The `## Findings` section MUST note the tier's load/performance-testing tooling
+  and status — existing simulation/load-generation tools in use (if any), gaps, and (during
+  onboarding) an agent-derived initial load estimate from the test environment — feeding the
+  observability/monitoring sub-section rather than being scored as a standalone 16-factor item.
+- **FR-023**: The rollup skill MUST produce a foundational posture score section in
+  `meta/architecture-assessment/README.md` aggregating all 7 tiers' scores, weaknesses,
+  estimated implementation cost, and estimated risk into one cross-tier sixteen-factor summary.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -236,6 +285,11 @@ missing tier.
   subdirectories (`meta/architecture-assessment/` vs. `meta/rabbit-wiki/`).
 - No automated CI enforcement of "all 7 tiers assessed" is required by this feature; the
   rollup's hard gate at invocation time is the sole enforcement mechanism.
+- The skill-tailoring A/B comparison raised in the 2026-09-15 recap (dedicated
+  `rabbit-architecture-assessment-tier` skill vs. a generic, untailored prompt, assessed once
+  each for one tier) is tracked as a planned activity, not dropped: it is recorded as a
+  `research.md` entry with a corresponding `tasks.md` spike task, since it is process/
+  experimentation rather than a functional requirement on the artifact format.
 
 ## Iterations
 
@@ -250,5 +304,19 @@ headings instead of SCQA.
 contracts/rabbit-architecture-assessment-tier.md, contracts/rabbit-architecture-assessment-rollup.md,
 quickstart.md, tasks.md
 **Tasks added**: T021-T033
+**Tasks removed**: —
+**Tasks marked complete**: —
+
+### Iteration 2026-09-15: Gap-to-5, strengthened Recommendation, load/perf Findings, foundational posture score
+
+**Change**: Add `Gap to 5` and `Quick Fix` columns to the per-tier 16-factor table; strengthen
+`## Recommendation` to require explicit rationale, a T-shirt size, a risk category, and
+human-vs-agent time-on-task; add a load/performance-testing status note requirement to
+`## Findings`; add a cross-tier foundational posture score to the rollup skill's output; track
+the skill-tailoring A/B comparison as a spike task.
+**Scope**: Feature-wide
+**Artifacts updated**: spec.md, plan.md, tasks.md, data-model.md, quickstart.md, research.md,
+contracts/rabbit-architecture-assessment-tier.md, contracts/rabbit-architecture-assessment-rollup.md
+**Tasks added**: T034-T043
 **Tasks removed**: —
 **Tasks marked complete**: —

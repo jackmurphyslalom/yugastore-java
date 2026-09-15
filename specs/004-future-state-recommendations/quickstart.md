@@ -43,6 +43,10 @@ assessments and a rollup `README.md`. When that precondition is met:
      (FR-006, SC-003).
    - `Recommendation` names exactly one labeled option and gives a tradeoff rationale (FR-007,
      SC-003).
+   - `Recommendation` additionally states a T-shirt size (S/M/L/XL), a risk category, a human
+     time-on-task estimate, and an agent time-on-task estimate, and its rationale genuinely
+     explains why the chosen option was picked over the alternatives rather than just naming it
+     (FR-013, FR-014, FR-015, FR-016).
    - `Alternatives considered` gives a brief reason for each non-chosen option (FR-008).
    - The recommendation section states that adoption requires a future `/speckit.specify` cycle
      (FR-011, SC-005).

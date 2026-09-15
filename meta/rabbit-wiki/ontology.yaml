@@ -48,6 +48,23 @@ concepts:
       behind the AI-SDLC bootstrap and related MCP/GitHub tooling setup for
       this repo.
     sources: [2026-09-15-team-rabbit-mode]
+  - id: architecture-assessment-actionability-feedback
+    label: Architecture Assessment Actionability Feedback
+    description: >-
+      Client feedback that architecture-assessment Likert scores need a
+      visible gap callout, roses-and-thorns quick-fix guidance tied to
+      sixteen-factor criteria, deeper future-state rationale, T-shirt sizing,
+      risk categorization to avoid wholesale refactors, and human-vs-agent
+      time-on-task estimates.
+    sources: [2026-09-15-architecture-assessment-recap-part-1]
+  - id: future-state-foundational-posture-scoring
+    label: Sixteen-Factor Foundational Posture Scoring
+    description: >-
+      Proposal to extend future-state recommendations with weakness, cost,
+      and risk estimates, compare skill-tailored vs untailored recommendation
+      quality, and roll findings into a broader sixteen-factor foundational
+      posture score across client tiers.
+    sources: [2026-09-15-architecture-assessment-recap-part-2]
 relations:
   - id: llm-wiki-pattern-related-to-knowledge-graph
     type: related_to
@@ -66,13 +83,6 @@ relations:
       more (prompts as code, state as a service, observability for
       non-determinism, trust and safety by design) for AI applications.
   - id: ai-sdlc-bootstrap-decision-related-to-client-requirements-2026-09
-  - id: yugastore-delivery-team-related-to-ai-sdlc-bootstrap-decision
-    type: related_to
-    from: yugastore-delivery-team
-    to: ai-sdlc-bootstrap-decision
-    description: >-
-      The same three people named in the roster ran the AI-SDLC bootstrap
-      setup call.
     type: related_to
     from: ai-sdlc-bootstrap-decision
     to: client-requirements-2026-09
@@ -80,4 +90,33 @@ relations:
       The AI-SDLC bootstrap was sequenced specifically so the client
       requirements interview (and this meeting) could be fed into the
       resulting knowledge base.
+  - id: yugastore-delivery-team-related-to-ai-sdlc-bootstrap-decision
+    type: related_to
+    from: yugastore-delivery-team
+    to: ai-sdlc-bootstrap-decision
+    description: >-
+      The same three people named in the roster ran the AI-SDLC bootstrap
+      setup call.
+  - id: architecture-assessment-actionability-feedback-related-to-future-state-foundational-posture-scoring
+    type: related_to
+    from: architecture-assessment-actionability-feedback
+    to: future-state-foundational-posture-scoring
+    description: >-
+      Recap 1 and Recap 2 are one continuous client feedback conversation on
+      the architecture-assessment/future-state deliverable, split across two
+      recordings.
+  - id: architecture-assessment-actionability-feedback-related-to-sixteen-factor-app
+    type: related_to
+    from: architecture-assessment-actionability-feedback
+    to: sixteen-factor-app
+    description: >-
+      The requested quick-fix and remediation guidance is tied to specific
+      sixteen-factor criteria.
+  - id: future-state-foundational-posture-scoring-related-to-sixteen-factor-app
+    type: related_to
+    from: future-state-foundational-posture-scoring
+    to: sixteen-factor-app
+    description: >-
+      The proposed foundational posture score is a roll-up of sixteen-factor
+      based assessments across client tiers.
 categories: []

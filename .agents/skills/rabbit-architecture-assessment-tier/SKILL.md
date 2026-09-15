@@ -50,15 +50,25 @@ specific to this tier:
   consulted (`docs/architecture/overview.md`, the tier's own directory).
 - **Findings**: a bullet list of notable, grounded observations — friction, risk, or open
   questions specific to this tier. May surface risks tied to low-scoring 16-factor items from
-  Step 4.
-- **Recommendation**: one grounded, evidence-based paragraph (not speculation beyond what the
-  source supports).
+  Step 4. MUST also include a load/performance-testing status note: the tier's existing
+  simulation/load-generation tooling in use (if any), gaps, and an agent-derived initial load
+  estimate where applicable — or explicitly state "none identified" when no such tooling or
+  estimate applies (FR-022).
+- **Recommendation**: one grounded, evidence-based paragraph giving an explicit rationale (why,
+  not just what — not speculation beyond what the source supports), followed by:
+  - **Size**: a T-shirt size, one of `S`/`M`/`L`/`XL`.
+  - **Risk**: a risk category, explicitly flagging when an alternative would amount to a
+    wholesale refactor.
+  - **Human time-on-task**: an estimate of human developer effort.
+  - **Agent time-on-task**: an estimate of agent (AI coding assistant) effort.
+  (FR-020, FR-021)
 
 ## Step 4: Write the 16-factor table
 
 Under the exact heading `## 16-Factor Assessment`, write one Markdown table with exactly 16 rows,
 one per factor, grounded in `docs/context/sources/2026-09-14-twelve-to-sixteen-factor-app.md`.
-Columns: `Factor | Name | Score | Explanation`. Use this exact ordered factor list (name column):
+Columns: `Factor | Name | Score | Explanation | Gap to 5 | Quick Fix`. Use this exact ordered
+factor list (name column):
 
 | # | Name |
 |---|---|
@@ -82,16 +92,19 @@ Columns: `Factor | Name | Score | Explanation`. Use this exact ordered factor li
 - **Execution model**: dispatch one parallel subagent per factor (16 total, one call batch) to
   independently research and score that single factor against this tier's evidence (gathered in
   Step 2). Each subagent returns exactly one `Score` (1-5, where 1 = not addressed/poor and 5 =
-  fully addressed/excellent) and one `Explanation` grounded in observed evidence for its factor.
-  Subagents never write the output file — this skill collects all 16 results and assembles them,
-  in factor order (I-XVI), into the single table before writing the file.
+  fully addressed/excellent), one `Explanation` grounded in observed evidence for its factor, a
+  `Gap to 5` value (`5 − Score`, or `N/A` when Score is `N/A`), and, for any factor scored below
+  5, a `Quick Fix` suggestion (a short, concrete, actionable next step) — leave `Quick Fix` blank
+  or `—` when Score is 5 or `N/A` (FR-018, FR-019). Subagents never write the output file — this
+  skill collects all 16 results and assembles them, in factor order (I-XVI), into the single
+  table before writing the file.
 - Factors I-XII: each subagent scores 1-5 with a concrete explanation grounded in this tier's
   actual configuration and code (e.g. Config -> `application.yml` env-driven values; Port binding
   -> the tier's port from `docs/architecture/overview.md`'s module table; Logs -> whether
   structured/stdout logging is observed).
 - Factors XIII-XVI: each subagent still runs and returns `Score: N/A` with a one-line Explanation
-  of why (no AI/LLM component observed) unless this tier has an observed AI/LLM component (none
-  of the 7 tiers do today, per the spec's Assumptions).
+  of why (no AI/LLM component observed), and `Gap to 5: N/A`, unless this tier has an observed
+  AI/LLM component (none of the 7 tiers do today, per the spec's Assumptions).
 
 
 ## Step 5: `login-microservice`-only WIP/unwired finding

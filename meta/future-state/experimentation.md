@@ -44,6 +44,18 @@ letting pricing/UX/ranking parameters change at runtime without a redeploy, whic
 engineering-bottleneck complaint itself. It is a smaller lift than a full experimentation
 platform (Option A) and, unlike Option B, is not scoped to a single service.
 
+**Size**: M — a Spring Cloud Config Server plus wiring `products-microservice`,
+`checkout-microservice`, and `react-ui`'s proxy target to read from it.
+
+**Risk**: Low-Medium. Extends an already-adopted dependency family (the fleet's existing Eureka
+/ Spring Cloud stack), so it is not a wholesale refactor; the main risk is coordinating the new
+externalized config schema across the three consuming tiers.
+
+**Human time-on-task**: ~3-5 developer-days (server setup, client wiring, one config schema).
+
+**Agent time-on-task**: ~1-2 hours for scaffolding the Config Server and client bootstrap code,
+plus human review of the schema and rollout plan.
+
 > Adopting this recommendation requires a future `/speckit.specify` cycle before any
 > implementation begins — this document does not authorize implementation.
 

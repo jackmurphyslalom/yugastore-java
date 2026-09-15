@@ -206,6 +206,41 @@ the rest of the feature and again as a final gate before calling the feature don
 
 ---
 
+## Phase 7: Sizing & Risk Enrichment (Iteration 2026-09-15)
+
+**Purpose**: Add T-shirt size, risk category, and human/agent time-on-task fields to the
+recommendation-document contract and all three recommendation documents, and strengthen the
+`## Recommendation` section to require an explicit rationale (FR-013, FR-014, FR-015, FR-016).
+
+**⚠️ Content-authoring note**: T025-T028 rewrite already content-complete files
+(`meta/future-state/*.md`) and are therefore deferred to `/speckit.implement`, not executed as
+part of this hub-only iteration apply.
+
+- [X] T024 [P] Update
+      [contracts/recommendation-document-format.md](./contracts/recommendation-document-format.md)
+      to add the `Size`, `Risk`, `Human time-on-task`, and `Agent time-on-task` fields to the
+      `## Recommendation` section template, and require that section's rationale to explain why
+      the chosen option was picked over the alternatives, not just name it (FR-013, FR-014,
+      FR-015, FR-016)
+- [X] T025 [US1] Rewrite `meta/future-state/experimentation.md`'s `## Recommendation` section to
+      add `Size`, `Risk`, `Human time-on-task`, `Agent time-on-task`, and a strengthened
+      rationale, per the updated contract (FR-013, FR-014, FR-015, FR-016, depends on T024)
+- [X] T026 [US1] Rewrite `meta/future-state/graceful-degradation.md`'s `## Recommendation`
+      section with the same four fields and strengthened rationale (FR-013, FR-014, FR-015,
+      FR-016, depends on T024)
+- [X] T027 [US1] Rewrite `meta/future-state/pricing-agility.md`'s `## Recommendation` section
+      with the same four fields and strengthened rationale (FR-013, FR-014, FR-015, FR-016,
+      depends on T024)
+- [X] T028 [US2] Update `meta/future-state/README.md` if the index should surface `Size`/`Risk`
+      per row, keeping the existing `Status` column semantics intact (depends on T025, T026,
+      T027)
+- [X] T029 Update and re-run the "Content validation" section of
+      [quickstart.md](./quickstart.md) as a final sign-off, confirming each recommendation
+      document states a size, a risk category, both time-on-task estimates, and a rationale in
+      `## Recommendation` (depends on T025, T026, T027, T028)
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -224,6 +259,10 @@ the rest of the feature and again as a final gate before calling the feature don
   T021 is actionable at any point and re-run as a final gate
 - **Polish (Phase 6)**: T022 actionable once Phase 3-5 scaffolding is done; T023 depends on all
   content tasks
+- **Sizing & Risk Enrichment (Phase 7)**: T024 (contract update) has no dependency beyond this
+  iteration being applied — actionable immediately. T025-T027 (per-file rewrites) depend on
+  T024 and are deferred to `/speckit.implement` (they rewrite content-complete files). T028
+  depends on T025-T027. T029 depends on T025-T028.
 
 ### Content-Authoring Gate Summary
 
@@ -281,3 +320,6 @@ Task: "Create meta/future-state/pricing-agility.md with fixed five-section struc
   task start, not only against this file's generation-time timestamp
 - No tests are generated (documentation-only feature, no automated suite per plan.md)
 - No application source file or ADR may be touched by any task in this file (FR-009, FR-010)
+- T024-T029 (Phase 7) were added by the 2026-09-15 iteration; T025-T028 rewrite
+  content-complete files and are intentionally left unchecked here for `/speckit.implement` to
+  execute, not this hub-only iteration apply

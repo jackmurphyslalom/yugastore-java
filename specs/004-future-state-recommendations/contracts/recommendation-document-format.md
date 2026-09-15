@@ -33,8 +33,17 @@ and `meta/future-state/pricing-agility.md`.
 
 ## Recommendation
 
-**Chosen: Option {A|B|C}.** {short tradeoff rationale for why this option was chosen over the
-others — FR-007}
+**Chosen: Option {A|B|C}.** {explicit rationale for why this option was chosen over the
+others — a genuine explanation, not just the option's name — FR-007, FR-016}
+
+**Size**: {S|M|L|XL} (FR-013)
+
+**Risk**: {risk category; explicitly call out if an alternative would amount to a wholesale
+refactor — FR-014}
+
+**Human time-on-task**: {estimate} (FR-015)
+
+**Agent time-on-task**: {estimate} (FR-015)
 
 > Adopting this recommendation requires a future `/speckit.specify` cycle before any
 > implementation begins — this document does not authorize implementation. (FR-011)
@@ -59,6 +68,14 @@ others — FR-007}
 implemented and executed skills. Until then, these sections MUST contain only their heading plus
 a placeholder note such as `_Blocked: pending meta/architecture-assessment/ (Feature 003)._` —
 never a guessed or generic statement.
+
+**Sizing & risk fields** (FR-013, FR-014, FR-015, FR-016): The `## Recommendation` section MUST
+always include, alongside the chosen option and rationale, a `Size` (S/M/L/XL), a `Risk`
+category (calling out wholesale-refactor alternatives explicitly), a `Human time-on-task`
+estimate, and an `Agent time-on-task` estimate. These four fields are subject to the same
+content-authoring gate as the rest of the `## Recommendation` section — they must not be
+fabricated before `meta/architecture-assessment/` exists, and once written they must reflect
+genuine author judgment, not filler values.
 
 ## Future-state index contract
 

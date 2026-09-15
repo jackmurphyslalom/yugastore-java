@@ -16,6 +16,33 @@ rollup only reads those files and never performs its own 16-factor scoring (cont
 - [`login-microservice`](./login-microservice.md)
 - [`react-ui`](./react-ui.md)
 
+## Foundational Posture Score
+
+Cross-tier summary aggregating each tier's weakest 16-factor area, estimated cost (from its
+Recommendation's `Size`), and estimated risk (from its Recommendation's `Risk`). See each tier
+file's own `## 16-Factor Assessment` and `## Recommendation` for full detail; this section only
+rolls up the highlights, it does not restate the full table.
+
+| Tier | Weakest factor(s) | Estimated cost (Size) | Estimated risk |
+|---|---|---|---|
+| `eureka-server-local` | XII Admin Processes (1) | S | Low |
+| `products-microservice` | I Codebase (2) | M | Low-Medium |
+| `checkout-microservice` | III Config, VIII Concurrency, IX Disposability (2 each) | M | Medium |
+| `cart-microservice` | XII Admin Processes (2) | S | Low |
+| `api-gateway-microservice` | IX Disposability (2) | L | Medium-High |
+| `login-microservice` | XII Admin Processes (1) | L | Medium |
+| `react-ui` | XI Logs (1) | L | Medium-High |
+
+**Fleet-wide observation**: the most common weak spot across tiers is `XII Admin Processes`
+(4 of 7 tiers score 2 or below), followed by resilience-related factors (`VIII Concurrency` /
+`IX Disposability`) concentrated in the two tiers that make synchronous downstream calls
+(`checkout-microservice`, `api-gateway-microservice`) — consistent with the existing graceful
+degradation gap tracked in `docs/context/gaps.md`. The highest estimated-cost items (`L`) are the
+frontend dependency upgrade (`react-ui`), the gateway resilience hardening
+(`api-gateway-microservice`), and finishing `login-microservice`'s integration — none of these are
+required for the system to function today, but all three carry Medium or higher risk if deferred
+indefinitely.
+
 ## C1: System Context
 
 ```mermaid

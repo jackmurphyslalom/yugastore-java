@@ -36,6 +36,12 @@ For each of the 7 fixed filenames above:
   with every one of the 16 factor rows carrying a Score and an Explanation. A file missing any
   required heading, missing a Score/Explanation on any factor row, or an empty/unreadable file,
   is treated identically to a missing file.
+- Separately, for the foundational posture score section only (Step 2.6): check that every one
+  of the 16 factor rows also carries a `Gap to 5` and `Quick Fix` column, and that
+  `## Recommendation` carries `Size`, `Risk`, and human/agent time-on-task fields. A tier missing
+  any of these is treated the same as a structurally invalid tier file for this section's gate
+  (FR-023) — the rest of `README.md` (diagrams, index) still proceeds normally when the base
+  Step 1 gate passes.
 
 If **any** of the 7 files is missing or structurally invalid:
 
@@ -68,7 +74,15 @@ Only reached when Step 1 finds all 7 files present and structurally valid.
    an unvalidated or invalid block.
 6. Write an index section identifying/linking all 7 per-tier files by their exact paths under
    `meta/architecture-assessment/`, so the file works as the human-facing entry point.
-7. Write `meta/architecture-assessment/README.md`, fully overwriting any prior content (idempotent
+7. Write a **Foundational Posture Score** section aggregating all 7 tiers into one cross-tier
+   sixteen-factor summary. When the gate in Step 1 (Gap to 5 / Quick Fix / Size / Risk / human
+   and agent time-on-task present on every tier) passes: for each tier, cite its lowest-scoring
+   factor(s) as its weakness, its Recommendation's `Size` as estimated cost, and its
+   `Risk` category as estimated risk — do not restate the full 16-factor table, only the
+   cross-tier summary of weaknesses/cost/risk grounded in each tier's own file (FR-023). When the
+   gate does not pass for one or more tiers, state which tiers lack the required fields and omit
+   only those tiers' rows from the summary (this does not block the diagrams or index above).
+8. Write `meta/architecture-assessment/README.md`, fully overwriting any prior content (idempotent
    full regeneration on every successful re-run — never append or leave stale content).
 
 ## Completion Report
@@ -76,4 +90,6 @@ Only reached when Step 1 finds all 7 files present and structurally valid.
 - On gate failure: report the exact list of missing/invalid tier filenames; confirm
   `README.md` was not created or modified.
 - On success: report the output path, confirm exactly one C1, one C2, and one C3 Mermaid block
-  were written and validated, and confirm the index links all 7 tier files.
+  were written and validated, confirm the index links all 7 tier files, and confirm whether the
+  Foundational Posture Score section covers all 7 tiers or lists which tiers were omitted for
+  missing fields.

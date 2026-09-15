@@ -142,6 +142,29 @@ Single project — prompt/skill tooling only (per `plan.md`'s Project Structure)
 
 ---
 
+## Phase 8: Iteration: Actionable scoring, strengthened Recommendation, load/perf Findings, foundational posture score
+
+**Purpose**: Apply the 2026-09-15 client-feedback-recap iteration (see `pending-iteration.md`, now folded into `spec.md`'s Iterations log) — add `Gap to 5` and `Quick Fix` columns to the 16-factor table; strengthen `## Recommendation` to require an explicit rationale, a T-shirt size (S/M/L/XL), a risk category, and human-vs-agent time-on-task; add a load/performance-testing status note requirement to `## Findings`; add a cross-tier foundational posture score to the rollup skill's output; and run the previously-tracked skill-tailoring A/B comparison spike. Contracts, `data-model.md`, `spec.md`, `plan.md`, `quickstart.md`, and `research.md` are already updated (this iteration's `/speckit.iterate.apply` pass); this phase covers the two `SKILL.md` files (the feature's actual implementation artifacts) and regenerating all 7 tier files plus the rollup `README.md` under the new contract.
+
+- [X] T034 [P] Update `.agents/skills/rabbit-architecture-assessment-tier/SKILL.md` Step 4 (16-factor table): each per-factor subagent additionally derives and returns a `Gap to 5` value (`5 − Score`, or `N/A` when Score is `N/A`) and, for any factor scored below 5, a `Quick Fix` suggestion; update the table's column header to `Factor | Name | Score | Explanation | Gap to 5 | Quick Fix` (FR-018, FR-019, per `contracts/rabbit-architecture-assessment-tier.md`)
+- [X] T035 [P] Update `.agents/skills/rabbit-architecture-assessment-tier/SKILL.md` Step 3 (`## Recommendation`): require an explicit rationale (why, not just what), a T-shirt size (`S`/`M`/`L`/`XL`), a risk category (explicitly flagging when an alternative would amount to a wholesale refactor), and both a human and an agent time-on-task estimate, replacing the current "one grounded paragraph" guidance (FR-020, FR-021)
+- [X] T036 [P] Update `.agents/skills/rabbit-architecture-assessment-tier/SKILL.md` Step 3 (`## Findings`): add a requirement to note the tier's load/performance-testing tooling and status — existing simulation/load-generation tooling in use (if any), gaps, and an agent-derived initial load estimate where applicable — or explicitly state "none identified" (FR-022)
+- [X] T037 [US4] Update `.agents/skills/rabbit-architecture-assessment-rollup/SKILL.md` Step 2 (success path): add a new aggregation step producing a foundational posture score section — per-tier score summary, weakness, estimated cost (from `Size`), and estimated risk (from `Risk`), rolled up into one cross-tier sixteen-factor summary — gated on all 7 tier files already carrying `Gap to 5`, `Quick Fix`, and the strengthened Recommendation fields (treat any tier missing these as structurally invalid for this gate, same as Step 1) (FR-023, per `contracts/rabbit-architecture-assessment-rollup.md`)
+- [X] T038 [P] Regenerate `meta/architecture-assessment/eureka-server-local.md` using the updated tier skill (T034-T036)
+- [X] T039 [P] Regenerate `meta/architecture-assessment/products-microservice.md` using the updated tier skill (T034-T036)
+- [X] T040 [P] Regenerate `meta/architecture-assessment/checkout-microservice.md` using the updated tier skill (T034-T036)
+- [X] T041 [P] Regenerate `meta/architecture-assessment/cart-microservice.md` using the updated tier skill (T034-T036)
+- [X] T042 [P] Regenerate `meta/architecture-assessment/api-gateway-microservice.md` using the updated tier skill (T034-T036)
+- [X] T043 [P] Regenerate `meta/architecture-assessment/login-microservice.md` using the updated tier skill (T034-T036), preserving its WIP/unwired finding (FR-007)
+- [X] T044 [P] Regenerate `meta/architecture-assessment/react-ui.md` using the updated tier skill (T034-T036)
+- [X] T045 [US4] Regenerate `meta/architecture-assessment/README.md` using the updated rollup skill (T037), once all 7 regenerated tier files (T038-T044) carry `Gap to 5`, `Quick Fix`, and the strengthened Recommendation fields
+- [X] T046 [SPIKE] Run the skill-tailoring A/B comparison for one tier — assess it once with the dedicated `rabbit-architecture-assessment-tier` skill (already regenerated above) and once with a generic, untailored prompt covering the same 16-factor model — and record the qualitative quality comparison in `research.md`'s "Decision: Track the skill-tailoring A/B comparison as a spike" entry (Result field)
+- [X] T047 Re-run the full `quickstart.md` (all 6 scenarios, including new Scenario 6) as a final sign-off pass against the Gap-to-5/Quick-Fix table, strengthened Recommendation, load/perf Findings note, and foundational posture score
+
+**Checkpoint**: Both skills, all 7 tier files, and the rollup README reflect the actionable-scoring, strengthened-Recommendation, and foundational-posture-score structure; the A/B comparison spike is recorded rather than dropped.
+
+---
+
 ## Dependencies & Execution Order
 
 ### Phase Dependencies
@@ -153,6 +176,7 @@ Single project — prompt/skill tooling only (per `plan.md`'s Project Structure)
 - **User Story 2 (Phase 5)**: Depends on User Story 3 (T009) because it extends the same `rabbit-architecture-assessment-rollup/SKILL.md` file, and on T012/T013 (all 7 tier files present and valid)
 - **Polish (Phase 6)**: Depends on Phases 3-5 all being complete
 - **Iteration Phase 7**: Depends on Phase 6 completion (post-completion iteration); T021/T022 (SKILL.md updates) block T024-T030 (per-tier regeneration), which block T031 (rollup regeneration); T032/T033 depend on T024-T031
+- **Iteration Phase 8**: Depends on Phase 7 completion (second post-completion iteration); T034-T036 (tier SKILL.md updates) block T038-T044 (per-tier regeneration); T037 (rollup SKILL.md update) and T038-T044 both block T045 (rollup regeneration); T046 (A/B spike) depends only on T034-T036 (regenerated tier skill) and can run in parallel with T038-T045; T047 depends on T045 and T046
 
 ### Within Each User Story
 
@@ -204,6 +228,7 @@ Task: "Run skill with out-of-scope target, verify rejection"
 4. User Story 2 → rollup's success path (C4 model) completes the feature
 5. Polish → idempotency and full quickstart sign-off
 6. Iteration (Phase 7) → update both SKILL.md files for Context/Findings/Recommendation + scored 16-factor table, regenerate all 7 tier files and the rollup README, re-verify quickstart
+7. Iteration (Phase 8) → update both SKILL.md files for Gap-to-5/Quick-Fix columns, strengthened Recommendation, load/perf Findings note, and the foundational posture score; regenerate all 7 tier files and the rollup README; run the skill-tailoring A/B comparison spike; re-verify quickstart
 
 ### Notes
 

@@ -18,8 +18,13 @@ implementation to confirm the feature works end to end.
 2. Confirm `meta/architecture-assessment/products-microservice.md` is created.
 3. Open the file and confirm it has:
    - A Context section, a Findings section, and a Recommendation section.
-   - A 16-factor table with all 16 rows, each row showing a Score and an Explanation, factors
-     XIII-XVI marked `N/A`.
+   - A 16-factor table with all 16 rows, each row showing a Score, an Explanation, a `Gap to 5`
+     value (`5 − Score`, or `N/A`), and a `Quick Fix` suggestion for any factor scored below 5;
+     factors XIII-XVI marked `N/A`.
+   - A Findings section stating the tier's load/performance-testing tooling status (or
+     explicitly "none identified").
+   - A Recommendation section stating an explicit rationale, a T-shirt size (S/M/L/XL), a risk
+     category, and both a human and an agent time-on-task estimate.
 4. Repeat for a second tier, `login-microservice`, and confirm its file additionally records the
    WIP/unwired finding.
 
@@ -50,7 +55,9 @@ implementation to confirm the feature works end to end.
 2. Invoke the rollup skill.
 3. Confirm `meta/architecture-assessment/README.md` is created containing exactly one C1, one
    C2, and one C3 Mermaid block (see `contracts/rabbit-architecture-assessment-rollup.md` for
-   required content), and that it links/identifies all 7 tier files.
+   required content), that it links/identifies all 7 tier files, and that it contains a
+   foundational posture section referencing all 7 tiers with their concrete weaknesses and risk
+   levels.
 4. Validate each Mermaid block (e.g., with the repo's Mermaid validator/preview tooling).
 5. Confirm `docs/architecture/overview.md` carries a one-line cross-reference to
    `meta/architecture-assessment/README.md` (FR-015).
@@ -65,3 +72,12 @@ implementation to confirm the feature works end to end.
    (no stale content from the prior version).
 
 **Expected outcome**: matches spec Edge Cases + FR-016/FR-017.
+
+## Scenario 6: Skill-tailoring A/B comparison spike
+
+1. Assess one tier once with the dedicated `rabbit-architecture-assessment-tier` skill and once
+   with a generic, untailored prompt covering the same 16-factor model.
+2. Record a qualitative quality comparison of the two outputs in `research.md`.
+
+**Expected outcome**: the comparison is recorded in `research.md`, not dropped (per the
+2026-09-15 recap).

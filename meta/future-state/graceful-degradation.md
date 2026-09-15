@@ -36,6 +36,18 @@ closes the gap for every caller (including `react-ui`) in one place, with the sm
 surface change and no new infrastructure. Resilience4j is a natural fit for the existing Spring
 Boot 2.6.3 / Spring Cloud stack.
 
+**Size**: S — localized to the existing `*RestClient` classes in one tier
+(`api-gateway-microservice`); no new service or infrastructure.
+
+**Risk**: Low. Scoped to one already-identified tier and pattern, not a wholesale refactor; the
+main risk is choosing sane default timeouts/fallback responses per downstream call.
+
+**Human time-on-task**: ~2-3 developer-days (add Resilience4j, wrap each `*RestClient` call,
+define fallback responses, add tests).
+
+**Agent time-on-task**: ~2-4 hours to scaffold the Resilience4j wiring and fallback stubs across
+the `*RestClient` classes, plus human review of the chosen timeout/fallback values.
+
 > Adopting this recommendation requires a future `/speckit.specify` cycle before any
 > implementation begins — this document does not authorize implementation.
 

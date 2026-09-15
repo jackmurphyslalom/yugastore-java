@@ -30,6 +30,12 @@ This is a skill-invocation contract (inputs/outputs of an agent skill), not a ne
 - MUST NOT contain a C4-Code (level 4) diagram (FR-012).
 - MUST function as the human-facing index: identify or link to all 7 per-tier assessment files
   (FR-013).
+- MUST contain a foundational posture score section aggregating all 7 tiers' scores,
+  weaknesses, estimated cost, and estimated risk into one cross-tier sixteen-factor summary,
+  citing concrete per-tier weaknesses and risk levels rather than restating the 16-factor table
+  (FR-023). This section requires all 7 tier files to already carry `Gap to 5`, `Quick Fix`, and
+  the strengthened Recommendation fields (`Size`, `Risk`, human/agent time-on-task); its absence
+  on any tier is treated the same as a structurally invalid tier file for this section's gate.
 - Each Mermaid block SHOULD be validated for syntax before write (see `../research.md`).
 
 ## Idempotency

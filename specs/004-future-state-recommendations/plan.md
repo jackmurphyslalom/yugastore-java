@@ -16,6 +16,12 @@ sections, cite a real finding from `meta/architecture-assessment/` (Feature 003'
 state that adoption requires a future `/speckit.specify` cycle. No application code or ADRs are
 produced.
 
+**2026-09-15 iteration**: The recommendation-document contract gains four additional fixed
+fields — T-shirt size, risk category, human time-on-task, and agent time-on-task — and the
+`## Recommendation` section must state an explicit rationale, not just the chosen option's
+name. No new tech stack or data source is introduced; sizing/risk/time-on-task values are
+author judgment layered on top of what Feature 003 already provides.
+
 **Hard blocking precondition (content only)**: `meta/architecture-assessment/` does not exist yet
 (verified at plan time — no top-level `meta/` folder exists in this repo). Feature 003's two
 skills (`rabbit-architecture-assessment-tier`, `rabbit-architecture-assessment-rollup`, per its
