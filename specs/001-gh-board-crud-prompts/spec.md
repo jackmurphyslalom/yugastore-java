@@ -117,7 +117,11 @@ underlying Issue remains open.
 **Acceptance Scenarios**:
 
 1. **Given** a valid ticket number, **When** the retire prompt is run with "done", **Then** the
-   ticket's Status changes to "Done" and the Issue itself is not closed.
+   ticket's Status changes to "Done" and our tooling issues no `gh issue close` call.
+   **Known limitation**: on a Project configured with GitHub's built-in "close issue when Status
+   set to Done" workflow, the Issue is closed anyway as a side effect of that Project automation,
+   not by this tooling; the "Issue remains open" guarantee only holds if that Project workflow is
+   disabled by a board admin (tracked in `docs/context/gaps.md`).
 2. **Given** a valid ticket number, **When** the retire prompt is run with "won't fix", **Then** the
    ticket's Status reflects that outcome and the prompt reminds the caller that a human must run
    `gh issue close` to actually close it. **Known limitation**: this outcome currently fails with a

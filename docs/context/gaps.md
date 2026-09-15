@@ -85,16 +85,42 @@ Keep unresolved or weak-signal context here so later feature work does not quiet
     `specs/intake/2026-09-14-client-requirements-interview.md`.
 
 - **Area**: No `Won't Fix` Status option configured for the gh-agent-board Projects (v2) field
-  (discovered during `/speckit.plan` for `specs/001-gh-board-crud-prompts/`)
+  (discovered during `/speckit.plan` for `specs/001-gh-board-crud-prompts/`, confirmed live
+  2026-09-15)
   - **Why it matters**: `specs/001-gh-board-crud-prompts/spec.md`'s "retire" prompt (FR-009) needs
-    to set Status to a value reflecting a "won't-fix" outcome, distinct from "done", but
-    `tools/gh-agent-board/config/board.json`'s configured Status options are only
-    `Todo`/`In Progress`/`In Review`/`Done`. It is unverified whether the live GitHub Project field
-    even has a matching option.
-  - **Evidence checked**: `tools/gh-agent-board/config/board.json` (`fields.Status.options`);
-    `specs/copilot-agent-issue-board/contracts/scripts.md` and `data-model.md` (Status Field table,
-    same four values); `specs/001-gh-board-crud-prompts/research.md` (decision recorded there).
+    to set Status to a value reflecting a "won't-fix" outcome, distinct from "done", but the live
+    Project's Status field has no matching option.
+  - **Evidence checked**: Live `gh project field-list 1 --owner @me` (2026-09-15) confirms the
+    real Status options are `Backlog`/`Ready`/`In progress`/`In review`/`Done` (no `Won't Fix`,
+    different casing/names than the spec's assumed `Todo`/`In Progress`/`In Review`/`Done`), and
+    Priority options are only `P0`/`P1`/`P2` (no `P3`). `tools/gh-agent-board/config/board.json`
+    has been updated to these real values; `config/board.smoke-test.json` records the same data.
+    Live run of `retire-ticket.sh --outcome wont-fix` against issue #33 confirmed it fails with
+    "field 'Status' or value 'Won't Fix' not configured in board.json", as expected.
   - **Next best reviewer or source**: A human with board-admin access must add a `Won't Fix`
-    option to the live Project's Status field and to `config/board.json` before the retire
-    prompt's "won't-fix" path can succeed; until then it fails with a clear "field not configured"
-    error rather than silently reusing `Done`.
+    (or equivalent) option to the live Project's Status field and to `config/board.json` before
+    the retire prompt's "won't-fix" path can succeed; until then it fails with a clear "field not
+    configured" error rather than silently reusing `Done`.
+
+- **Area**: GitHub Projects v2 built-in "close issue when Status = Done" workflow defeats the
+  gh-agent-board retire prompt's "never closes the Issue" guarantee (discovered during live smoke
+  test of `specs/001-gh-board-crud-prompts/`, 2026-09-15)
+  - **Why it matters**: `retire-ticket.sh --outcome done` (FR-009) never calls `gh issue close`
+    and its own output states the Issue "remains open — closing it is a human-only action." A live
+    test on issue #33 showed the underlying Issue was closed anyway (`stateReason: COMPLETED`,
+    closed at the same instant the Status field-write completed), because the Project has its own
+    default automation ("Item closed when Status set to Done") that closes the Issue as a side
+    effect of the field being set to a Done-mapped column. This is a real gap between the
+    documented tooling guarantee (spec.md US5, FR-009) and the actual observed behavior: the
+    `gh` CLI/API path used by our script is not the cause, but the net effect contradicts the
+    contract.
+  - **Evidence checked**: Live run against issue #33, 2026-09-15: `retire-ticket.sh --outcome done`
+    succeeded and printed the "Issue remains open" message; immediate `gh issue view 33
+    --json state,stateReason,closedAt` showed `{"state":"CLOSED","stateReason":"COMPLETED",
+    "closedAt":"2026-09-15T19:02:40Z"}`, matching the retire call's timestamp. Issue was manually
+    reopened afterward (`gh issue reopen 33`) as a corrective action, not by any script.
+  - **Next best reviewer or source**: A human with board-admin access must disable the "Item
+    closed when Status set to Done" (or equivalently named) default workflow on the live Project
+    (via the Project's own Workflows settings UI — not exposed by `gh project` CLI subcommands) if
+    the "never closes the Issue" guarantee must hold in practice. Until disabled, treat FR-009's
+    "Issue remains open" guarantee as unverified for the `done` outcome on this specific Project.

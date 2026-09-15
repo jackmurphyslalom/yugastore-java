@@ -29,6 +29,21 @@ Status; `P0`-`P3` for Priority) as keys, per FR-016.
 literal username with `unknown owner type` — set `"owner": "@me"` instead. For an org-owned
 project, use the org's literal login (e.g. `"my-org"`).
 
+**Auth scope quirk**: `gh project` subcommands need the `project` (or `read:project`) token
+scope, which the default `gh auth login` session may not have. Check with `gh auth status`. If
+missing, either run `gh auth refresh -s read:project` (interactive), or, for this repo, point at
+the PAT in the git-ignored `.env` file's `GH_CLASSIC_KEY` for a single invocation:
+`GH_TOKEN="$(grep '^GH_CLASSIC_KEY=' .env | cut -d= -f2-)" ./scripts/<script>.sh ...`. Never print,
+log, or commit the token value; `.env` is already in `.gitignore`.
+
+**Known limitation — Project automation can close an Issue behind this tooling's back**: none of
+these scripts ever call `gh issue close`, but if the live Project has a built-in "close issue when
+Status set to Done" workflow enabled, setting Status to a Done-mapped option (e.g. via
+`retire-ticket.sh --outcome done`) closes the underlying Issue as a side effect of that Project
+automation. Disable that workflow in the Project's own Workflows settings (not exposed via `gh
+project` CLI subcommands) if the "never closes the Issue" guarantee must hold. See
+`docs/context/gaps.md` for details.
+
 ## Scripts
 
 | Script | Purpose | FR |
