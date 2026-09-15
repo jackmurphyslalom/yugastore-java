@@ -1,0 +1,9 @@
+You have access to gh-agent-board. 
+
+First create a new issue using these tools, with the content to create a set of CRUD prompts, change owner prompt, and reassign prompt that accept a ticket number as input. 
+
+Ask me 5 clarifying question before we we generate a plan.
+
+Go through all question 1by1 in chat, sequentially. I will answer one and then you need to recalibrate based on my response. You will always use a SCQA format. You will always use asd-ste100 simplified technical english. You will always wait for me to say bingo before moving to the next questions. When i answer only with a Letter, you may infer Bingo. You can also ask me to agree or disagree to change direction. Never use semicolns or em dashes in any of your writing. Always list them A,B,C and provide your top recomendation"
+
+
