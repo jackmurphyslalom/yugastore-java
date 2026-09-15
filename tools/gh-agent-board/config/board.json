@@ -1,0 +1,25 @@
+{
+  "project_id": "REPLACE_WITH_PROJECT_NODE_ID",
+  "project_number": 0,
+  "owner": "REPLACE_WITH_OWNER",
+  "fields": {
+    "Status": {
+      "field_id": "REPLACE_WITH_STATUS_FIELD_ID",
+      "options": {
+        "Todo": "REPLACE_WITH_OPTION_ID",
+        "In Progress": "REPLACE_WITH_OPTION_ID",
+        "In Review": "REPLACE_WITH_OPTION_ID",
+        "Done": "REPLACE_WITH_OPTION_ID"
+      }
+    },
+    "Priority": {
+      "field_id": "REPLACE_WITH_PRIORITY_FIELD_ID",
+      "options": {
+        "P0": "REPLACE_WITH_OPTION_ID",
+        "P1": "REPLACE_WITH_OPTION_ID",
+        "P2": "REPLACE_WITH_OPTION_ID",
+        "P3": "REPLACE_WITH_OPTION_ID"
+      }
+    }
+  }
+}
