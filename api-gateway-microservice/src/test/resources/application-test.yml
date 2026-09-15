@@ -1,0 +1,6 @@
+# Test profile: Eureka and downstream microservices are not available in CI.
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false

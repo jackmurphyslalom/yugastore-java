@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import './index.css';
 
 class ShowProduct extends Component {
-  state = {product_id: "", product: undefined, productAlsoBought: []}
+  state = {product: undefined, productAlsoBought: []}
+  currentProductId = "";
 
   componentDidMount() {
     var new_product_id = this.props.match.params.id;
@@ -16,10 +17,10 @@ class ShowProduct extends Component {
   }
 
   fetchProductDetails = (new_product_id) => {
-    if (new_product_id != undefined &&
-        this.state.product_id != undefined &&
-        new_product_id != this.state.product_id) {
-      this.state.product_id = "" + new_product_id;
+    if (new_product_id !== undefined &&
+        this.currentProductId !== undefined &&
+        new_product_id !== this.currentProductId) {
+      this.currentProductId = "" + new_product_id;
       var url = '/products/details?asin=' + new_product_id;
       console.log("Fetching url: " + url);
       fetch(url)

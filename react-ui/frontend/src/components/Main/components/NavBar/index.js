@@ -24,7 +24,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { match, location, history } = this.props
+    const { location } = this.props
     const notIndex = location.pathname!=="/";
     return(
     <nav className={`nav-bar ${this.props.scrolled || notIndex ? 'nav-bar-scrolled' : '' }`}>
