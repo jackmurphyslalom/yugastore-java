@@ -13,6 +13,8 @@ Preserve an established project glossary's structure. For a new project, use con
 | YCQL | YugabyteDB's Cassandra-compatible API, used by products, checkout, orders, and inventory. | "Cassandra" (product name) when specifically meaning YugabyteDB's API | `resources/schema.cql`, `products-microservice/.../config/YugabyteYCQLConfig.java` | high | 2026-09-14 |
 | YSQL | YugabyteDB's Postgres-compatible API, used by the shopping cart. | "Postgres" (product name) when specifically meaning YugabyteDB's API | `resources/schema.sql`, `README.md` | high | 2026-09-14 |
 | Team Rabbit Mode | Team name for the current AI Immersion exercise using this repo as its working project (GitHub project: "Rabbit Mode Project"). | "the team," "session 518" | `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md` | high | 2026-09-14 |
+| Ticket | A GitHub Issue tracked on the gh-agent-board project board; identified by its Issue number and referenced by that number throughout agent prompts and scripts. | "issue" (when specifically meaning the board-tracked concept, prefer "Ticket") | `specs/001-gh-board-crud-prompts/spec.md` (Key Entities), `tools/gh-agent-board/scripts/*` | high | 2026-09-15 |
+| Owner / Assignee | The GitHub user or agent identity currently assigned to work a Ticket; "Owner" and "Assignee" are the same concept — there is no separate owner field. Changed via the change-owner/reassign prompts. | treating "owner" as a distinct field from GitHub's assignee | `specs/001-gh-board-crud-prompts/spec.md` (FR-004, Key Entities) | high | 2026-09-15 |
 
 ## Usage notes
 

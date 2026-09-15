@@ -99,5 +99,5 @@ missing framework script; report `MISSING_SCRIPT` with its installed path.
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan
-at specs/copilot-agent-issue-board/plan.md
+at specs/001-gh-board-crud-prompts/plan.md
 <!-- SPECKIT END -->
