@@ -45,5 +45,5 @@ Write only the requested text. No preamble, no summary, no closing remarks.
 2. Any semicolon? Replace with a period.
 3. Any contraction? Expand it.
 4. Any passive voice with a known actor? Make it active.
-5. Any "-ing" main verb, nominalization ("perform an analysis"), or phrasal verb ("spin up")? Replace with a plain verb.
+5. Any "-ing" main verb, nominalization ("perform an analysis"), or unnecessary phrasal verb ("spin up")? Replace with a plain verb.
 6. Same thing named two ways? Pick one name.
