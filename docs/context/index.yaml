@@ -45,15 +45,29 @@ entries:
     category: product
     path: docs/product/glossary.md
     summary: |
-      Seven confirmed terms: ASIN, Cronos (legacy internal codename), api-gateway, Eureka/service
-      discovery, YCQL, YSQL, Team Rabbit Mode.
+      Nine confirmed terms: ASIN, Cronos (legacy internal codename), api-gateway, Eureka/service
+      discovery, YCQL, YSQL, Team Rabbit Mode, Ticket, Owner/Assignee.
     source_paths:
       - resources/schema.cql
       - resources/schema.sql
       - checkout-microservice/src/main/java
       - docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md
+      - specs/001-gh-board-crud-prompts/spec.md
     confidence: high
-    last_verified: 2026-09-14
+    last_verified: 2026-09-15
+    status: verified
+  - id: decision-2026-09-15-gh-agent-board-crud-prompts
+    category: decisions
+    path: docs/decisions/2026-09-15-gh-agent-board-crud-prompts.md
+    summary: |
+      gh-agent-board CRUD/change-owner/reassign prompts reuse a shared ticket-resolution helper
+      (lib/board-item.sh) and the existing set-field.sh mutation path, and extend the audit action
+      vocabulary with a new change_owner action.
+    source_paths:
+      - specs/001-gh-board-crud-prompts/plan.md
+      - specs/001-gh-board-crud-prompts/research.md
+    confidence: high
+    last_verified: "2026-09-15"
     status: verified
   - id: repo-map
     category: context
