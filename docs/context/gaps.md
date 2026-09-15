@@ -83,3 +83,18 @@ Keep unresolved or weak-signal context here so later feature work does not quiet
     `react-ui` for existing health/metrics endpoints or admin screens before scoping the
     resilience feature described in
     `specs/intake/2026-09-14-client-requirements-interview.md`.
+
+- **Area**: No `Won't Fix` Status option configured for the gh-agent-board Projects (v2) field
+  (discovered during `/speckit.plan` for `specs/001-gh-board-crud-prompts/`)
+  - **Why it matters**: `specs/001-gh-board-crud-prompts/spec.md`'s "retire" prompt (FR-009) needs
+    to set Status to a value reflecting a "won't-fix" outcome, distinct from "done", but
+    `tools/gh-agent-board/config/board.json`'s configured Status options are only
+    `Todo`/`In Progress`/`In Review`/`Done`. It is unverified whether the live GitHub Project field
+    even has a matching option.
+  - **Evidence checked**: `tools/gh-agent-board/config/board.json` (`fields.Status.options`);
+    `specs/copilot-agent-issue-board/contracts/scripts.md` and `data-model.md` (Status Field table,
+    same four values); `specs/001-gh-board-crud-prompts/research.md` (decision recorded there).
+  - **Next best reviewer or source**: A human with board-admin access must add a `Won't Fix`
+    option to the live Project's Status field and to `config/board.json` before the retire
+    prompt's "won't-fix" path can succeed; until then it fails with a clear "field not configured"
+    error rather than silently reusing `Done`.
