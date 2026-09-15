@@ -25,6 +25,10 @@ You may also add supporting notes or checklists for that feature.
 
 `context/promotion-log.md` is the durable bridge back into `docs/`. It captures what later feature work discovered that might need promotion into product, architecture, context, pattern, or decision docs.
 
+See [`docs/process/user-stories-vs-specs.md`](../docs/process/user-stories-vs-specs.md) for the
+boundary between a GitHub Issue (backlog) and the `spec.md`/`plan.md`/`tasks.md` feature described
+here, and which one is authoritative at each stage.
+
 ## How Specs Get Created
 
 Use your agent commands in order:
