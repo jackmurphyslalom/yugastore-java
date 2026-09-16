@@ -38,6 +38,11 @@ package-lock.json
 __pycache__/
 *.pyc
 
+# Local YugabyteDB install (extracted from the gitignored *.tar.gz) and
+# stray duplicate binaries downloaded for local perf/data-load testing
+resources/yugabyte-*/
+resources/cassandra-loader.*
+
 # Spec Kit active-feature pointer (local working state)
 .specify/feature.json
 
