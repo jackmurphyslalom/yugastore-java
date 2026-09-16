@@ -1,6 +1,6 @@
 ---
 name: slalom-html-slide-decks
-description: Create portable Slalom-branded browser-native HTML deck packages with live index files, Slalom brand guardrails, design-language references, reusable visual primitives, and Playwright QA rendering. Use when the agent is asked to generate, iterate, screenshot, QA, or package a webpage slide deck, HTML presentation, scrollytelling deck, or slide-like web experience that should follow Slalom branding or Slalom PowerPoint template cues. Do not use for native PowerPoint, Google Slides, Keynote, or PDF decks unless the user explicitly wants an HTML implementation.
+description: Create portable Slalom-branded slide decks in either browser-native HTML (live index files, reusable visual primitives, Playwright QA) or Marp Markdown (single deck.md rendered via @marp-team/marp-cli, styled by the shared Slalom Marp theme). Use when the agent is asked to generate, iterate, screenshot, QA, or package a webpage/HTML deck, Marp deck, scrollytelling deck, or slide-like web experience that should follow Slalom branding or Slalom PowerPoint template cues. Do not use for native PowerPoint, Google Slides, or Keynote decks unless the user explicitly wants an HTML or Marp implementation.
 license: MIT
 ---
 
@@ -9,7 +9,12 @@ license: MIT
 This is the canonical skill body. Agent-specific wrappers (`.codex/SKILL.md`, `.agents/skills/slalom-html-slide-decks/SKILL.md`) delegate here. Scripts, references, and starter assets live alongside this file under `.shared/slalom-html-slide-decks/`.
 
 ## Core Contract
-Build a portable deck folder. The user opens top-level `index.html` and sees the live HTML deck. `review.html` exposes the live slide DOM for annotation/review. `renders/` exists only for QA/export evidence.
+Build a portable deck folder. Two output formats are supported and share the same Slalom brand rules:
+
+- **HTML** (default): the user opens top-level `index.html` and sees the live deck. `review.html` exposes the live slide DOM for annotation. `renders/` holds QA/export evidence.
+- **Marp**: a single `deck.md` Marp source that renders to `deck.html`/`deck.pdf` via `@marp-team/marp-cli`, styled by the shared Slalom Marp theme at `docs/slides/themes/slalom.css`.
+
+Choose HTML when the deck needs custom visual composition, per-slide layout primitives, or Playwright-driven visual QA. Choose Marp when the deck is markdown-authored, benefits from a single-file source, or needs quick PDF export. Both formats obey the same `references/slalom-brand-reference.md` rules and require the standard Slalom footer copyright on internal slides.
 
 Use `references/slalom-brand-reference.md`, `references/design-language/`, `references/html-deck-requirements.md`, and the packaged support files copied from `assets/slalom-html-deck-starter/`.
 
@@ -21,15 +26,21 @@ If the work includes net-new messaging, a major rewrite, client-facing executive
 3. Choose output placement:
    - Use an explicit user folder when provided.
    - Otherwise follow a clear project artifact/output convention when one exists.
-   - Otherwise create `outputs/<YYYY-MM-DD>-<deck-slug>/`.
+   - Otherwise create `outputs/<YYYY-MM-DD>-<deck-slug>/` for HTML and `outputs-marp/<YYYY-MM-DD>-<deck-slug>/` for Marp.
    - Ask if two plausible destinations would matter to the user.
-4. Create the deck package:
+4. Create the deck package. Pick the setup script that matches the requested format:
 
 ```bash
+# HTML deck (default)
 node "$SKILL_DIR/scripts/setup-deck.js" --title "Deck Title" --out ./outputs
+
+# Marp deck
+node "$SKILL_DIR/scripts/setup-deck-marp.js" --title "Deck Title" --out ./outputs-marp
 ```
 
-The package shape is:
+`setup-deck-marp.js` resolves the Slalom Marp theme in this order: `--theme=<path>` when provided, then repo-local `docs/slides/themes/slalom.css`, then `assets/marp/slalom.css` under the skill. If none resolve, it warns and falls back to Marp's default theme.
+
+The HTML package shape is:
 
 ```text
 <deck-slug>/
@@ -43,7 +54,19 @@ The package shape is:
 └── support/
 ```
 
-Agents edit `slides/*.html` and `deck.css`. `support/` is copied for portability; do not depend on `.shared/slalom-html-slide-decks/...` or `.agents/skills/...` at runtime.
+The Marp package shape is:
+
+```text
+<deck-slug>/
+├── deck.md
+├── README.md
+└── source/
+    ├── README.md
+    ├── story-brief.md
+    └── visual-qa-ledger.md
+```
+
+Agents edit `slides/*.html` and `deck.css` (HTML) or `deck.md` (Marp). For HTML, `support/` is copied for portability; do not depend on `.shared/slalom-html-slide-decks/...` or `.agents/skills/...` at runtime. For Marp, the theme is referenced by relative path from the deck folder; keep the deck and theme in the same repo or vendor the theme alongside `deck.md`.
 
 ## Design Workflow
 1. If a storytelling handoff exists, read `source/story-brief.md` and `source/visual-system.md`; otherwise derive a compact Storyline Gate before authoring.
@@ -89,6 +112,9 @@ Local gates:
 - Avoid nested cards and generic app chrome unless the slide content requires them.
 
 ## Build And QA
+
+### HTML
+
 Build the live `index.html`, render QA screenshots, generate a contact sheet, and run checks:
 
 ```bash
@@ -108,5 +134,19 @@ Open the live top-level `index.html`, `review.html`, the contact sheet, and full
 Fresh-eye semantic visual QA is mandatory for substantial/new client-facing decks, major visual rebuilds, and any deck where the reviewer has already caught a visual miss. Use `references/visual-qa-reviewer.md` for the reviewer prompt. It is optional for tiny formatting edits.
 
 If Playwright's managed browser is missing, run `npx playwright install chromium`. If Chromium fails on macOS with sandbox or crash errors, rerun the exact build command with escalated approval instead of changing slide code.
+
+### Marp
+
+Marp has no Playwright-driven build step. Render the deck directly with the Slalom theme:
+
+```bash
+cd ./outputs-marp/YYYY-MM-DD-deck-slug
+# Command shape is written into the deck's README.md at setup time.
+npx @marp-team/marp-cli deck.md --theme-set "<relative-path-to>/docs/slides/themes/slalom.css" -o deck.html
+```
+
+For PDF export add `--pdf --allow-local-files`. First run downloads the Marp CLI via `npx`; later runs reuse the cache.
+
+Manual QA for Marp decks: open `deck.html` in a browser, walk every slide, and confirm each slide's headline, body, and any table fits within the slide box without clipping. Marp does not auto-shrink content — overflowing slides must be shortened, split, or restructured. Record findings in `source/visual-qa-ledger.md`.
 
 Every generated internal slide must include `Copyright [year] Slalom. All Rights Reserved. Proprietary and Confidential.` unless the user explicitly requests a public/non-confidential variant.
