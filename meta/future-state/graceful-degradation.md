@@ -2,11 +2,24 @@
 
 ## Outcome
 
-We recommend adding Resilience4j circuit breakers, timeouts, and fallback responses at **both**
-`api-gateway-microservice`'s `*RestClient`s and `checkout-microservice`'s own
-`ShoppingCartRestClient`/`ProductCatalogRestClient`. This closes the only two hops in the call
-chain where a downstream slowdown or outage today turns into a raw, ungraceful failure, using a
-single proven pattern applied twice rather than new infrastructure.
+**Before** — An on-call engineer gets paged at 2am because one downstream service has slowed to
+a crawl. Every request waiting on it hangs instead of failing, threads pile up at both the point
+where the storefront's requests first arrive and the point one step further in where checkout
+calls out to cart and product data, and within minutes the whole system looks down instead of
+just the one dependency that actually is. The engineer's first job isn't fixing the real problem
+— it's untangling which of the two places is actually stuck.
+
+**After** — The same slowdown happens, but now the engineer opens the dashboard to a single,
+clearly-flagged dependency showing a fast, contained failure instead of a spreading outage.
+Requests that would have hung instead return an immediate, predictable response, the rest of the
+system keeps serving traffic normally, and the page — if it comes at all — points straight at the
+one dependency that needs attention.
+
+**Bridge** — Resilience4j circuit breakers, timeouts, and fallback responses wrapped around
+**both** `api-gateway-microservice`'s `*RestClient`s and `checkout-microservice`'s own
+`ShoppingCartRestClient`/`ProductCatalogRestClient` close the only two hops in the call chain
+where a downstream slowdown or outage today turns into a raw, ungraceful failure, using a single
+proven pattern applied twice rather than new infrastructure.
 
 **Top 10 solutions considered** (ranked, most to least viable):
 

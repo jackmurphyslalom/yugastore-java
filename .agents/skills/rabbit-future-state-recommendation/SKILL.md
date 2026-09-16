@@ -1,6 +1,6 @@
 ---
 name: rabbit-future-state-recommendation
-description: Reanalyze and regenerate a meta/future-state/ recommendation document in outcome-first form — Outcome, Client need, Solution, a ranked top-10 solution list, and a SWOT / Buy-vs-Build-vs-Partner / TCO comparative analysis of the top 6 — grounded in meta/architecture-assessment/ findings, per the recommendation-document-format contract. Use when the user wants to widen or reanalyze the possibility space for experimentation.md, graceful-degradation.md, or pricing-agility.md, or when architecture-assessment findings have changed and a recommendation should be refreshed. Not for creating new client-need documents or editing application code.
+description: Reanalyze and regenerate a meta/future-state/ recommendation document in outcome-first form — an Outcome told as Before / After / Bridge (a specific person's moment, then the change, then the technology that produces it), Client need, Solution, a ranked top-10 solution list, and a SWOT / Buy-vs-Build-vs-Partner / TCO comparative analysis of the top 6 — grounded in meta/architecture-assessment/ findings, per the recommendation-document-format contract. Use when the user wants to widen or reanalyze the possibility space for experimentation.md, graceful-degradation.md, or pricing-agility.md, when architecture-assessment findings have changed, or when an Outcome reads like a feature announcement and needs to be reframed around the human moment. Not for creating new client-need documents or editing application code.
 license: MIT
 ---
 
@@ -21,18 +21,18 @@ Exactly these 3 values are valid targets, each mapping to one file under `meta/f
 
 ## Execution Model: one subagent per document
 
-- Each future-state recommendation document's reanalysis (Steps 1-7 below) MUST be conducted by
+- Each future-state recommendation document's reanalysis (Steps 1-8 below) MUST be conducted by
   its own dedicated subagent — never inline by the invoking/orchestrating agent itself.
 - **Single-target request** (one of the 3 values above): dispatch exactly one subagent, give it
-  the target and this skill's Steps 1-7, and let it read evidence, rank solutions, run the
+  the target and this skill's Steps 1-8, and let it read evidence, rank solutions, run the
   comparative analysis, and write the one output file itself.
 - **Multi-target request** ("reanalyze all three", "reanalyze the possibility space", or no
   specific target named): dispatch one subagent per target, in parallel (up to 3 total, one per
-  recognized target), each independently running Steps 1-7 for its single document. Subagents
+  recognized target), each independently running Steps 1-8 for its single document. Subagents
   never coordinate with each other and never write to any file but their own target.
 - The invoking/orchestrating agent's own job is limited to: validating the requested target(s)
   against the fixed enumeration, dispatching the subagent(s), collecting each subagent's
-  Completion Report, and then performing Step 8 (index sync) itself exactly once after all
+  Completion Report, and then performing Step 9 (index sync) itself exactly once after all
   dispatched subagents have finished — never before, and never delegated to a subagent, since
   concurrent subagents editing the shared `README.md` would race.
 
@@ -82,7 +82,7 @@ statements that would apply to any tier:
    SWOT/Buy-Build-Partner preference.
 
 Do not run this three-framework analysis on solutions ranked 7-10 — they are noted only in
-`## Alternatives considered` (Step 6).
+`## Alternatives considered` (Step 7).
 
 ## Step 5: Choose and rewrite the recommendation
 
@@ -97,7 +97,28 @@ Per the contract's `## Recommendation` template, rewrite naming exactly one of t
   `/speckit.specify` cycle before any implementation begins — this document does not authorize
   implementation."
 
-## Step 6: Rewrite alternatives considered
+## Step 6: Write the Outcome (Before / After / Bridge)
+
+Write `## Outcome` as a three-part story, per the contract's storytelling framework — never lead
+with the chosen solution's name:
+
+- **Before**: 1-2 sentences naming a specific person in a specific moment (a customer, a product
+  manager, a developer, an on-call engineer — never "users" in the abstract) and what fails for
+  them, in plain language with no jargon and no technology names. If the document is
+  developer/operator-facing with no end customer in the loop, the person is the developer or
+  operator who feels the failure, not a storefront customer.
+- **After**: 1-2 sentences showing the same moment once the chosen solution (Step 5) is in place —
+  what that person now sees or feels. Still no jargon, no technology names — the experience, not
+  the mechanism.
+- **Bridge**: 1-2 sentences naming the chosen solution and explaining exactly what it does to
+  produce that difference. This is the only place in Outcome where the technology name belongs.
+
+Preserve the factual accuracy and full scope of the original Outcome (e.g. if it covers two hops
+or three tiers, the rewrite must too) — only reorder where the technology name appears, never
+drop or invent a claim. Then append the ranked top-10 list (from Step 3) under
+**Top 10 solutions considered**, per the contract template.
+
+## Step 7: Rewrite alternatives considered
 
 Rewrite `## Alternatives considered` with:
 
@@ -107,17 +128,18 @@ Rewrite `## Alternatives considered` with:
 - One bullet per solution ranked 7-10, each with a brief one-line reason it ranked below the top
   6 (no full three-framework analysis required for these).
 
-## Step 7: Write the file
+## Step 8: Write the file
 
 - Overwrite exactly one file: `meta/future-state/{target}.md`, following the contract's required
-  section order: `## Outcome` (with the ranked top-10 list), `## Client need`, `## Solution`,
-  `## Comparative Analysis (Top 6)`, `## Recommendation`, `## Alternatives considered`.
-- Never modify any other file under `meta/future-state/` except `README.md` (Step 8 — performed
+  section order: `## Outcome` (Before/After/Bridge plus the ranked top-10 list), `## Client need`,
+  `## Solution`, `## Comparative Analysis (Top 6)`, `## Recommendation`, `## Alternatives
+  considered`.
+- Never modify any other file under `meta/future-state/` except `README.md` (Step 9 — performed
   by the orchestrating agent, not this subagent), and never touch `*-microservice/src`,
   `react-ui/`, or `docs/architecture/adr/`.
-- Return your Completion Report to the orchestrating agent; do not attempt Step 8 yourself.
+- Return your Completion Report to the orchestrating agent; do not attempt Step 9 yourself.
 
-## Step 8: Sync the index
+## Step 9: Sync the index
 
 - If the rewritten `## Recommendation`'s Size or Risk differs from the corresponding row in
   `meta/future-state/README.md`, update that row. Keep the `Status` column's existing semantics
@@ -126,7 +148,8 @@ Rewrite `## Alternatives considered` with:
 
 ## Completion Report
 
-Report: the validated target, the output file path, how many solutions are in the ranked top-10
-list (and how many are new versus the prior version), which 6 got full comparative analysis, the
-chosen option, and whether `README.md` was updated.
+Report: the validated target, the output file path, whether the Outcome follows the
+Before/After/Bridge structure, how many solutions are in the ranked top-10 list (and how many are
+new versus the prior version), which 6 got full comparative analysis, the chosen option, and
+whether `README.md` was updated.
 

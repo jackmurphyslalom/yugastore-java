@@ -2,10 +2,19 @@
 
 ## Outcome
 
-We recommend a dedicated `pricing_rules` table in YugabyteDB, read by `products-microservice`
-and `checkout-microservice` at request time. This is the lowest-lift path that removes pricing
-changes from the build/redeploy cycle entirely, without introducing a new service or extending
-the three-way domain-model duplication already flagged as a risk in this system.
+**Before** — A backend engineer gets a Monday-morning request to change a discount percentage for
+the coming week. To make that one-number change stick everywhere the price shows up, they have
+to edit code, open a pull request, wait for review, and coordinate a redeploy of two separate
+services before the new price actually takes effect at checkout.
+
+**After** — The same engineer opens an internal tool, updates the rule, and it takes effect at the
+next storefront request and at checkout — no code change, no pull request, no redeploy of either
+service, and no risk of the catalog page and the checkout page briefly disagreeing on price.
+
+**Bridge** — A dedicated `pricing_rules` table in YugabyteDB, read by `products-microservice` and
+`checkout-microservice` at request time, makes this possible: it removes pricing changes from the
+build/redeploy cycle entirely, without introducing a new service or extending the three-way
+domain-model duplication already flagged as a risk in this system.
 
 **Top 10 solutions considered** (ranked, most to least viable):
 

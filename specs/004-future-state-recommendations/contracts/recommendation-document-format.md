@@ -19,8 +19,22 @@ expansion). v1 remains documented further down for historical reference only.
 
 ## Outcome
 
-{2-4 sentences leading with what we recommend and the resulting business outcome, before any
- client-need restatement or analysis.}
+**Before** — {1-2 sentences. Name a specific person in a specific moment (a customer, a product
+ manager, a developer, an on-call engineer — never "users" in the abstract). Show what fails and
+ what they experience as a result, in plain language with no jargon and no technology names.}
+
+**After** — {1-2 sentences. The same moment, but the change is in place. Show what that person
+ now sees or feels, still with no jargon and no technology names — the experience, not the
+ mechanism.}
+
+**Bridge** — {1-2 sentences. Now name the technology and explain exactly what it does to produce
+ that difference — this is where the library, service, or pattern name belongs, and the only
+ place in Outcome where it should appear.}
+
+(If the document is developer/operator-facing with no end customer in the loop — e.g. a
+ service-to-service resilience pattern — the "person" in Before/After is the developer or
+ operator who feels the failure or the fix, not a storefront customer. The three-part structure
+ still applies.)
 
 **Top 10 solutions considered** (ranked, most to least viable):
 
@@ -101,6 +115,16 @@ refactor — FR-014}
 3. **TCO** is the discipline that prevents a good-looking sticker price from hiding real cost —
    covers integration, operations, migration, and retirement cost, and may reverse the initial
    SWOT/Buy-Build-Partner preference.
+
+**Outcome storytelling framework** (Before / After / Bridge — applies to `## Outcome` only):
+
+- Leads with the reader's world, not the solution — the burden of imagining why a change matters
+  should not fall on the reader.
+- Preserve the factual accuracy of the original and the full scope (number of hops/tiers covered)
+  — only reorder where the technology name appears, never drop or invent a claim.
+- Drop: opening with a solution/library/service name, jargon in Before/After (no "circuit
+  breaker", "config server", etc. until Bridge), and passive constructions that hide the person
+  ("graceful degradation is achieved by...").
 
 **Verbatim client need text per file** (FR-004 — copy exactly, do not paraphrase):
 

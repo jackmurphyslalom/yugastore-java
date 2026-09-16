@@ -2,11 +2,21 @@
 
 ## Outcome
 
-We recommend a Spring Cloud Config Server as the single runtime-configuration source for
-ranking, UX, and pricing toggles. This removes today's single biggest experimentation blocker —
-every behavior change currently requires a code change and a full redeploy — for the lowest
-incremental infrastructure cost, by extending a dependency family (Spring Cloud/Eureka) all 7
-tiers already run.
+**Before** — On Thursday afternoon, a product manager wants to try a lower weekend price on a
+slow-moving product and a tweaked ranking order to see if it sells better. They file a ticket, an
+engineer has to pick it up, change code, and redeploy, and by the time the change goes live the
+weekend window it was meant for has already passed.
+
+**After** — The same product manager now opens the toggle screen, changes the price and ranking
+values themselves, and the storefront reflects the new values within seconds — for products,
+ranking, and checkout pricing alike. Rolling a change back or retiring it is just as immediate,
+with no engineer and no redeploy in the loop.
+
+**Bridge** — A Spring Cloud Config Server becomes the single runtime-configuration source for
+ranking, UX, and pricing toggles, extending the Spring Cloud/Eureka dependency family every one of
+the 7 tiers already runs; `products-microservice`, `checkout-microservice`, and `react-ui`'s proxy
+target read current values from it directly, at the lowest incremental infrastructure cost of any
+option analyzed.
 
 **Top 10 solutions considered** (ranked, most to least viable):
 
