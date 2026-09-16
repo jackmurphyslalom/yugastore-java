@@ -6,7 +6,7 @@
 
 Closes #
 
-## Major change? Update the Marp slide deck
+## Major change? Update or regenerate the slide deck
 
 If this PR introduces a **major** change (new feature, architecture decision, significant
 refactor, or anything worth calling out in a demo/retro), add a slide to
@@ -17,6 +17,10 @@ for the full authoring guide.
 
 - [ ] Not a major change — no deck update needed
 - [ ] Deck updated with a slide summarizing this change
+- [ ] Regenerate the slide deck
+
+Check `Regenerate the slide deck` when you want the deck-creating agent to open a follow-up pull
+request that reruns `rabbit-deck-gen` and refreshes the Team Rabbit Mode recap deck for review.
 
 **Render the deck to check your slide:**
 
