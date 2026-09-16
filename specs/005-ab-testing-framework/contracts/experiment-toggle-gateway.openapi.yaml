@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Experiment Toggle — Gateway Read Surface
+  version: "1.0.0"
+  description: >
+    Public, read-only surface exposed by api-gateway-microservice so react-ui can fetch
+    currently active UX/ranking experiment toggle values, per Principle I
+    (Gateway-Only Service Boundary). This is the only externally-reachable path to
+    experiment toggle data (FR-010); the write/admin surface is internal-only
+    (see experiment-toggle-admin.openapi.yaml).
+servers:
+  - url: http://localhost:8081
+    description: api-gateway-microservice (localhost-only deployment, ADR-0001)
+paths:
+  /gateway/experiments/toggles:
+    get:
+      summary: Get all currently active experiment toggle values
+      operationId: getActiveExperimentToggles
+      responses:
+        "200":
+          description: Currently active toggle values, fanned out from config-server-microservice
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: "#/components/schemas/ExperimentToggle"
+              example:
+                experiment.ranking-strategy:
+                  value: "default"
+                  updatedAt: "2026-09-16T12:00:00Z"
+                experiment.ux-variant:
+                  value: "control"
+                  updatedAt: "2026-09-16T12:00:00Z"
+        "503":
+          description: >
+            Config Source unreachable and the gateway has no last-known-good value cached
+            yet (fresh-deploy edge case, FR-007). Never returned once any value has been
+            successfully fetched at least once.
+components:
+  schemas:
+    ExperimentToggle:
+      type: object
+      required: [value, updatedAt]
+      properties:
+        value:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
