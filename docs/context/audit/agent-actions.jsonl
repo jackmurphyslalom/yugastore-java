@@ -40,3 +40,6 @@
 {"timestamp":"2026-09-15T23:04:05Z","agent_id":"copilot","session_id":"perf-test-ticket","action":"set_field","target":"PVTI_lAHODtCRE84Bjfdczg7Iusg","result":"succeeded","reason":null,"details":{"field":"Status","value":"Backlog"}}
 {"timestamp":"2026-09-16T00:29:37Z","agent_id":"copilot","session_id":"manual-cli","action":"create_issue","target":"60","result":"succeeded","reason":null,"details":{"item_id":"PVTI_lAHODtCRE84Bjfdczg7JNdc"}}
 {"timestamp":"2026-09-16T00:29:44Z","agent_id":"copilot","session_id":"manual-cli","action":"set_field","target":"PVTI_lAHODtCRE84Bjfdczg7JNdc","result":"succeeded","reason":null,"details":{"field":"Status","value":"Backlog"}}
+{"timestamp":"2026-09-16T04:51:05Z","agent_id":"claude-code","session_id":"seed-data-agents-e2e-tests","action":"create_issue","target":"62","result":"succeeded","reason":null,"details":{"item_id":"PVTI_lAHODtCRE84Bjfdczg7KsTU"}}
+{"timestamp":"2026-09-16T04:51:13Z","agent_id":"claude-code","session_id":"seed-data-agents-e2e-tests","action":"create_issue","target":"63","result":"succeeded","reason":null,"details":{"item_id":"PVTI_lAHODtCRE84Bjfdczg7KsXI"}}
+{"timestamp":"2026-09-16T04:51:20Z","agent_id":"claude-code","session_id":"seed-data-agents-e2e-tests","action":"create_issue","target":"64","result":"succeeded","reason":null,"details":{"item_id":"PVTI_lAHODtCRE84Bjfdczg7KsZk"}}
