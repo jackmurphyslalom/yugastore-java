@@ -1,0 +1,336 @@
+openapi: 3.0.3
+info:
+  title: Externalized Dynamic Pricing — Gateway REST Surface
+  version: 0.1.0
+  description: |
+    Public REST contract exposed by `api-gateway-microservice` for the externalized
+    dynamic pricing feature. Everything in this file is reachable from outside the
+    reactor and MUST go through the gateway (Principle I).
+
+    Merchandiser writes are authorized by the `X-Merchandiser-Id` header + an
+    allow-list in `application.yml` for iteration 1 — see research decision R-5
+    in ../research.md.
+servers:
+  - url: http://localhost:8080
+    description: Local gateway (default docker-run.sh port).
+
+tags:
+  - name: pricing-read
+    description: Shopper-facing effective-price reads. Anonymous.
+  - name: pricing-admin
+    description: Merchandiser writes. Requires `X-Merchandiser-Id` allow-listed.
+  - name: pricing-history
+    description: Merchandiser audit reads (Story 5). Requires `X-Merchandiser-Id`.
+
+paths:
+  /pricing/effective:
+    get:
+      tags: [pricing-read]
+      summary: Resolve the effective price for a single ASIN at now.
+      operationId: getEffectivePriceForAsin
+      parameters:
+        - in: query
+          name: asin
+          required: true
+          schema: { type: string, minLength: 1 }
+      responses:
+        '200':
+          description: Effective price resolved. `serving_mode` records whether the pricing source, the cache, or the list-price fallback served.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EffectivePrice' }
+        '404':
+          description: ASIN unknown to the catalog.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+
+  /pricing/effective/batch:
+    post:
+      tags: [pricing-read]
+      summary: Resolve effective price for a batch of ASINs (product-list and cart-render paths).
+      operationId: getEffectivePriceBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [asins]
+              properties:
+                asins:
+                  type: array
+                  minItems: 1
+                  maxItems: 500
+                  items: { type: string, minLength: 1 }
+      responses:
+        '200':
+          description: Batch of resolutions. Unknown ASINs are omitted from `results` and listed in `unknown_asins`.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [results, unknown_asins, serving_mode]
+                properties:
+                  results:
+                    type: array
+                    items: { $ref: '#/components/schemas/EffectivePrice' }
+                  unknown_asins:
+                    type: array
+                    items: { type: string }
+                  serving_mode:
+                    $ref: '#/components/schemas/ServingMode'
+
+  /pricing/rules:
+    post:
+      tags: [pricing-admin]
+      summary: Create a new price rule.
+      operationId: createPriceRule
+      parameters:
+        - $ref: '#/components/parameters/MerchandiserIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreatePriceRuleRequest' }
+      responses:
+        '201':
+          description: Created. Response is the persisted rule.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PriceRule' }
+        '400':
+          description: Validation error (see data-model.md § Validation rules for `code` values).
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /pricing/rules/{rule_id}:
+    parameters:
+      - in: path
+        name: rule_id
+        required: true
+        schema: { type: string, format: uuid }
+    put:
+      tags: [pricing-admin]
+      summary: Update an existing price rule.
+      operationId: updatePriceRule
+      parameters:
+        - $ref: '#/components/parameters/MerchandiserIdHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdatePriceRuleRequest' }
+      responses:
+        '200':
+          description: Updated. Response is the resulting rule.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PriceRule' }
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: Rule not found or already retracted.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+    delete:
+      tags: [pricing-admin]
+      summary: Retract a price rule (soft delete).
+      operationId: retractPriceRule
+      parameters:
+        - $ref: '#/components/parameters/MerchandiserIdHeader'
+      responses:
+        '204':
+          description: Retracted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: Rule not found.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '409':
+          description: Rule was already retracted.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+
+  /pricing/rules/history:
+    get:
+      tags: [pricing-history]
+      summary: Query change history by ASIN or by category (Story 5).
+      operationId: getPriceRuleHistory
+      parameters:
+        - $ref: '#/components/parameters/MerchandiserIdHeader'
+        - in: query
+          name: asin
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 500, default: 100 }
+      responses:
+        '200':
+          description: Ordered by `event_at DESC`. Exactly one of `asin` or `category` MUST be provided.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [entries]
+                properties:
+                  entries:
+                    type: array
+                    items: { $ref: '#/components/schemas/PriceRuleHistoryEntry' }
+        '400':
+          description: Neither or both of `asin` and `category` provided.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/Problem' }
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  parameters:
+    MerchandiserIdHeader:
+      in: header
+      name: X-Merchandiser-Id
+      required: true
+      schema: { type: string, minLength: 1 }
+      description: Local-only merchandiser identifier (iteration 1). See research.md R-5.
+
+  responses:
+    Unauthorized:
+      description: `X-Merchandiser-Id` header missing.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Forbidden:
+      description: `X-Merchandiser-Id` value is not in the allow-list.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+
+  schemas:
+    ScopeKind:
+      type: string
+      enum: [ASIN, CATEGORY]
+    RuleKind:
+      type: string
+      enum: [LIST_PRICE_OVERRIDE, PROMOTION]
+    ServingMode:
+      type: string
+      enum: [SOURCE, CACHE, LIST_PRICE_FALLBACK]
+      description: Which serving path produced this result. Exposed also on `/actuator/info` (FR-011).
+
+    CreatePriceRuleRequest:
+      type: object
+      required: [scope_kind, scope_value, rule_kind, unit_price, priority]
+      properties:
+        scope_kind: { $ref: '#/components/schemas/ScopeKind' }
+        scope_value: { type: string, minLength: 1 }
+        rule_kind: { $ref: '#/components/schemas/RuleKind' }
+        unit_price: { type: number, exclusiveMinimum: 0 }
+        starts_at:
+          type: string
+          format: date-time
+          description: Required when `rule_kind = PROMOTION`, forbidden otherwise.
+        ends_at:
+          type: string
+          format: date-time
+          description: Required when `rule_kind = PROMOTION`, forbidden otherwise. Must be > `starts_at`.
+        priority: { type: integer, minimum: 0, default: 0 }
+
+    UpdatePriceRuleRequest:
+      type: object
+      description: Partial update. Only fields present in the body are changed. `scope_kind` and `scope_value` are not mutable (retract and create a new rule instead).
+      properties:
+        rule_kind: { $ref: '#/components/schemas/RuleKind' }
+        unit_price: { type: number, exclusiveMinimum: 0 }
+        starts_at: { type: string, format: date-time, nullable: true }
+        ends_at: { type: string, format: date-time, nullable: true }
+        priority: { type: integer, minimum: 0 }
+
+    PriceRule:
+      type: object
+      required: [rule_id, scope_kind, scope_value, rule_kind, unit_price, priority, created_at, created_by, updated_at, updated_by, active]
+      properties:
+        rule_id: { type: string, format: uuid }
+        scope_kind: { $ref: '#/components/schemas/ScopeKind' }
+        scope_value: { type: string }
+        rule_kind: { $ref: '#/components/schemas/RuleKind' }
+        unit_price: { type: number }
+        starts_at: { type: string, format: date-time, nullable: true }
+        ends_at: { type: string, format: date-time, nullable: true }
+        priority: { type: integer }
+        created_at: { type: string, format: date-time }
+        created_by: { type: string }
+        updated_at: { type: string, format: date-time }
+        updated_by: { type: string }
+        active: { type: boolean }
+
+    EffectivePrice:
+      type: object
+      required: [asin, unit_price, source, list_price, resolved_at, serving_mode]
+      properties:
+        asin: { type: string }
+        unit_price: { type: number, exclusiveMinimum: 0 }
+        source:
+          type: string
+          enum: [RULE, LIST_PRICE]
+        source_rule_id: { type: string, format: uuid, nullable: true }
+        list_price: { type: number, exclusiveMinimum: 0 }
+        resolved_at: { type: string, format: date-time }
+        serving_mode: { $ref: '#/components/schemas/ServingMode' }
+
+    PriceRuleHistoryEntry:
+      type: object
+      required: [rule_id, event_at, event_kind, actor, scope_kind, scope_value, rule_kind]
+      properties:
+        rule_id: { type: string, format: uuid }
+        event_at: { type: string, format: date-time }
+        event_kind:
+          type: string
+          enum: [CREATED, UPDATED, RETRACTED]
+        actor: { type: string }
+        scope_kind: { $ref: '#/components/schemas/ScopeKind' }
+        scope_value: { type: string }
+        rule_kind: { $ref: '#/components/schemas/RuleKind' }
+        unit_price_before: { type: number, nullable: true }
+        unit_price_after: { type: number, nullable: true }
+        starts_at_before: { type: string, format: date-time, nullable: true }
+        starts_at_after: { type: string, format: date-time, nullable: true }
+        ends_at_before: { type: string, format: date-time, nullable: true }
+        ends_at_after: { type: string, format: date-time, nullable: true }
+        priority_before: { type: integer, nullable: true }
+        priority_after: { type: integer, nullable: true }
+
+    Problem:
+      type: object
+      description: RFC 7807-shaped error body. `code` is a stable machine-readable error identifier — see ../data-model.md § Validation rules.
+      required: [type, title, status, code]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        code: { type: string }
+        detail: { type: string }
+        instance: { type: string }

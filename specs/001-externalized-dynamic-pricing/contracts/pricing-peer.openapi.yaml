@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Externalized Dynamic Pricing — Peer REST Surface (checkout ↔ pricing)
+  version: 0.1.0
+  description: |
+    Internal reactor-only REST contract. `checkout-microservice` discovers
+    `pricing-microservice` via Eureka and calls this surface at order placement
+    to resolve the effective unit price before writing the order line.
+
+    This is a peer call, mirroring the existing checkout → products peer call
+    via `ProductCatalogRestClient`. It is NOT reachable through
+    `api-gateway-microservice` and MUST NOT be exposed there — see research
+    decision R-1 in ../research.md.
+
+    The path shape here intentionally matches the gateway's
+    `/pricing/effective` and `/pricing/effective/batch` reads for
+    implementation simplicity (pricing-microservice serves the same handler
+    for both callers); the gateway does not proxy this endpoint.
+
+servers:
+  - url: http://localhost:8083
+    description: Local pricing-microservice.
+
+paths:
+  /pricing/effective:
+    get:
+      summary: Resolve effective price for a single ASIN. Identical shape to the gateway surface.
+      operationId: resolveEffectivePriceForAsin
+      parameters:
+        - in: query
+          name: asin
+          required: true
+          schema: { type: string, minLength: 1 }
+      responses:
+        '200':
+          description: Effective price resolved.
+          content:
+            application/json:
+              schema: { $ref: 'pricing-rest.openapi.yaml#/components/schemas/EffectivePrice' }
+        '404':
+          description: ASIN unknown to the catalog.
+
+  /pricing/effective/batch:
+    post:
+      summary: Resolve effective price for a batch of ASINs (used by checkout to resolve the whole cart in one round trip).
+      operationId: resolveEffectivePriceBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [asins]
+              properties:
+                asins:
+                  type: array
+                  minItems: 1
+                  maxItems: 500
+                  items: { type: string, minLength: 1 }
+      responses:
+        '200':
+          description: Batch resolution.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [results, unknown_asins, serving_mode]
+                properties:
+                  results:
+                    type: array
+                    items: { $ref: 'pricing-rest.openapi.yaml#/components/schemas/EffectivePrice' }
+                  unknown_asins:
+                    type: array
+                    items: { type: string }
+                  serving_mode:
+                    { $ref: 'pricing-rest.openapi.yaml#/components/schemas/ServingMode' }

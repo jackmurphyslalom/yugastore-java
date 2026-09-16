@@ -55,6 +55,17 @@ Young Kim
 
 ---
 
+# Pricing agility: spec authored
+
+- Turned the "pricing agility" recommendation into a full Spec-Kit feature spec: `specs/001-externalized-dynamic-pricing/`
+- Future state: prices externalized from the catalog into a new pricing microservice (behind `api-gateway-microservice`, per the constitution) — merchandisers change prices/promotions with no redeploy
+- Five prioritized user stories: merchandiser self-service pricing, one consistent effective price across storefront/cart/checkout, immutable order-line price snapshots, graceful degradation when pricing is down, auditable change history
+- Preserves the existing stock-check and order-write path — pricing is a read-side concern, not a transactional change
+- Coordinates with, but doesn't duplicate, `specs/002-graceful-degradation-resilience/`
+- Three open clarifications flagged for `/speckit.clarify`: merchandiser auth (login-microservice is out of scope), whether A/B pricing experimentation ships with it, and the pricing datastore (YCQL vs. YSQL vs. config)
+
+---
+
 # Performance & resiliency testing
 
 - Built a k6 + Toxiproxy load/fault-injection suite to find the app's failure/bottleneck point under simulated traffic (issue #55)
@@ -80,4 +91,4 @@ Young Kim
 
 # Recap
 
-One continuous thread: bootstrap the AI-SDLC framework and its supporting docs/tooling, then raise the CI and testing floor on top of it — all hand-curated here from this repo's own decisions, docs, and merged PRs.
+One continuous thread: bootstrap the AI-SDLC framework and its supporting docs/tooling, raise the CI and testing floor on top of it, then turn an assessment recommendation into a real spec (dynamic pricing) — all hand-curated here from this repo's own decisions, docs, and merged PRs.
