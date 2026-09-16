@@ -1,0 +1,13 @@
+This skill's factor definitions and evaluation guidance paraphrase material from:
+
+- "The Twelve-Factor App" methodology by Adam Wiggins and contributors:
+  https://www.12factor.net/
+  Last updated 2017. Original content © the respective authors.
+
+- "From the Twelve to Sixteen-Factor App: Rethinking app dev for AI" by
+  Kunal Kumar Gupta, published on the Google Cloud blog (October 15, 2025):
+  https://cloud.google.com/transform/from-the-twelve-to-sixteen-factor-app
+
+All factor descriptions and evidence signals in `references/sixteen-factors.md`
+are paraphrased summaries and evaluation heuristics written for this skill.
+No source text has been copied verbatim.
