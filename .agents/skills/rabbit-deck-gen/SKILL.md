@@ -63,6 +63,17 @@ Drop order for `--max-slides`:
 
 When a slide is dropped, do not silently merge its content into another slide; the recap intentionally omits it. Renumber the remaining slides sequentially.
 
+## Content Style
+
+Apply these rules to every generated slide. They override any "punchy" impulse from the style lens.
+
+- No eyebrows, kickers, motivational closers, or manufactured subtitles. Slide titles are literal (e.g., "Meet the team", not "Three humans in the loop").
+- No headline numbers. Counts appear in the body only when the count is the claim (e.g., "38 no-merge commits landed on Sep 15"). Do not title a slide with a number (`42 skills, five families`, `51 commits, one team, three days`).
+- No decorative aggregates. Do not report totals that combine unrelated things (e.g., a sum of file-touches across agent-mirror folders) unless the sum answers a specific question on the slide.
+- No metaphorical framing (`three days built the runway`, `the sprint's spike day`, `carried the load`). State what happened.
+- One claim per slide. If a bucket, theme, or list has no signal for the window, omit it — do not list "0" for completeness.
+- Prefer verbs and nouns over adjectives. Cut every word that does not carry the claim.
+
 ## Steps
 
 1. **Resolve inputs.** Determine `FORMAT`, `MAX_SLIDES`, `SINCE`, `OUT`, `OUT_MARP`, `STYLE_LENS`, `ADDITIONAL_CONTENT`, and `AUDIENCE` from `$ARGUMENTS` and the defaults above. Do not ask about anything already defaulted.
@@ -105,18 +116,18 @@ When a slide is dropped, do not silently merge its content into another slide; t
      --out "$OUT_MARP"
    ```
 
-   Then author the effective slide list in the package(s). Slalom brand rules from the slalom skill remain authoritative — the below is only the content brief for each slide:
+   Then author the effective slide list in the package(s). Slalom brand rules from the slalom skill remain authoritative, and the Content Style rules above apply to every slide. The below is only the content brief:
 
-   1. **Intro / Cover.** "Team Rabbit Mode" as the anchor headline. Subhead: "YugaStore Recap". HTML: use Slalom cover geometry per `references/slalom-brand-reference.md`. Marp: use `<!-- _class: lead -->` on the first slide for the branded title screen.
-   2. **Meet the team.** Young Chul Kim, Jack Murphy, Michael Apfelbeck. One line per member (roles inferred from git author distribution when possible; otherwise omit roles).
-   3. **The project — brownfield YugaStore.** One-sentence project frame (Spring Boot microservices commerce reference app), the tiers (`eureka-server-local`, `products-microservice`, `checkout-microservice`, `cart-microservice`, `api-gateway-microservice`, `login-microservice`, `react-ui`), and a single visual (HTML) or compact table (Marp) that encodes "brownfield" (existing system + our recent additions).
-   4. **Agentic skills inventory.** From step 3's `.agents/skills/*` enumeration. Prefer grouping by prefix (`rabbit-*`, `speckit-*`, `aisdlc-*`, other) with counts and 1-line descriptions for headline skills only. Do not dump every description.
-   5. **Copilot prompts and MCP servers.** HTML: two-column or lane-based layout. Marp: two adjacent sections (`### Prompts`, `### MCP servers`). Show configured servers by name; call out Context7 and github if present.
-   6. **Progress at a glance.** Total commits and commits-per-day chart (HTML) or table (Marp) from step 4. Include the window (`SINCE` value) on the slide.
-   7. **What we shipped — themes.** Grouped notable commit messages by theme (features / docs / specs / infra / tests). Use a lane layout (HTML) or grouped bullet list (Marp), not a raw commit list.
-   8. **Where we worked.** Files/areas bucket totals from step 4. Highlight top 3 buckets by count; smaller buckets can share a "Also touched" line.
-   9. **Spec Kit artifacts created.** List new `specs/*/{spec,plan,tasks}.md` files from step 4. If none, replace this slide with a "Spec Kit activity" slide summarizing edits to existing spec artifacts instead.
-   10. **What's next / close.** One outcome-oriented headline plus 2-3 follow-through items grounded in the git recap (e.g. open feature branches, unmerged PRs). Include the standard Slalom internal footer copyright unless the user asked for a public variant.
+   1. **Cover.** Title: "Team Rabbit Mode — YugaStore Recap". Include the window (`SINCE`). HTML: use Slalom cover geometry per `references/slalom-brand-reference.md`. Marp: use `<!-- _class: lead -->` on the first slide.
+   2. **Meet the team.** Young Chul Kim, Jack Murphy, Michael Apfelbeck. One line per member describing what they actually touched in the window (derived from git author + file paths). If the git signal does not support a role, name the member and stop.
+   3. **The project.** One sentence: brownfield Spring Boot microservices reference app. List the tiers (`eureka-server-local`, `products-microservice`, `checkout-microservice`, `cart-microservice`, `api-gateway-microservice`, `login-microservice`, `react-ui`). No metaphor for "brownfield".
+   4. **Agentic skills inventory.** Group by prefix (`rabbit-*`, `speckit-*`, `aisdlc-*`, other). Show the count per group and name only the skills that were added or materially changed in the window (from git). Do not list every skill.
+   5. **Copilot prompts and MCP servers.** Configured MCP servers by name. Copilot prompts grouped by prefix with counts. HTML: two columns. Marp: two adjacent sections.
+   6. **Progress at a glance.** Total no-merge commits in the window and the commits-per-day breakdown. State the `SINCE` value on the slide. No narrative around the numbers.
+   7. **What shipped.** Grouped notable commit messages by theme (features / docs / specs / infra / tests). Drop themes with no commits.
+   8. **Where we worked.** Files/areas buckets from step 4, showing only buckets with a non-trivial signal for the window. Do not report every bucket; do not sum unrelated buckets into a headline.
+   9. **Spec Kit artifacts created.** List new `specs/*/{spec,plan,tasks}.md` files from step 4, grouped by feature slug. If none were added in the window, drop this slide (do not substitute a filler slide).
+   10. **Close.** 2-3 follow-through items grounded in the git recap (open feature branches, unmerged PRs, referenced-but-not-implemented specs). No motivational sign-off. Include the standard Slalom internal footer copyright unless the user asked for a public variant.
 
    Every generated internal slide must include `Copyright [year] Slalom. All Rights Reserved. Proprietary and Confidential.` unless the user explicitly requests a public/non-confidential variant. For Marp, put the footer as an italic line at the bottom of each slide; for HTML, use the slide template's footer.
 
@@ -152,6 +163,8 @@ Return in this order:
 ## Guardrails
 
 - Do not fabricate git numbers, commit messages, contributor breakdowns, or skill descriptions. If a data source is missing, say so on the slide rather than making something up.
+- Do not add flavor text, eyebrows, kickers, metaphors, or motivational closers. See Content Style above.
+- Do not headline slides with counts or list decorative aggregates (see Content Style).
 - Do not create either deck package by hand — always invoke `slalom-html-slide-decks`'s `setup-deck.js` or `setup-deck-marp.js` so the copied `support/` primitives, starter styles, and Marp theme wiring land correctly.
 - Do not edit application code or spec artifacts from this skill. It writes only to the deck package(s) under `$OUT/` and `$OUT_MARP/`.
 - Do not push the deck, open a PR, or delete anything from `additional-deck-content/`.
