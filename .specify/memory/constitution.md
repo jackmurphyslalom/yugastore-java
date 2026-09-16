@@ -1,25 +1,21 @@
 <!--
 Sync Impact Report
-Version change: (template, unratified) → 1.0.0
-Modified principles: n/a (initial ratification)
-Added sections:
-  - Core Principles: I. Gateway-Only Service Boundary
-  - Core Principles: II. Consistency-Sensitive Data Paths
-  - Core Principles: III. Canonical Terminology
-  - Core Principles: IV. Context-Grounded Change
-  - Core Principles: V. Incremental Test Hardening
-  - Deployment & Scope Boundaries
-  - Development Workflow
-  - Governance
-Removed sections: none (template placeholders replaced)
+Version change: 1.0.0 → 1.0.1
+Modified principles: n/a (no principle added/removed/redefined)
+Modified sections:
+  - Deployment & Scope Boundaries: resolved deployment-target bullet — localhost-only is now
+    ratified per docs/architecture/adr/0001-deployment-target-localhost.md, superseding the
+    tentative AWS pick from docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md;
+    TODO(DEPLOYMENT_TARGET) removed.
+Added sections: none
+Removed sections: none
 Templates requiring updates:
-  - .specify/templates/plan-template.md ✅ (Constitution Check section already derives gates from this file; no hardcoded principle names to update)
-  - .specify/templates/spec-template.md ✅ (no constitution-specific references found)
-  - .specify/templates/tasks-template.md ✅ (no constitution-specific references found)
-  - .specify/templates/checklist-template.md ✅ (no constitution-specific references found)
-  - Framework command/skill files (speckit.*) ✅ (reviewed; none hardcode principle names)
+  - .specify/templates/plan-template.md ✅ (no change needed; no hardcoded deployment-target references)
+  - .specify/templates/spec-template.md ✅ (no change needed)
+  - .specify/templates/tasks-template.md ✅ (no change needed)
+  - .specify/templates/checklist-template.md ✅ (no change needed)
+  - Framework command/skill files (speckit.*) ✅ (no change needed)
 Follow-up TODOs:
-  - TODO(DEPLOYMENT_TARGET): AWS vs. existing Cloud Foundry manifests unresolved (see docs/context/gaps.md); constitution intentionally leaves this open rather than picking a side.
   - TODO(LOGIN_MICROSERVICE_SCOPE): whether login-microservice completion is in engagement scope is unresolved (see docs/context/gaps.md).
 -->
 # yugastore-java Constitution
@@ -70,11 +66,12 @@ existing test.
 
 ## Deployment & Scope Boundaries
 
-- Target deployment platform is unresolved: kickoff decisions tentatively picked AWS (by
-  available credentials only, explicitly reversible), but every microservice still ships a
-  Cloud Foundry `manifest.yml`. Neither is constitutionally mandated; treat the choice as open
-  until resolved via an ADR (`docs/architecture/adr/`) and reflected here.
-  TODO(DEPLOYMENT_TARGET): resolve and update this section once a target is ratified.
+- Target deployment platform is ratified as **localhost only**, per
+  `docs/architecture/adr/0001-deployment-target-localhost.md`: run via the `docker-run.sh`
+  container stack or manual per-service `mvn spring-boot:run`. No cloud target (AWS or Cloud
+  Foundry) is in scope for this engagement; this supersedes the tentative AWS pick recorded in
+  `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`. Existing per-service
+  `manifest.yml` files remain in the repo but are dormant/unused.
 - `login-microservice` is unfinished and has no `api-gateway-microservice` REST client wired to
   it. Completing or integrating it is out of scope by default; any change to wire it in MUST go
   through `/speckit.specify` first rather than being bundled into unrelated work.
@@ -100,7 +97,7 @@ file. Any PR, spec, or plan that conflicts with a principle MUST either comply o
 constitution amendment alongside the change; silent exceptions are not permitted. Use
 `docs/context/gaps.md` to track open governance questions until they can be ratified here.
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-14 | **Last Amended**: 2026-09-14
+**Version**: 1.0.1 | **Ratified**: 2026-09-14 | **Last Amended**: 2026-09-15
 
 <!-- AI-SDLC:CONTEXT-ROUTING START -->
 ## AI-SDLC Context Routing

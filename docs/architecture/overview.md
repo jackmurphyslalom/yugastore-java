@@ -69,7 +69,7 @@ and YSQL (Postgres-compatible, for the shopping cart).
 
 ## Assumptions and Open Questions
 
-- Whether Cloud Foundry (`manifest.yml`) or Docker is the intended deployment target for this
-  engagement, versus AWS (tentatively chosen per the kickoff decisions), is unresolved.
+- Resolved 2026-09-15: deployment target is localhost only (`docker-run.sh` / per-service
+  `mvn spring-boot:run`); no cloud target, per `docs/architecture/adr/0001-deployment-target-localhost.md`.
 - The intake's idea to "build graceful degradation on Eureka" is unverified against actual
   gateway code — no such logic was observed.

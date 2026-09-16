@@ -57,6 +57,7 @@
 - Product/architecture overviews assume the three `specs/intake` client-requirement items are
   real (not exercise-only) prompts; only the pricing item was directly verifiable against code.
 - Deployment target (AWS vs. existing Cloud Foundry `manifest.yml`s) is unresolved.
+  Resolved 2026-09-15: ratified as localhost only, see `docs/architecture/adr/0001-deployment-target-localhost.md`.
 
 ## Missing, Stale, or Conflicting Context
 
@@ -72,6 +73,7 @@
   first `/speckit.specify` feature?
 - Is finishing `login-microservice` in scope for this engagement?
 - Which deployment target (AWS, Cloud Foundry, Docker-only) should the team standardize on?
+  Resolved 2026-09-15: localhost only, see `docs/architecture/adr/0001-deployment-target-localhost.md`.
 - What principles should be ratified via `/speckit.constitution`?
 
 ## Boundaries

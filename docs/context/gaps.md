@@ -55,13 +55,6 @@ Keep unresolved or weak-signal context here so later feature work does not quiet
     `api-gateway-microservice/src/main/java/.../rest/clients/`.
   - **Next best reviewer or source**: Human confirmation of engagement scope.
 
-- **Area**: Deployment target ambiguity (AWS vs. existing Cloud Foundry `manifest.yml` files)
-  - **Why it matters**: Kickoff decisions tentatively picked AWS (by available credentials only,
-    explicitly reversible), but every microservice already ships a Cloud Foundry `manifest.yml`.
-  - **Evidence checked**: `docs/decisions/2026-09-14-1758-immersion-kickoff-decisions.md`; each
-    microservice's `manifest.yml`.
-  - **Next best reviewer or source**: Revisit once real client cloud constraints are known.
-
 - **Area**: `.specify/memory/constitution.md` is still the unfilled template
   - **Why it matters**: No ratified project principles exist yet; downstream commands treat the
     constitution as authoritative when present.
