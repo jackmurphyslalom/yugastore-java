@@ -1,7 +1,6 @@
 //Dependencies
 import React, { PureComponent } from 'react';
 import { Logo } from '../';
-import { Icon } from '../../../common';
 import { NavLink } from 'react-router-dom';
 //Internals
 import './index.css';

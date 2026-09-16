@@ -1,0 +1,7 @@
+links:
+  - feature: 004-marp-slide-generation
+    issue_url: https://github.com/jackmurphyslalom/yugastore-java/issues/48
+    issue_number: 48
+    repo: jackmurphyslalom/yugastore-java
+    linked_at: 2026-09-15T00:00:00Z
+    spec_file: specs/004-marp-slide-generation/spec.md

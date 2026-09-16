@@ -1,12 +1,12 @@
-package com.yugabyte.yugastore.test;
-
+package com.yugabyte.app.yugastore.cart;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-public class SpringAndReactApplicationTests {
+@ActiveProfiles("test")
+public class YugastoreCartTests {
 
 	@Test
 	public void contextLoads() {

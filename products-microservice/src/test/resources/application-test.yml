@@ -1,0 +1,17 @@
+# Test profile: Cassandra/Yugabyte YCQL and Eureka are not available in CI.
+# We exclude their auto-configurations; @ActiveProfiles("test") in the test class
+# also bypasses the "local" @Profile gate on YugabyteYCQLConfig.
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveDataAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveRepositoriesAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.cassandra.CassandraRepositoriesAutoConfiguration
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
