@@ -1,0 +1,57 @@
+/* Modular block primitives: capabilities, solution pieces, and lego-like compositions. */
+.modular-blocks {
+  display: flex;
+  align-items: end;
+  gap: 28px;
+  min-height: 430px;
+  margin-top: 74px;
+}
+
+.modular-block {
+  position: relative;
+  min-width: 170px;
+  min-height: 130px;
+  padding: 28px 24px;
+  background: var(--slalom-blue);
+  color: var(--white);
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1.08;
+  transform: translateY(var(--block-lift, 0));
+}
+
+.modular-block::before {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: -18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: inherit;
+  filter: brightness(1.1);
+}
+
+.modular-block::after {
+  content: "";
+  position: absolute;
+  right: 28px;
+  top: -18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: inherit;
+  filter: brightness(1.1);
+}
+
+.modular-block.accent-cyan { background: var(--cyan); color: var(--black); }
+.modular-block.accent-coral { background: var(--coral); color: var(--black); }
+.modular-block.accent-purple { background: var(--purple); color: var(--black); }
+.modular-block.accent-chartreuse { background: var(--chartreuse); color: var(--black); }
+.modular-block.dark-block { background: var(--black); }
+
+.modular-block.is-selected {
+  outline: 8px solid rgba(12, 98, 251, 0.24);
+  outline-offset: 10px;
+}
+

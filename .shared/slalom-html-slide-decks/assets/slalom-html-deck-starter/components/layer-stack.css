@@ -1,0 +1,48 @@
+/* Layer stack primitives: pyramids, platform layers, foundations, and capability stacks. */
+.layer-stack {
+  display: grid;
+  gap: 18px;
+  width: min(100%, 1180px);
+  margin-top: 70px;
+}
+
+.layer-stack__layer {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: center;
+  min-height: 92px;
+  background: var(--surface-raised);
+}
+
+.layer-stack__label {
+  height: 100%;
+  display: grid;
+  align-items: center;
+  padding: 24px 28px;
+  background: var(--slalom-blue);
+  color: var(--white);
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1.05;
+}
+
+.layer-stack__body {
+  padding: 22px 30px;
+  color: var(--black);
+  font-size: 25px;
+  line-height: 1.18;
+}
+
+.layer-stack__layer:nth-child(2) .layer-stack__label { background: var(--cyan); color: var(--black); }
+.layer-stack__layer:nth-child(3) .layer-stack__label { background: var(--purple); color: var(--black); }
+.layer-stack__layer:nth-child(4) .layer-stack__label { background: var(--chartreuse); color: var(--black); }
+
+.layer-stack.pyramid {
+  justify-items: center;
+}
+
+.layer-stack.pyramid .layer-stack__layer:nth-child(1) { width: 58%; }
+.layer-stack.pyramid .layer-stack__layer:nth-child(2) { width: 72%; }
+.layer-stack.pyramid .layer-stack__layer:nth-child(3) { width: 86%; }
+.layer-stack.pyramid .layer-stack__layer:nth-child(4) { width: 100%; }
+
