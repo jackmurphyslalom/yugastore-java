@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: Experiment Toggle — Internal Admin Surface
+  version: "1.0.0"
+  description: >
+    Internal-only read/write surface hosted directly on config-server-microservice.
+    NOT reachable through api-gateway-microservice (FR-010) and NOT protected by
+    login-microservice (FR-009 resolution: authorization is enforced at the
+    infrastructure layer — network/deployment-topology access control to this
+    service — for this iteration). This is the surface an experiment owner or
+    engineer uses to change, retire, or inspect toggle values and history.
+servers:
+  - url: http://localhost:8888
+    description: config-server-microservice (localhost-only, internal network reachability only)
+paths:
+  /admin/toggles:
+    get:
+      summary: List all currently active toggle values (Story 3 / FR-006)
+      operationId: listActiveToggles
+      responses:
+        "200":
+          description: Currently active toggle values with since-when metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: "#/components/schemas/ExperimentToggle"
+  /admin/toggles/{key}:
+    put:
+      summary: Change (or retire, by setting the documented default value) a toggle
+      operationId: writeToggle
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+          example: experiment.ranking-strategy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentToggleWriteRequest"
+      responses:
+        "200":
+          description: Accepted and applied; previous value returned for confirmation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToggleChangeEvent"
+        "400":
+          description: >
+            Rejected — key not recognized, or value not in that key's documented
+            allow-list (FR-004). Previous value continues serving; no history
+            entry is appended.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationError"
+  /admin/toggles/history:
+    get:
+      summary: List toggle change history (Story 3 traceability)
+      operationId: listToggleHistory
+      parameters:
+        - name: key
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional filter to a single toggle key.
+      responses:
+        "200":
+          description: Change history, most recent first
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ToggleChangeEvent"
+components:
+  schemas:
+    ExperimentToggle:
+      type: object
+      required: [value, updatedAt]
+      properties:
+        value:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        updatedBy:
+          type: string
+    ExperimentToggleWriteRequest:
+      type: object
+      required: [value]
+      properties:
+        value:
+          type: string
+        changedBy:
+          type: string
+          description: Optional free-text identifier of the experiment owner/engineer.
+    ToggleChangeEvent:
+      type: object
+      required: [key, newValue, changedAt]
+      properties:
+        key:
+          type: string
+        previousValue:
+          type: string
+          nullable: true
+        newValue:
+          type: string
+        changedAt:
+          type: string
+          format: date-time
+        changedBy:
+          type: string
+    ValidationError:
+      type: object
+      required: [key, rejectedValue, reason]
+      properties:
+        key:
+          type: string
+        rejectedValue:
+          type: string
+        reason:
+          type: string
+          example: "'fastest' is not a recognized value for experiment.ranking-strategy; allowed values are: default, price-desc, newest-first"
