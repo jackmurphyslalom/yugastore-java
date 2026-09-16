@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../support/base.css">
+  <link rel="stylesheet" href="../deck.css">
+</head>
+<body>
+  <section class="slide" aria-label="Copilot prompts and MCP servers" data-slide="5">
+    <p class="kicker">How the team invokes it</p>
+    <h2>43 Copilot prompts, 2 MCP servers</h2>
+
+    <div class="grid-2" style="margin-top:56px;gap:80px">
+      <div class="dark-block" style="padding:48px">
+        <p class="eyebrow" style="color:var(--slalom-cyan)">.github/prompts/ — 43</p>
+        <h3 style="margin-top:16px">Copilot chat commands</h3>
+        <ul style="margin-top:24px;line-height:1.7">
+          <li><strong>15 rabbit-*</strong> — wiki lifecycle, arch assessment, deck gen, gh-board CRUD, archive-to-markdown.</li>
+          <li><strong>25 speckit.*</strong> — full Spec Kit loop, each delegating to a subagent.</li>
+          <li><strong>1 slalom-html-slide-decks</strong> — free-text deck brief.</li>
+          <li><strong>1 rabbit-deck-gen</strong> — the prompt that drove this deck.</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow">.vscode/mcp.json — 2</p>
+        <h3 style="margin-top:16px">MCP servers wired to the workspace</h3>
+
+        <div class="panel" style="margin-top:24px;padding:28px 32px;border-left:6px solid var(--slalom-blue)">
+          <h4 style="margin:0">context7</h4>
+          <p class="muted" style="margin-top:8px">HTTP MCP at <code>mcp.context7.com/mcp</code>. Pulls current library/framework docs so we don't guess at Spring Boot 2.6.3 config keys or Eureka client behavior.</p>
+        </div>
+
+        <div class="panel" style="margin-top:20px;padding:28px 32px;border-left:6px solid var(--slalom-coral)">
+          <h4 style="margin:0">github-mcp</h4>
+          <p class="muted" style="margin-top:8px">GitHub Copilot's HTTP MCP. Backs the <code>gh-agent-board</code> tooling and the rabbit-gh-board-* prompts against real Issues and Projects.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>5</span></div>
+  </section>
+</body>
+</html>

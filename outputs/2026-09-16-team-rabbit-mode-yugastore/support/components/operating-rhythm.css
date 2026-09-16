@@ -1,0 +1,54 @@
+/* Operating rhythm primitives: swimlanes, workplans, cadence, and delivery loops. */
+.operating-rhythm {
+  display: grid;
+  grid-template-columns: 220px repeat(var(--rhythm-count, 4), 1fr);
+  gap: 0;
+  margin-top: 62px;
+  border-top: 3px solid var(--surface-chrome);
+  border-left: 3px solid var(--surface-chrome);
+}
+
+.operating-rhythm > * {
+  min-height: 90px;
+  padding: 20px 22px;
+  border-right: 3px solid var(--surface-chrome);
+  border-bottom: 3px solid var(--surface-chrome);
+}
+
+.operating-rhythm__head {
+  background: var(--slalom-blue);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.operating-rhythm__lane {
+  background: #eef4ff;
+  color: var(--black);
+  font-size: 22px;
+  font-weight: 850;
+}
+
+.operating-rhythm__cell {
+  color: var(--gray);
+  font-size: 20px;
+  line-height: 1.18;
+}
+
+.delivery-loop {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 76px;
+}
+
+.delivery-loop__step {
+  min-height: 250px;
+  padding: 34px 28px;
+  background: var(--surface-raised);
+  border-bottom: 8px solid var(--slalom-blue);
+}
+

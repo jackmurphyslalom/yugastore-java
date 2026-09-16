@@ -1,0 +1,58 @@
+/* Intent map primitives: ecosystems, stakeholder rings, and clustered relationships. */
+.intent-map {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 560px;
+}
+
+.intent-map__center {
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 230px;
+  height: 230px;
+  border: 8px solid var(--slalom-blue);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--black);
+  font-size: 30px;
+  font-weight: 850;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.intent-map__ring {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border: 4px solid rgba(12, 98, 251, 0.18);
+  border-radius: 999px;
+}
+
+.intent-map__node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 154px;
+  min-height: 96px;
+  padding: 18px;
+  background: var(--surface-raised);
+  border-top: 7px solid var(--slalom-blue);
+  color: var(--black);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.08;
+  text-align: center;
+}
+
+.intent-map__node.accent-cyan { border-color: var(--cyan); }
+.intent-map__node.accent-coral { border-color: var(--coral); }
+.intent-map__node.accent-purple { border-color: var(--purple); }
+.intent-map__node.accent-chartreuse { border-color: var(--chartreuse); }
+
+.intent-map__node.pos-top { top: 18px; left: calc(50% - 77px); }
+.intent-map__node.pos-right { top: 150px; right: 130px; }
+.intent-map__node.pos-bottom-right { bottom: 70px; right: 230px; }
+.intent-map__node.pos-bottom-left { bottom: 70px; left: 230px; }
+.intent-map__node.pos-left { top: 150px; left: 130px; }

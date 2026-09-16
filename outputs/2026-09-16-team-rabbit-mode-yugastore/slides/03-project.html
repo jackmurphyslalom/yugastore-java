@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../support/base.css">
+  <link rel="stylesheet" href="../support/components/layer-stack.css">
+  <link rel="stylesheet" href="../deck.css">
+  <title>The project — brownfield YugaStore</title>
+</head>
+<body>
+  <section class="slide" aria-label="Brownfield YugaStore project" data-slide="3">
+    <p class="kicker">The project</p>
+    <h2>Brownfield YugaStore — seven tiers we inherited</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:64px;margin-top:56px;align-items:start">
+      <div>
+        <p style="max-width:520px">Spring Boot microservices commerce reference app, Eureka-based service discovery, a React storefront on top. We did not rewrite it — we wired agentic scaffolding around it and started shipping specs against the existing shape.</p>
+        <p class="muted" style="margin-top:32px;font-size:20px">Brownfield: existing system + our recent additions. The additions live in <code>.agents/</code>, <code>.github/</code>, <code>docs/</code>, <code>meta/</code>, <code>specs/</code>, and <code>tools/</code> — not inside the microservices themselves.</p>
+      </div>
+
+      <div class="layer-stack" aria-label="YugaStore tier stack">
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Edge</span>
+          <div class="layer-stack__body">react-ui · api-gateway-microservice</div>
+        </div>
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Domain</span>
+          <div class="layer-stack__body">products-microservice · cart-microservice · checkout-microservice · login-microservice</div>
+        </div>
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Platform</span>
+          <div class="layer-stack__body">eureka-server-local (service discovery)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>3</span></div>
+  </section>
+</body>
+</html>

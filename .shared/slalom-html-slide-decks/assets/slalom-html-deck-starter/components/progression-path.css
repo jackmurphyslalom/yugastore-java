@@ -1,0 +1,58 @@
+/* Progression primitives: journeys, roadmaps, maturity movement, and staged paths. */
+.progression-path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--path-count, 4), 1fr);
+  gap: 28px;
+  margin-top: 70px;
+}
+
+.progression-path::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 58px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--slalom-blue), var(--cyan), var(--purple));
+}
+
+.progression-step {
+  position: relative;
+  display: grid;
+  align-content: start;
+  min-height: 330px;
+  padding: 112px 28px 30px;
+  background: var(--surface-raised);
+}
+
+.progression-step__mark {
+  position: absolute;
+  top: 18px;
+  left: 28px;
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  background: var(--slalom-blue);
+  color: var(--white);
+  font-size: 28px;
+  font-weight: 850;
+}
+
+.progression-step h3 {
+  font-size: 30px;
+}
+
+.progression-step p {
+  margin-top: 16px;
+  color: var(--gray);
+  font-size: 22px;
+}
+
+.progression-step.is-current {
+  background: #eef4ff;
+  outline: 4px solid rgba(12, 98, 251, 0.26);
+}
+

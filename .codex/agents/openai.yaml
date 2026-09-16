@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slalom HTML Slide Decks"
+  short_description: "Create Slalom-branded live HTML slide decks"
+  default_prompt: "Use $slalom-html-slide-decks to create a Slalom-branded live HTML deck with review.html, render evidence, structural QA, and semantic visual QA notes."

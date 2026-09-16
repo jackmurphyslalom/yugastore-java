@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>team rabbit mode yugastore review</title>
+  <link rel="stylesheet" href="support/base.css">
+  <link rel="stylesheet" href="support/base-light.css">
+  <link rel="stylesheet" href="deck.css">
+  <style>
+    body { margin: 0; background: #f4f5f7; color: #111; font-family: Arial, sans-serif; }
+    .review-shell { display: grid; gap: 40px; padding: 32px; }
+    .review-note { max-width: 960px; font-size: 16px; line-height: 1.5; }
+    .review-slide { display: grid; gap: 12px; justify-items: start; }
+    .review-slide > header { display: flex; gap: 16px; align-items: baseline; font-size: 16px; }
+    .review-slide > header span { font-weight: 700; }
+    .review-slide > .slide { width: 1920px; height: 1080px; transform-origin: top left; box-shadow: 0 16px 44px rgba(0,0,0,.18); }
+    @media (max-width: 2100px) { .review-slide > .slide { transform: scale(.5); margin-bottom: -540px; } }
+  </style>
+</head>
+<body>
+  <main class="review-shell">
+    <section class="review-note">
+      <h1>team rabbit mode yugastore review</h1>
+      <p>This page exposes every slide as live HTML DOM for annotation and semantic visual QA. It is not the final presentation surface; use <a href="index.html">index.html</a> for the live deck.</p>
+    </section>
+    <article class="review-slide" id="slide-1" aria-label="Slide 1" data-slide-file="01-cover.html">
+      <header><span>Slide 1</span><a href="slides/01-cover.html">01-cover.html</a><a href="renders/01-cover.png">render</a></header>
+<section class="slide template-cover" aria-label="Team Rabbit Mode cover" data-slide="1">
+    <div class="cover-meta">
+      <span>3-day recap</span>
+      <span>2026-09-14 → 2026-09-16</span>
+    </div>
+
+    <img class="slalom-logo" src="support/assets/slalom-logo-black.svg" alt="Slalom">
+    <h1>Team Rabbit Mode</h1>
+    <p class="cover-body">A brownfield YugaStore recap — what the team built, which agentic tools carried the load, and what the last three days actually looked like in the repo.</p>
+
+    <div class="cover-footer">
+      <span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span>
+      <span>1</span>
+    </div>
+
+    <div class="color-bar" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-2" aria-label="Slide 2" data-slide-file="02-meet-the-team.html">
+      <header><span>Slide 2</span><a href="slides/02-meet-the-team.html">02-meet-the-team.html</a><a href="renders/02-meet-the-team.png">render</a></header>
+<section class="slide" aria-label="Meet the team" data-slide="2">
+    <p class="kicker">Three humans in the loop</p>
+    <h2>Meet team Rabbit Mode</h2>
+
+    <div class="grid-3" style="margin-top:64px">
+      <article>
+        <div class="panel accent-cyan" style="height:220px;display:flex;align-items:flex-end;padding:32px">
+          <span style="font-size:56px;line-height:1;font-weight:850;color:var(--slalom-blue)">22</span>
+        </div>
+        <h3 style="margin-top:24px">Young Chul Kim</h3>
+        <p class="muted">Spec Kit driver — constitution v1.0.0, boundary docs, testing-framework alignment, perf test suite, project board wire-up.</p>
+      </article>
+
+      <article>
+        <div class="panel accent-coral" style="height:220px;display:flex;align-items:flex-end;padding:32px">
+          <span style="font-size:56px;line-height:1;font-weight:850;color:var(--slalom-blue)">15</span>
+        </div>
+        <h3 style="margin-top:24px">Jack Murphy</h3>
+        <p class="muted">Rabbit Wiki + agent tooling — gh-agent-board CRUD, rabbit-wiki lifecycle, architecture-assessment skills, client-feedback iterations.</p>
+      </article>
+
+      <article>
+        <div class="panel accent-chartreuse" style="height:220px;display:flex;align-items:flex-end;padding:32px">
+          <span style="font-size:56px;line-height:1;font-weight:850;color:var(--slalom-blue)">14</span>
+        </div>
+        <h3 style="margin-top:24px">Michael Apfelbeck</h3>
+        <p class="muted">Skill authoring + framing — AI-SDLC bootstrap, 16-factor analysis skill, MCP config, dynamic pricing plan, Slalom deck skill.</p>
+      </article>
+    </div>
+
+    <p class="muted" style="margin-top:40px;font-size:20px">Commits per member, 2026-09-14 → 2026-09-16 (no-merges).</p>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>2</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-3" aria-label="Slide 3" data-slide-file="03-project.html">
+      <header><span>Slide 3</span><a href="slides/03-project.html">03-project.html</a><a href="renders/03-project.png">render</a></header>
+<section class="slide" aria-label="Brownfield YugaStore project" data-slide="3">
+    <p class="kicker">The project</p>
+    <h2>Brownfield YugaStore — seven tiers we inherited</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:64px;margin-top:56px;align-items:start">
+      <div>
+        <p style="max-width:520px">Spring Boot microservices commerce reference app, Eureka-based service discovery, a React storefront on top. We did not rewrite it — we wired agentic scaffolding around it and started shipping specs against the existing shape.</p>
+        <p class="muted" style="margin-top:32px;font-size:20px">Brownfield: existing system + our recent additions. The additions live in <code>.agents/</code>, <code>.github/</code>, <code>docs/</code>, <code>meta/</code>, <code>specs/</code>, and <code>tools/</code> — not inside the microservices themselves.</p>
+      </div>
+
+      <div class="layer-stack" aria-label="YugaStore tier stack">
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Edge</span>
+          <div class="layer-stack__body">react-ui · api-gateway-microservice</div>
+        </div>
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Domain</span>
+          <div class="layer-stack__body">products-microservice · cart-microservice · checkout-microservice · login-microservice</div>
+        </div>
+        <div class="layer-stack__layer">
+          <span class="layer-stack__label">Platform</span>
+          <div class="layer-stack__body">eureka-server-local (service discovery)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>3</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-4" aria-label="Slide 4" data-slide-file="04-agentic-skills.html">
+      <header><span>Slide 4</span><a href="slides/04-agentic-skills.html">04-agentic-skills.html</a><a href="renders/04-agentic-skills.png">render</a></header>
+<section class="slide" aria-label="Agentic skills inventory" data-slide="4">
+    <p class="kicker">Agentic surface</p>
+    <h2>42 skills, five families</h2>
+
+    <div class="grid-4" style="margin-top:56px">
+      <article class="icon-card">
+        <div class="icon-mark">25</div>
+        <h3>speckit-*</h3>
+        <p>Spec Kit workflow — specify, plan, tasks, implement, analyze, converge, iterate, bugfix, issue.import/link/sync, checklist, taskstoissues.</p>
+      </article>
+
+      <article class="icon-card">
+        <div class="icon-mark">10</div>
+        <h3>rabbit-*</h3>
+        <p>Repo-specific knowledge ops — wiki ingest/analyze/query/lint, architecture assessment (tier + rollup), future-state recommendations, deck gen.</p>
+      </article>
+
+      <article class="icon-card">
+        <div class="icon-mark">5</div>
+        <h3>aisdlc-*</h3>
+        <p>Bootstrap language — grilling interviews, domain modeling, knowledge ingestion, PR flow, skill authoring.</p>
+      </article>
+
+      <article class="icon-card">
+        <div class="icon-mark">2</div>
+        <h3>Analysis &amp; decks</h3>
+        <p>16-factor-analysis (12-factor + 4 AI-era factors) and slalom-html-slide-decks (this deck).</p>
+      </article>
+    </div>
+
+    <p class="muted" style="margin-top:40px;font-size:20px">Enumerated from <code>.agents/skills/*/SKILL.md</code>. Each skill has a canonical body plus agent-specific wrappers under <code>.claude/</code>, <code>.cursor/</code>, <code>.grok/</code>, <code>.zcode/</code>, <code>.rovodev/</code>, <code>.factory/</code>, and <code>.kiro/</code>.</p>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>4</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-5" aria-label="Slide 5" data-slide-file="05-prompts-and-mcp.html">
+      <header><span>Slide 5</span><a href="slides/05-prompts-and-mcp.html">05-prompts-and-mcp.html</a><a href="renders/05-prompts-and-mcp.png">render</a></header>
+<section class="slide" aria-label="Copilot prompts and MCP servers" data-slide="5">
+    <p class="kicker">How the team invokes it</p>
+    <h2>43 Copilot prompts, 2 MCP servers</h2>
+
+    <div class="grid-2" style="margin-top:56px;gap:80px">
+      <div class="dark-block" style="padding:48px">
+        <p class="eyebrow" style="color:var(--slalom-cyan)">.github/prompts/ — 43</p>
+        <h3 style="margin-top:16px">Copilot chat commands</h3>
+        <ul style="margin-top:24px;line-height:1.7">
+          <li><strong>15 rabbit-*</strong> — wiki lifecycle, arch assessment, deck gen, gh-board CRUD, archive-to-markdown.</li>
+          <li><strong>25 speckit.*</strong> — full Spec Kit loop, each delegating to a subagent.</li>
+          <li><strong>1 slalom-html-slide-decks</strong> — free-text deck brief.</li>
+          <li><strong>1 rabbit-deck-gen</strong> — the prompt that drove this deck.</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow">.vscode/mcp.json — 2</p>
+        <h3 style="margin-top:16px">MCP servers wired to the workspace</h3>
+
+        <div class="panel" style="margin-top:24px;padding:28px 32px;border-left:6px solid var(--slalom-blue)">
+          <h4 style="margin:0">context7</h4>
+          <p class="muted" style="margin-top:8px">HTTP MCP at <code>mcp.context7.com/mcp</code>. Pulls current library/framework docs so we don't guess at Spring Boot 2.6.3 config keys or Eureka client behavior.</p>
+        </div>
+
+        <div class="panel" style="margin-top:20px;padding:28px 32px;border-left:6px solid var(--slalom-coral)">
+          <h4 style="margin:0">github-mcp</h4>
+          <p class="muted" style="margin-top:8px">GitHub Copilot's HTTP MCP. Backs the <code>gh-agent-board</code> tooling and the rabbit-gh-board-* prompts against real Issues and Projects.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>5</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-6" aria-label="Slide 6" data-slide-file="06-progress-at-a-glance.html">
+      <header><span>Slide 6</span><a href="slides/06-progress-at-a-glance.html">06-progress-at-a-glance.html</a><a href="renders/06-progress-at-a-glance.png">render</a></header>
+<section class="slide" aria-label="Progress at a glance" data-slide="6">
+    <div class="eyebrow">3-day recap · window: "3 days ago" → HEAD</div>
+    <h2>51 commits, one team, three days</h2>
+
+    <div style="position:absolute;left:104px;bottom:200px;font-size:280px;line-height:.85;font-weight:850;color:var(--slalom-blue)">51</div>
+    <p style="position:absolute;left:104px;bottom:150px;font-size:22px;color:var(--slalom-gray-700);margin:0">no-merge commits · 84 including merges</p>
+
+    <div style="position:absolute;right:104px;top:220px;width:820px">
+      <p class="eyebrow" style="margin-bottom:24px">Commits per day (no-merges)</p>
+
+      <div style="display:grid;grid-template-columns:130px 1fr 80px;row-gap:24px;column-gap:24px;align-items:center;font-size:24px">
+        <span><strong>Sep 14</strong></span>
+        <div style="height:44px;background:var(--slalom-cyan);width:calc(100% * 10 / 38)"></div>
+        <span>10</span>
+
+        <span><strong>Sep 15</strong></span>
+        <div style="height:44px;background:var(--slalom-blue);width:100%"></div>
+        <span>38</span>
+
+        <span><strong>Sep 16</strong></span>
+        <div style="height:44px;background:var(--slalom-coral);width:calc(100% * 3 / 38)"></div>
+        <span>3</span>
+      </div>
+
+      <p class="muted" style="margin-top:40px;font-size:18px">Sep 15 was the sprint's spike day: 10 new specs, testing-framework alignment, perf test suite, and the first Slalom-themed slide generation all landed together.</p>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>6</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-7" aria-label="Slide 7" data-slide-file="07-what-we-shipped-themes.html">
+      <header><span>Slide 7</span><a href="slides/07-what-we-shipped-themes.html">07-what-we-shipped-themes.html</a><a href="renders/07-what-we-shipped-themes.png">render</a></header>
+<section class="slide" aria-label="What we shipped — themes" data-slide="7">
+    <p class="kicker">Themes across the 51 commits</p>
+    <h2>Five lanes carried the work</h2>
+
+    <div class="modular-blocks" style="margin-top:48px">
+      <article class="modular-block">
+        <p class="eyebrow">Features</p>
+        <h3>Dynamic pricing plan · perf &amp; fault-injection suite · gh-agent-board</h3>
+        <p class="muted">Externalized dynamic pricing spec+plan, k6 load + toxiproxy fault-injection suite for issue #55, and gh-agent-board CRUD/reassign/change-owner prompts merged as PR #14.</p>
+      </article>
+
+      <article class="modular-block">
+        <p class="eyebrow">Spec Kit</p>
+        <h3>10 new features authored end-to-end</h3>
+        <p class="muted">Each with spec.md, plan.md, tasks.md, research.md, data-model.md, quickstart.md. See slide 9 for the full list. Boundary doc (#21) implemented and closed.</p>
+      </article>
+
+      <article class="modular-block">
+        <p class="eyebrow">Rabbit Wiki</p>
+        <h3>Lifecycle + arch assessment + wiki ingest</h3>
+        <p class="muted">Rabbit Wiki lifecycle skill added; architecture-assessment tier+rollup skills replaced SCQA with Context/Findings/Recommendation + scored 16-factor; LLM Wiki, Knowledge Graph, and recap recordings ingested.</p>
+      </article>
+
+      <article class="modular-block">
+        <p class="eyebrow">Skills &amp; tooling</p>
+        <h3>16-factor analysis, Slalom decks, Marp</h3>
+        <p class="muted">16-factor-analysis skill authored and run against every tier. Marp-based slide generation added, then Slalom-themed. Slalom HTML deck skill installed on Sep 16 (this deck).</p>
+      </article>
+
+      <article class="modular-block">
+        <p class="eyebrow">Docs, style, ops</p>
+        <h3>Constitution v1.0.0 · writing style · localhost target</h3>
+        <p class="muted">Project constitution ratified. Writing style guide + phrasal-verb clarification. Recorded localhost-only deployment scope. Real GitHub Projects board wired up with audit entries.</p>
+      </article>
+    </div>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>7</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-8" aria-label="Slide 8" data-slide-file="08-where-we-worked.html">
+      <header><span>Slide 8</span><a href="slides/08-where-we-worked.html">08-where-we-worked.html</a><a href="renders/08-where-we-worked.png">render</a></header>
+<section class="slide" aria-label="Where we worked" data-slide="8">
+    <p class="kicker">File-touch buckets, 3-day window</p>
+    <h2>The work landed in the agentic scaffolding</h2>
+
+    <table class="brand-table" style="margin-top:36px;width:100%;max-width:1500px;font-size:22px">
+      <thead>
+        <tr>
+          <th style="width:60%">Area</th>
+          <th style="width:20%;text-align:right">File-touches</th>
+          <th style="width:20%">Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>.agents/skills/</code></td><td style="text-align:right"><strong>76</strong></td><td>Skill authoring</td></tr>
+        <tr><td><code>.shared/slalom-html-slide-decks/</code></td><td style="text-align:right"><strong>69</strong></td><td>Slalom deck install</td></tr>
+        <tr><td><code>meta/rabbit-wiki/</code></td><td style="text-align:right"><strong>43</strong></td><td>Wiki ingest</td></tr>
+        <tr><td><code>.github/prompts/</code></td><td style="text-align:right"><strong>43</strong></td><td>Copilot prompts</td></tr>
+        <tr><td><code>.specify/extensions/</code></td><td style="text-align:right"><strong>40</strong></td><td>Spec Kit extensions</td></tr>
+        <tr><td><code>tools/gh-agent-board/</code></td><td style="text-align:right"><strong>37</strong></td><td>Project-board CLI</td></tr>
+        <tr><td>Agent mirrors (<code>.claude</code>, <code>.cursor</code>, <code>.grok</code>, <code>.zcode</code>, <code>.rovodev</code>, <code>.factory</code>)</td><td style="text-align:right"><strong>180</strong></td><td>Skill fan-out</td></tr>
+      </tbody>
+    </table>
+
+    <p class="muted" style="margin-top:28px;font-size:20px;max-width:1500px">No production Java <code>src/main</code> was touched. Every microservice got new <code>src/test</code> scaffolding under testing-framework-alignment, and <code>react-ui/frontend</code> components saw targeted edits.</p>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>8</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-9" aria-label="Slide 9" data-slide-file="09-spec-kit-artifacts.html">
+      <header><span>Slide 9</span><a href="slides/09-spec-kit-artifacts.html">09-spec-kit-artifacts.html</a><a href="renders/09-spec-kit-artifacts.png">render</a></header>
+<section class="slide" aria-label="Spec Kit artifacts created" data-slide="9">
+    <p class="kicker">10 features authored end-to-end</p>
+    <h2>Every one has spec, plan, tasks, research, data-model, and quickstart</h2>
+
+    <div class="grid-3" style="margin-top:48px;gap:32px 48px">
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-blue)">001-*</p>
+        <ul style="line-height:1.9;margin-top:12px">
+          <li>externalized-dynamic-pricing</li>
+          <li>gh-board-crud-prompts</li>
+          <li>user-story-spec-boundary</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-cyan)">002-*</p>
+        <ul style="line-height:1.9;margin-top:12px">
+          <li>rabbit-wiki-lifecycle</li>
+          <li>testing-framework-alignment</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-coral)">003-*</p>
+        <ul style="line-height:1.9;margin-top:12px">
+          <li>architecture-assessment</li>
+          <li>ci-test-pipeline</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-purple)">004-*</p>
+        <ul style="line-height:1.9;margin-top:12px">
+          <li>future-state-recommendations</li>
+          <li>marp-slide-generation</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-chartreuse)">Named</p>
+        <ul style="line-height:1.9;margin-top:12px">
+          <li>copilot-agent-issue-board</li>
+        </ul>
+      </div>
+
+      <div style="grid-column:span 1;align-self:end">
+        <div class="panel dark" style="padding:24px 28px">
+          <p style="margin:0;font-size:48px;line-height:1;font-weight:850">60</p>
+          <p class="muted" style="margin-top:8px;font-size:16px">new Spec Kit files across 10 features (spec + plan + tasks + research + data-model + quickstart, each).</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:36px;font-size:20px">Boundary: <em>001-user-story-spec-boundary</em> was specified, planned, tasked, and implemented — issue #21 closed inside the 3-day window.</p>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>9</span></div>
+  </section>
+    </article>
+    <article class="review-slide" id="slide-10" aria-label="Slide 10" data-slide-file="10-close.html">
+      <header><span>Slide 10</span><a href="slides/10-close.html">10-close.html</a><a href="renders/10-close.png">render</a></header>
+<section class="slide" aria-label="What's next" data-slide="10">
+    <p class="kicker">From scaffolding to shipping</p>
+    <h2>Three days built the runway. The next sprint lands the planes.</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:56px">
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-blue)">Open at HEAD</p>
+        <ul style="line-height:1.8;margin-top:16px">
+          <li><strong>feature/slide-deck-gen</strong> — this deck's branch; installed Slalom HTML deck skill on Sep 16.</li>
+          <li><strong>feature/dynamic-pricing-plan</strong> — merged to master via PR #66 on Sep 16.</li>
+          <li><strong>feature/16-factor-analysis-skill</strong>, <strong>feature/ci-cd-bootstrap</strong>, <strong>feature/writing-style</strong>, <strong>feature/mcp-config</strong> — landed and archived.</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow" style="color:var(--slalom-coral)">Now do the work</p>
+        <ul style="line-height:1.8;margin-top:16px">
+          <li>Implement the <strong>001-externalized-dynamic-pricing</strong> plan against <code>products-microservice</code> and <code>checkout-microservice</code>.</li>
+          <li>Turn the <strong>003-architecture-assessment</strong> tier findings into the graceful-degradation and pricing-agility future-state recommendations.</li>
+          <li>Wire the <strong>003-ci-test-pipeline</strong> spec through GitHub Actions so the perf suite and JUnit 5 suite run on push.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top:56px;font-size:32px;line-height:1.3;max-width:1400px;color:var(--slalom-blue);font-weight:700">Rabbit Mode: three humans, forty-two skills, one brownfield repo. Onward.</p>
+
+    <div class="footer"><span>Copyright 2026 Slalom. All Rights Reserved. Proprietary and Confidential.</span><span>10</span></div>
+  </section>
+    </article>
+  </main>
+</body>
+</html>
