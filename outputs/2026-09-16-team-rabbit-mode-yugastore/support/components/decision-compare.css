@@ -1,0 +1,63 @@
+/* Decision primitives: tradeoffs, criteria, current/future, and recommendations. */
+.decision-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 42px;
+  margin-top: 70px;
+}
+
+.decision-panel {
+  min-height: 470px;
+  padding: 42px;
+  background: var(--surface-raised);
+  border-top: 9px solid var(--slalom-blue);
+}
+
+.decision-panel.muted {
+  border-color: var(--light-gray);
+}
+
+.decision-panel.recommended {
+  background: #eef4ff;
+  box-shadow: inset 0 0 0 4px rgba(12, 98, 251, 0.18);
+}
+
+.decision-panel h3 {
+  font-size: 36px;
+}
+
+.decision-panel ul {
+  display: grid;
+  gap: 16px;
+  margin: 28px 0 0;
+  padding-left: 1.1em;
+}
+
+.decision-panel li {
+  color: var(--gray);
+  font-size: 24px;
+  line-height: 1.22;
+}
+
+.decision-spectrum {
+  position: relative;
+  margin-top: 74px;
+  padding-top: 54px;
+}
+
+.decision-spectrum::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  height: 8px;
+  background: linear-gradient(90deg, var(--slalom-dark-blue), var(--slalom-blue), var(--cyan));
+}
+
+.decision-spectrum__ticks {
+  display: grid;
+  grid-template-columns: repeat(var(--tick-count, 3), 1fr);
+  gap: 24px;
+}
+
