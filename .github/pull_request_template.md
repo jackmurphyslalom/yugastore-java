@@ -15,8 +15,7 @@ refactor, or anything worth calling out in a demo/retro), add a slide to
 project's change progress over time. See [`docs/slides/README.md`](../docs/slides/README.md)
 for the full authoring guide.
 
-- [ ] Not a major change — no deck update needed
-- [ ] Deck updated with a slide summarizing this change
+- [ ] Regenerate the slide deck
 
 **Render the deck to check your slide:**
 
